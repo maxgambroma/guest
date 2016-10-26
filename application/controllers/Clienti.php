@@ -372,6 +372,7 @@ echo $this->email->print_debugger();
     /**
      * lato cliente 
      * vedi i dettagli delle prenotazioni 
+     * cancella e modifica preno
      * restituisce i dettagli della prentoazine e se future le amminista
      */
     
