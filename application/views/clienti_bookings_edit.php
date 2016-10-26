@@ -247,7 +247,6 @@
 ?>
 <?php foreach ($preno as $key => $row_new) { ?>
     <div>
-
         <fieldset> 
             <legend> Booking id : <?php echo $row_new->preno_id; ?>  </legend>
             <div class="row ">
@@ -266,21 +265,15 @@
             </div>            
             <div class="row">
                 <div class="small-12 large-12 columns">
-
-
                     <?php if ($row_new->q1) { ?> 
                         <div class="row ">
                             <div class="small-6 large-6 columns">
                                 <div class="numero_camara ">  <?php echo $row_new->q1; ?>  <img  align="right" title="<?php echo $lg_tipologia[$row_new->t1]->obmp_cm_lingue_nome; ?> " src="<?php echo base_url(); ?>/asset/img/tipologia_<?php echo $row_new->t1; ?>.jpg"/>  </div> 
                             </div>
                             <div class="small-6 large-6 columns ">
-
                                 <h3><?php echo $lg_tipologia[$row_new->t1]->obmp_cm_lingue_nome; ?>  </h3>
-
                                 <?php echo $lg_tipologia[$row_new->t1]->obmp_cm_lingue_html1; ?> 
-
                             </div> 
-
                         </div>   
                     <?php } ?> 
                     <?php if ($row_new->q2) { ?> 
@@ -340,7 +333,6 @@
                     <?php } ?>            
                     <br>
                     <p></p>
-
                     <a href="#" data-reveal-id="firstModal" class="radius button">Cancella</a>
                     <a href="#" data-reveal-id="secondModal" class="radius button">Modifica</a>
                 </div>
@@ -348,15 +340,34 @@
             <!-- Reveal Modals begin -->
             <div id="secondModal" class="reveal-modal" data-reveal aria-labelledby="secondModalTitle" aria-hidden="true" role="dialog">
                 <h2 id="secondModalTitle">This is a modal.</h2>
-                <p>
-                    Cambia le date <br>
-                    Stai per modificare le date della tua prenotazione<br>
-                    Arrivo 	Partenza 	Prezzo<br>
-                    Dati iniziali 	sab 5 nov 2016 	dom 6 nov 2016 	US$84,57<br>
-                    Nuovi dati 	sab 19 nov 2016 	dom 20 nov 2016 	US$84,57<br>  </p>
+                <div class="row">
+                    <div class="large-3 columns">
+                        <p>
+                            <?php echo lang('check_in', 'Check-in'); ?> 
+                            <?php echo form_error('check_in'); ?>
+                            <input id="preno_dal" type="text" name="preno_dal" value="<?php echo set_value('preno_dal'); ?>"  />
+                        </p>
+                    </div>
+                    <div class="large-3 columns">
+                        <?php echo lang('check_out', 'Check-out'); ?> 
+                        <?php echo form_error('check_out'); ?>
+                        <input id="preno_al" type="text" name="preno_al"   value="<?php echo set_value('preno_dal'); ?>"  />
+                    </div>
+                    <div  class="large-3 columns"> 
+                        <p> 
+                            <a href="#"  id="aggiorna_preno"  class="button right">Default Button</a>
+                        </p>
+                    </div>
+                </div>
+                <div id="new_preno">Pippo </div>
+                Cambia le date <br>
+                Stai per modificare le date della tua prenotazione<br>
+                Arrivo 	Partenza 	Prezzo<br>
+                Dati iniziali 	sab 5 nov 2016 	dom 6 nov 2016 	US$84,57<br>
+                Nuovi dati 	sab 19 nov 2016 	dom 20 nov 2016 	US$84,57<br>  </p>
                 <a class="close-reveal-modal" aria-label="Close">&#215;</a>
             </div>
-          <!-- Triggers the modals -->
+            <!-- Triggers the modals -->
             <!-- Cancella Preno -->
             <div id="firstModal" class="reveal-modal" data-reveal aria-labelledby="firstModalTitle" aria-hidden="true" role="dialog">
                 <h2 id="firstModalTitle">Cancella Prenotazione</h2>
@@ -364,7 +375,6 @@
                     <!--  agenda_edit.php  -->
                 <fieldset>
                     <?php echo form_error('preno_stato'); ?>
-
                     <legend>Agenda:</legend>	
                     <?php
 // Change the css classes to suit your needs    
@@ -398,6 +408,46 @@
     </div>
 <?php } ?>
 
+<script>
+    $(function () {
+// Dal
+        $("#preno_dal").datepicker({
+            defaultDate: "",
+            showButtonPanel: true,
+            currentText: "Today",
+            changeMonth: true,
+            changeYear: true,
+            numberOfMonths: 1,
+            firstDay: 1,
+            minDate: new Date(),
+            dateFormat: 'yy-mm-dd',
+            onSelect: function (selectedDate) {
+                $("#preno_al_c").datepicker("option", "minDate", selectedDate);
+            }
+        });
+// Al
+        $("#preno_al").datepicker({
+            defaultDate: "+1d",
+            showButtonPanel: true,
+            changeMonth: true,
+            changeYear: true,
+            numberOfMonths: 1,
+            firstDay: 1,
+            minDate: new Date(),
+            dateFormat: 'yy-mm-dd'
+        });
 
+    });
+</script>
+<script>
 
+    $(function () {
+// aggiorna il div 
+        $("#aggiorna_preno").click(function () {
+            var preno_dal = $('#preno_dal').val();
+            var preno_al = $('#preno_al').val();
+            $("div#new_preno").load("<?php echo base_url(); ?>index.php/agenda/cambia_date?preno_dal=" + preno_dal + "&preno_al=" + preno_al + "&preno_id=<?php echo $row_new->preno_id ?>");
+        });
+    });
+</script> 
 
