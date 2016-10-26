@@ -345,13 +345,13 @@
                         <p>
                             <?php echo lang('check_in', 'Check-in'); ?> 
                             <?php echo form_error('check_in'); ?>
-                            <input id="preno_dal" type="text" name="preno_dal" value="<?php echo set_value('preno_dal'); ?>"  />
+                            <input id="preno_dal" type="text" name="preno_dal" value="<?php echo $row_new->preno_dal; ?>"  />
                         </p>
                     </div>
                     <div class="large-3 columns">
                         <?php echo lang('check_out', 'Check-out'); ?> 
                         <?php echo form_error('check_out'); ?>
-                        <input id="preno_al" type="text" name="preno_al"   value="<?php echo set_value('preno_dal'); ?>"  />
+                        <input id="preno_al" type="text" name="preno_al"   value="<?php echo  $row_new->preno_al; ?>"  />
                     </div>
                     <div  class="large-3 columns"> 
                         <p> 
@@ -408,6 +408,10 @@
     </div>
 <?php } ?>
 
+
+
+
+
 <script>
     $(function () {
 // Dal
@@ -422,7 +426,14 @@
             minDate: new Date(),
             dateFormat: 'yy-mm-dd',
             onSelect: function (selectedDate) {
-                $("#preno_al_c").datepicker("option", "minDate", selectedDate);
+                $("#preno_al").datepicker("option", "minDate", selectedDate);
+             // trovo i nuovi valori    
+             var preno_dal = $('#preno_dal').val();
+            var preno_al = $('#preno_al').val();
+            $("div#new_preno").load("<?php echo base_url(); ?>index.php/agenda/cambia_date?preno_dal=" + preno_dal + "&preno_al=" + preno_al + "&preno_id=<?php echo $row_new->preno_id ?>");
+
+                
+                
             }
         });
 // Al
@@ -439,8 +450,22 @@
 
     });
 </script>
-<script>
 
+
+
+<script>
+    $(function () {
+// aggiorna il div 
+        $("#preno_al").change(function () {
+            var preno_dal = $('#preno_dal').val();
+            var preno_al = $('#preno_al').val();
+            $("div#new_preno").load("<?php echo base_url(); ?>index.php/agenda/cambia_date?preno_dal=" + preno_dal + "&preno_al=" + preno_al + "&preno_id=<?php echo $row_new->preno_id ?>");
+        });
+    });
+</script> 
+
+
+<script> 
     $(function () {
 // aggiorna il div 
         $("#aggiorna_preno").click(function () {

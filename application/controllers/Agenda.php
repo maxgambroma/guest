@@ -483,7 +483,13 @@ class Agenda extends CI_Controller {
 
 	function cambia_date()
 	{
-            echo current_url() . 'OK' ;
+            
+           echo 'preno_id'  .$preno_id = $this->input->get('preno_id') ; echo '<br>';
+           echo 'preno_dal'  .$preno_dal = $this->input->get('preno_dal');echo '<br>';
+           echo 'preno_al' . $preno_al = $this->input->get('preno_al') ;echo '<br>';
+                     
+            
+
 	}
 }
 ?>
