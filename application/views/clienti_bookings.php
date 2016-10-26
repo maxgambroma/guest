@@ -213,8 +213,6 @@
 <div class="new_preno">
     <fieldset>
         <legend> NewPreno</legend>
-        
-
 <?php foreach ($preno as $key => $row_new) { ?>
     <div>
         <fieldset>
@@ -236,7 +234,6 @@
                             <div class="small-12 large-12 columns">
                                 <a href="<?php echo base_url(); ?>/index.php/clienti/bookings_edit/<?php echo $rs_clienti[0]->conto_id; ?>/<?php  echo  $rs_clienti[0]->clienti_id; ?>/<?php  echo  $row_new->preno_id; ?>?lg=<?php echo $this->lg; ?>" class="button success small right">Amministra Preno </a>
                             </div>
-                        
                     </div>
                 </div>
             </div>
@@ -260,7 +257,7 @@
 
 
 
-<div class="old_preno">
+<div class="old_preno box_cancellata">
     <fieldset>
         <legend> Old Preno</legend>
         

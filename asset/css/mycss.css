@@ -205,7 +205,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cfe7fa', end
     background: #F1C40F;
 }
 
-
+.box_cancellata{
+	 opacity: 0.5;
+}
 
 
 .review-bar {
