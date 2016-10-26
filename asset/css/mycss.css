@@ -1,0 +1,301 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 26-set-2015, 19.17.25
+    Author     : massimo
+*/
+
+@charset "utf-8";
+/* CSS Document */
+
+/* struttura  */
+#camare {
+	/*max-width:1280px;*/
+	margin: auto; /* centra la tabella */
+	background-color: #FFFFFF;
+        
+}
+
+
+.room_fermata {
+	background-color: #0C6;
+	float: left;
+	height: 33mm;
+	width: 30mm;
+	border-top-style: double;
+	border-right-style: double;
+	border-bottom-style: double;
+	border-left-style: double;
+	margin: 1mm;
+	padding: 2mm;
+	font-family: Tahoma, Geneva, sans-serif;
+	text-align: center;
+	vertical-align: middle;
+
+}
+
+.room_partenza {
+	background-color: #CF0;
+	float: left;
+	height: 33mm;
+	width: 30mm;
+	border-top-style: double;
+	border-right-style: double;
+	border-bottom-style: double;
+	border-left-style: double;
+	margin: 1mm;
+	padding: 2mm;
+	font-family: Tahoma, Geneva, sans-serif;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.room_manutenzione {
+	background-color: #C99;
+	float: left;
+	height: 33mm;
+	width: 30mm;
+	border-top-style: double;
+	border-right-style: double;
+	border-bottom-style: double;
+	border-left-style: double;
+	margin: 1mm;
+	padding: 2mm;
+	font-family: Tahoma, Geneva, sans-serif;
+	text-align: center;
+	vertical-align: middle;
+}
+
+
+.privacy_box {
+        border-radius: 20px 20px 20px 20px ;
+	background-color: #0C6;
+	float: left;
+	height: 33mm;
+	width: 30mm;
+	border-top-style: double;
+	border-right-style: double;
+	border-bottom-style: double;
+	border-left-style: double;
+	margin: 1mm;
+	padding: 2mm;
+	font-family: Tahoma, Geneva, sans-serif;
+	text-align: center;
+	vertical-align: middle;
+
+}
+
+
+
+.area_manutenzione {
+	background-color: #8ba8af;
+	float: left;
+	height: 33mm;
+	width: 60mm;
+	border-top-style: double;
+	border-right-style: double;
+	border-bottom-style: double;
+	border-left-style: double;
+	margin: 1mm;
+	padding: 2mm;
+	font-family: Tahoma, Geneva, sans-serif;
+	text-align: center;
+	vertical-align: middle;
+}
+
+
+
+.room_arrivi_ok {
+	background-color: aquamarine;
+	float: left;
+	height: 33mm;
+	width: 30mm;
+	border-top-style: double;
+	border-right-style: double;
+	border-bottom-style: double;
+	border-left-style: double;
+	margin: 1mm;
+	padding: 2mm;
+	font-family: Tahoma, Geneva, sans-serif;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.room_arrivi_ko {
+	background-color: #CF0;
+	float: left;
+	height: 33mm;
+	width: 30mm;
+	border-top-style: double;
+	border-right-style: double;
+	border-bottom-style: double;
+	border-left-style: double;
+	margin: 1mm;
+	padding: 2mm;
+	font-family: Tahoma, Geneva, sans-serif;
+	text-align: center;
+	vertical-align: middle;
+}
+
+
+
+.rooms{
+	background-color: #EADFC5;
+	float: left;
+	height: 33mm;
+	width: 30mm;
+	border-top-style: double;
+	border-right-style: double;
+	border-bottom-style: double;
+	border-left-style: double;
+	margin: 1mm;
+	padding: 2mm;
+	font-family: Tahoma, Geneva, sans-serif;
+	text-align: center;
+	vertical-align: middle;
+}
+
+
+
+
+.risosrsa {
+	
+	float: inside;
+	height: 100%;
+	width:  100%;
+	border-top-style: double;
+	border-right-style: double;
+	border-bottom-style: double;
+	border-left-style: double;
+	padding: 4mm;
+	font-family: Tahoma, Geneva, sans-serif;
+	text-align: center;
+	vertical-align: middle;   
+   margin: 0 auto;   
+   
+   
+   /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#cfe7fa+2,6393c1+88 */
+background: rgb(207,231,250); /* Old browsers */
+background: -moz-linear-gradient(top, rgba(207,231,250,1) 2%, rgba(99,147,193,1) 88%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(2%,rgba(207,231,250,1)), color-stop(88%,rgba(99,147,193,1))); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top, rgba(207,231,250,1) 2%,rgba(99,147,193,1) 88%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top, rgba(207,231,250,1) 2%,rgba(99,147,193,1) 88%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top, rgba(207,231,250,1) 2%,rgba(99,147,193,1) 88%); /* IE10+ */
+background: linear-gradient(to bottom, rgba(207,231,250,1) 2%,rgba(99,147,193,1) 88%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cfe7fa', endColorstr='#6393c1',GradientType=0 ); /* IE6-9 */
+   
+   
+}
+
+
+.box_review{
+	
+	font-family: Tahoma, Geneva, sans-serif;
+
+}
+
+
+.box_booking{
+	
+	font-family: Tahoma, Geneva, sans-serif;
+
+    background: #F1C40F;
+}
+
+
+
+
+.review-bar {
+    background: #feba02 none repeat scroll 0 0;
+    color: #000;
+    height: 20px;
+    padding-right: 2px;
+    text-align: right;
+}
+
+.contenuto{
+    
+    overflow: auto;
+}
+
+
+.required {
+    display: inline;
+     color: orangered;
+
+}
+
+
+.icon-bar {
+    background: #007095;
+    display: inline-block;
+    font-size: 0;
+    width: 100%;
+}
+
+
+
+.barra_icone {
+    background: #007095;
+
+    width: 100%;
+}
+
+
+
+.hasDatepicker {
+    background-image: url("../../asset/img/calendar_icon.jpg");
+    background-position: right center;
+    background-repeat: no-repeat;
+}
+
+.cliente_cognome_jquery {
+    background-color: #d9ffd9;
+    background-image: url("../../asset/img/cliente_cognome.gif");
+    background-position: right center;
+    background-repeat: no-repeat;
+}
+
+.cliente_nome_jquery {
+    background-image: url("../../asset/img/cliente_nome.png");
+    background-position: right center;
+    background-repeat: no-repeat;
+}
+
+.telefono_jquery {
+    background-image: url("../../asset/img/telefono_icona.gif");
+    background-position: right center;
+    background-repeat: no-repeat;
+}
+
+
+.email_jquery {
+    background-image: url("../../asset/img/email_icona.gif");
+    background-position: right center;
+    background-repeat: no-repeat;
+}
+
+.password_jquery {
+    background-image: url("../../asset/img/passord_icona.gif");
+    background-position: right center;
+    background-repeat: no-repeat;
+}
+
+
+.rooms_jquery {
+    background-image: url("../../asset/img/rooms_icona.gif");
+    background-position: right center;
+    background-repeat: no-repeat;
+}
+
+.numero_camara{
+    
+    font-size: 600%;
+    font-family: Tahoma, Geneva, sans-serif;
+	text-align: center;
+	vertical-align: middle;
+    
+}
