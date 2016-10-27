@@ -430,7 +430,7 @@
              // trovo i nuovi valori    
              var preno_dal = $('#preno_dal').val();
             var preno_al = $('#preno_al').val();
-            $("div#new_preno").load("<?php echo base_url(); ?>index.php/agenda/cambia_date?preno_dal=" + preno_dal + "&preno_al=" + preno_al + "&preno_id=<?php echo $row_new->preno_id ?>");
+            $("div#new_preno").load("<?php echo base_url(); ?>index.php/agenda/cambia_date?preno_dal=" + preno_dal + "&preno_al=" + preno_al + "&preno_id=<?php echo $row_new->preno_id ?>&hotel_id=<?php echo $row_new->hotel_id ?>");
 
                 
                 
@@ -451,15 +451,13 @@
     });
 </script>
 
-
-
 <script>
     $(function () {
 // aggiorna il div 
         $("#preno_al").change(function () {
             var preno_dal = $('#preno_dal').val();
             var preno_al = $('#preno_al').val();
-            $("div#new_preno").load("<?php echo base_url(); ?>index.php/agenda/cambia_date?preno_dal=" + preno_dal + "&preno_al=" + preno_al + "&preno_id=<?php echo $row_new->preno_id ?>");
+            $("div#new_preno").load("<?php echo base_url(); ?>index.php/agenda/cambia_date?preno_dal=" + preno_dal + "&preno_al=" + preno_al + "&preno_id=<?php echo $row_new->preno_id ?>&hotel_id=<?php echo $row_new->hotel_id ?>");
         });
     });
 </script> 
@@ -471,7 +469,7 @@
         $("#aggiorna_preno").click(function () {
             var preno_dal = $('#preno_dal').val();
             var preno_al = $('#preno_al').val();
-            $("div#new_preno").load("<?php echo base_url(); ?>index.php/agenda/cambia_date?preno_dal=" + preno_dal + "&preno_al=" + preno_al + "&preno_id=<?php echo $row_new->preno_id ?>");
+            $("div#new_preno").load("<?php echo base_url(); ?>index.php/agenda/cambia_date?preno_dal=" + preno_dal + "&preno_al=" + preno_al + "&preno_id=<?php echo $row_new->preno_id ?>&hotel_id=<?php echo $row_new->hotel_id ?>");
         });
     });
 </script> 

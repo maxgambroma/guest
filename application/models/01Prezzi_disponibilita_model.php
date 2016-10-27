@@ -233,43 +233,7 @@ class Prezzi_disponibilita_model extends CI_Model {
         $return = $query->result();
         return $return;
     }
-    
-    
-    /**
-     * trovo il prezzo per l'evento 
-     * da modificare con la data evento ora non iserita
-     * @param type $T1
-     * @param type $hotel_id
-     * @param type $today
-     * @param type $ref_event
-     * @return type
-     */
-    
-        public function  prezzo_eventi($T1,$hotel_id, $today, $ref_event ){
 
-        $sql = "
-         SELECT
-        listino_obmp.listino_nome_id,
-        listino_obmp.tipologia_id,
-        listino_obmp.hotel_id,
-        listino_obmp.listino_prezzo,
-        obmp_ref_event.listino_nome_id,
-        obmp_ref_event.ref_event_id,
-        obmp_ref_event.hotel_id
-        FROM
-        obmp_ref_event
-        INNER JOIN listino_obmp ON (obmp_ref_event.listino_nome_id = listino_obmp.listino_nome_id)
-        WHERE   (listino_obmp.tipologia_id = '$T1') AND
-        (listino_obmp.hotel_id = '$hotel_id') AND
-        (obmp_ref_event.ref_event_id = '$ref_event')
-            ";
-
-        $query = $this->db->query($sql);
-        $return = $query->result();
-        return $return;
-    }
-    
-        
     /**
      * Tetemino le tipologie di camare prenotate 
      * @param type $hotel_id
@@ -374,6 +338,7 @@ class Prezzi_disponibilita_model extends CI_Model {
             }
 
 
+
             //echo "<pre>";print_r($disponibilita);
             if (count($arrivi) > 0) {
                 $tot_camere_in_arrivo = (int) $arrivi['0']->somma_q1 +
@@ -455,28 +420,35 @@ class Prezzi_disponibilita_model extends CI_Model {
      * 
      * @return array
      */
-    function prezzo_hotel($hotel_id, $today, $includi_prezzi = 0, $ref_event = NULL) {
+    function prezzo_hotel($hotel_id, $today, $includi_prezzi = 0) {
 
         $now = date('Y-m-d');
 
 
         // Utilizzo rs_hotel per estrarre i dati che mi interessano
         $this->rs_hotel = $this->rs_hotel($hotel_id);
+
         $this->hotel_numero_camere = $this->rs_hotel->hotel_numero_camere;
+
         $this->diff_gg_preno = $this->data_diff($today, $now);
+
         $this->hotel_tarif_cambia_gg = $this->rs_hotel->hotel_tarif_cambia_gg;
         $this->hotel_disp_modo = $this->rs_hotel->hotel_disp_modo;
         // Fine di utilizzo rs_hotel
         // 
         // Calcolo il totale delle camere in arrivo oggi
+
         $this->tot_cam_in_arrivo = $this->camere_in_arrivo($hotel_id, $today, $now);
+
         $this->tot_cam_in_opzione = $this->camere_in_opzione($hotel_id, $today, $now);
+
         $this->tot_cam_presenti = $this->camere_presenti($hotel_id, $today, $now);
+
         $this->tot_cam_occupate = $this->camere_occupate($this->tot_cam_in_arrivo, $this->tot_cam_presenti, $this->tot_cam_in_opzione);
         $this->tot_cam_libere = $this->camere_libere($this->hotel_numero_camere, $this->tot_cam_occupate);
         $this->tot_occ_percetuale_hotel = $this->occ_percentuale_hotel();
 
-// colori occupazione
+
         if ($this->tot_occ_percetuale_hotel > 0.66 && $this->tot_cam_libere > 4) {
             $style = "yellow";
         } elseif ($this->tot_occ_percetuale_hotel <= 0.66 && $this->tot_occ_percetuale_hotel > 0.33) {
@@ -490,6 +462,7 @@ class Prezzi_disponibilita_model extends CI_Model {
 // inizio i prezzi 
 
         $tipologia_camere = $this->rs_tip_camere($hotel_id);
+
 
         $prezzo = array();
         $totale_prezzo = array();
@@ -510,8 +483,7 @@ class Prezzi_disponibilita_model extends CI_Model {
 //                print_r($appoggio);
 
                 $tableau[$tipologia_id] = $appoggio[$tipologia_id]['0']->somma_tipologia;
-  
-                
+
 
 
 // prezzo 
@@ -551,36 +523,14 @@ class Prezzi_disponibilita_model extends CI_Model {
                     $totale_prezzo[$tipologia_id] = $this->rs_cambia_prezzo($hotel_id, $tipologia_id);
                 }
 
- // se è un evento metto il prezzo 
-                
-                if(!empty($ref_event) && isset($ref_event))
-{
-$totale_prezzo[$tipologia_id]   =  $this->prezzo_eventi($T1,$hotel_id, $today,  $ref_event ) ;
-
-}
-
-              
-// setto l'errore
-                if ($totale_prezzo[$tipologia_id] > 1) {
-                    $errore_booking = 0;
-                } else {
-                    $errore_booking = 1;
-                }
-
-                if ($this->tot_cam_libere >= 0) {
-                    $errore_booking = 0;
-                } else {
-                    $errore_booking = 1;
-                }
 
 // creo Ouput                
 
                 $array_totale_risultati = array(
                     // area prezzi
-                     'prezzo_giorno' => $totale_prezzo,
+                    'prezzo_giorno' => $totale_prezzo,
                     'tableau_dett' => $tableau,
                     'nome_tipologia' => $nome_tipologia,
-                    'errore_booking' => $errore_booking,
                     // area disponibilita
                     'tot_cam_opzione' => $this->tot_cam_in_opzione,
                     'tot_cam_in_arrivo' => $this->tot_cam_in_arrivo,
@@ -693,105 +643,83 @@ $totale_prezzo[$tipologia_id]   =  $this->prezzo_eventi($T1,$hotel_id, $today,  
 
         if ($preno_al >= $preno_dal) {
             $differenza_date = strtotime($preno_al) - strtotime($preno_dal);
-            return $data_diff = date('z', $differenza_date);
+             return $data_diff = date('z', $differenza_date);
         } else {
 
-            $differenza_date = (strtotime($preno_dal) - strtotime($preno_al));
-            return $data_diff = date('z', $differenza_date);
+            $differenza_date = (strtotime($preno_dal) - strtotime($preno_al)) ;
+             return  $data_diff = date('z', $differenza_date);
         }
+
+      
     }
+    
+    
+    
+    public function prezzo_web($hotel_id, $today, $includi_prezzi = 0) {
+        
+      $prezzo_hotel  =  prezzo_hotel($hotel_id, $today, $includi_prezzi = 0) ;
+      
+      
+//      Array
+//(
+//    [prezzo_giorno] => Array
+//        (
+//            [7] => 105
+//            [1] => 100
+//            [3] => 119
+//            [9] => 138
+//            [2] => 119
+//            [4] => 138
+//            [5] => 152
+//            [8] => 180
+//        )
+//
+//    [tableau_dett] => Array
+//        (
+//            [7] => 12
+//            [1] => 3
+//            [3] => 3
+//            [9] => 0
+//            [2] => 6
+//            [4] => 1
+//            [5] => 0
+//            [8] => 0
+//        )
+//
+//    [nome_tipologia] => Array
+//        (
+//            [7] => Doppia Uso
+//            [1] => Singola
+//            [3] => Matrimoniale
+//            [9] => Matri Balcone
+//            [2] => Doppia
+//            [4] => Tripla
+//            [5] => Quadrupla
+//            [8] => Quintupla
+//        )
+//
+//    [tot_cam_opzione] => 0
+//    [tot_cam_in_arrivo] => 13
+//    [tot_cam_presenti] => 22
+//    [tot_cam_giorno] => 35
+//    [tot_cam_libere] => 12
+//    [style_colore] => yellow
+//    [tot_occ_percetuale_hotel] => 0.74468085106383
+//    [diff_gg_preno] => 0
+//    [hotel_tarif_cambia_gg] => -1
+//    [hotel_disp_modo] => 1
+//)
 
-    /**
-     * Cerco le tariffe dei singoli giorni di soggiorno 
-     * @param type $hotel_id
-     * @param type $preno_dal
-     * @param type $preno_al
-     * @param int $includi_prezzi
-     */
-    public function prezzo_web($hotel_id, $preno_dal, $preno_al, $includi_prezzi = 0) {
-
-// protezioni per le date passate
-        if ($preno_dal < date('Y-m-d')) {
-            $preno_dal = date('Y-m-d');
-        }
-        if ($preno_al <= $preno_dal) {
-            $preno_al = $this->somma_gg($preno_dal, 1);
-        }
-
-        $oggi = $preno_dal;
-// scorro le date per le array 
-        while ($oggi < $preno_al) {
-
-            $today = $oggi;
-            $giorno = $this->prezzo_hotel($hotel_id, $today, $includi_prezzi = 1, $ref_event = NULL);
-
-// array KW prezzi tipologia giorno 
-            foreach ($giorno['prezzo_giorno'] as $key => $value) {
-                $prezzo_giorno[$key][$oggi] = $value;
-            }
-// array KW tableau_dett giornaliarei
-            foreach ($giorno['tableau_dett'] as $key => $value) {
-                $tableau_dett[$key][$oggi] = $value;
-            }
-// array giorno
-            $errore_booking[$oggi] = $giorno['errore_booking'];
-            $tot_cam_opzione[$oggi] = $giorno['tot_cam_opzione'];
-            $tot_cam_in_arrivo[$oggi] = $giorno['errore_booking'];
-            $tot_cam_presenti[$oggi] = $giorno['errore_booking'];
-            $tot_cam_giorno[$oggi] = $giorno['errore_booking'];
-            $tot_cam_libere[$oggi] = $giorno['errore_booking'];
-            $style_colore[$oggi] = $giorno['errore_booking'];
-            $tot_occ_percetuale_hotel[$oggi] = $giorno['errore_booking'];
-
-// incremento di un giorno loop
-            $oggi = $this->somma_gg($oggi, 1);
-        }
-
-        $diff_gg_preno = $giorno['diff_gg_preno'];
-        $hotel_tarif_cambia_gg = $giorno['hotel_tarif_cambia_gg'];
-        $nome_tipologia = $giorno['nome_tipologia'];
-        $hotel_numero_camere = $giorno['hotel_numero_camere'];
-        $hotel_disp_modo = $giorno['hotel_disp_modo'];
-
-// totale soggiorno       
-        foreach ($prezzo_giorno as $key => $value) {
-            $sum_prezzo[$key] = array_sum($value);
-        }
-
-        $array_totale_risultati = array(
-// area prezzi
-            'prezzo_giorno' => $prezzo_giorno,
-            'sum_prezzo' => $sum_prezzo,
-            'tableau_dett' => $tableau_dett,
-            'nome_tipologia' => $nome_tipologia,
-            'errore_booking' => $errore_booking,
-// area disponibilita
-// 'tot_cam_opzione' => $tot_cam_in_opzione,
-            'tot_cam_in_arrivo' => $tot_cam_in_arrivo,
-            'tot_cam_presenti' => $tot_cam_presenti,
-// 'preno_gia_arrivati' => $preno_gia_arrivati,
-// 'tot_cam_giorno' => $tot_cam_occupate,
-            'tot_cam_libere' => $tot_cam_libere,
-//  'style_colore' => $style,
-            'hotel_numero_camere' => $hotel_numero_camere,
-            'tot_occ_percetuale_hotel' => $tot_occ_percetuale_hotel,
-            'diff_gg_preno' => $diff_gg_preno,
-            'hotel_tarif_cambia_gg' => $hotel_tarif_cambia_gg,
-            'hotel_disp_modo' => $hotel_disp_modo, 
-            'preno_dal' => $preno_dal,
-            'preno_al' => $preno_al,
-        );
-
-        return $array_totale_risultati;
+      
+      
+      
+      
+      
+      
+      
+        
     }
-
-    function somma_gg($OGGI, $gg) {
-        $appoggio = explode('-', $OGGI);
-        $anno = $appoggio[0];
-        $mese = $appoggio[1];
-        $giorno = $appoggio[2];
-
-        return $data_gg = date("Y-m-d", mktime(0, 0, 0, $mese, ($giorno + $gg), $anno));
-    }
+    
+    
 
 }
