@@ -7,6 +7,8 @@ class Agenda extends CI_Controller {
  		parent::__construct();
                 $this->load->database();
                 $this->load->model('agenda_model');
+                $this->load->model('prezzi_disponibilita_model');
+                
 		$this->load->library('form_validation');
 		$this->load->library('table');
                 $this->load->library('pagination');
@@ -483,13 +485,45 @@ class Agenda extends CI_Controller {
 
 	function cambia_date()
 	{
-            
-           echo 'preno_id'  .$preno_id = $this->input->get('preno_id') ; echo '<br>';
-           echo 'preno_dal'  .$preno_dal = $this->input->get('preno_dal');echo '<br>';
-           echo 'preno_al' . $preno_al = $this->input->get('preno_al') ;echo '<br>';
-                     
-            
+           echo 'hotel_id' . $hotel_id = $this->input->get('hotel_id') ;  echo '<br>';
+           echo 'preno_id'  .  $preno_id = $this->input->get('preno_id') ; echo '<br>';
+           echo 'preno_dal'  . $preno_dal = $this->input->get('preno_dal');echo '<br>';
+           echo 'preno_al' .   $preno_al = $this->input->get('preno_al') ;echo '<br>';
+             
+            // trovo le nuove preno
+            $data['preno'] = $preno = $this->agenda_model->find_by_id($preno_id);
+           
+          
+           
+      $data['preno_new'] =   $this->prezzi_disponibilita_model->prezzo_web($hotel_id, $preno_dal, $preno_al, $includi_prezzi = 0) ;
+   
+          //  $today = $preno_dal ;
+         // $result =    $this->prezzi_disponibilita_model->prezzo_hotel($hotel_id, $today, $includi_prezzi = 1)  ;
 
+          
+          $this->load->view('clienti_cambia_date', $data);
+          
+          
 	}
+        
+        
+        
+	function new_iporto($preno_id, $preno_dal, $preno_al   )
+	{
+              
+            // trovo le nuove preno
+            $data['preno'] = $preno = $this->agenda_model->find_by_id($preno_id);
+            $data['preno_new'] =   $this->prezzi_disponibilita_model->prezzo_web($hotel_id, $preno_dal, $preno_al, $includi_prezzi = 0) ;
+   
+          //  $today = $preno_dal ;
+         // $result =    $this->prezzi_disponibilita_model->prezzo_hotel($hotel_id, $today, $includi_prezzi = 1)  ;
+
+          
+          $this->load->view('clienti_cambia_date', $data);
+          
+          
+	}
+        
+        
 }
 ?>
