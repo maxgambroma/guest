@@ -480,50 +480,47 @@ class Agenda extends CI_Controller {
 	}
         
         
-        
+        /**
+         * trovo le tariffe per il nuovo perido
+         */
         
 
-	function cambia_date()
-	{
-           echo 'hotel_id' . $hotel_id = $this->input->get('hotel_id') ;  echo '<br>';
-           echo 'preno_id'  .  $preno_id = $this->input->get('preno_id') ; echo '<br>';
-           echo 'preno_dal'  . $preno_dal = $this->input->get('preno_dal');echo '<br>';
-           echo 'preno_al' .   $preno_al = $this->input->get('preno_al') ;echo '<br>';
-             
-            // trovo le nuove preno
-            $data['preno'] = $preno = $this->agenda_model->find_by_id($preno_id);
-           
-          
-           
-      $data['preno_new'] =   $this->prezzi_disponibilita_model->prezzo_web($hotel_id, $preno_dal, $preno_al, $includi_prezzi = 0) ;
-   
-          //  $today = $preno_dal ;
-         // $result =    $this->prezzi_disponibilita_model->prezzo_hotel($hotel_id, $today, $includi_prezzi = 1)  ;
+	function cambia_date() {
+        $hotel_id = $this->input->get('hotel_id');
+        $preno_id = $this->input->get('preno_id');
+        $preno_dal = $this->input->get('preno_dal');
+        $preno_al = $this->input->get('preno_al');
 
-          
-          $this->load->view('clienti_cambia_date', $data);
-          
-          
-	}
-        
-        
-        
-	function new_iporto($preno_id, $preno_dal, $preno_al   )
-	{
-              
-            // trovo le nuove preno
-            $data['preno'] = $preno = $this->agenda_model->find_by_id($preno_id);
-            $data['preno_new'] =   $this->prezzi_disponibilita_model->prezzo_web($hotel_id, $preno_dal, $preno_al, $includi_prezzi = 0) ;
-   
-          //  $today = $preno_dal ;
-         // $result =    $this->prezzi_disponibilita_model->prezzo_hotel($hotel_id, $today, $includi_prezzi = 1)  ;
 
-          
-          $this->load->view('clienti_cambia_date', $data);
-          
-          
-	}
-        
-        
+// trovo le nuove preno
+        $data['preno'] = $preno = $this->agenda_model->find_by_id($preno_id);
+        $data['preno_new'] = $preno_new = $this->prezzi_disponibilita_model->prezzo_web($hotel_id, $preno_dal, $preno_al, $includi_prezzi = 0);
+
+        $data['importo'] = $this->new_iporto($preno, $preno_new);
+
+        $this->load->view('clienti_cambia_date', $data);
+    }
+
+    /**
+     * 
+     * @param type $preno
+     * @param type $preno_new
+     * @return type
+     */
+    function new_iporto($preno, $preno_new) {
+
+        $importo = $preno_new['sum_prezzo'][$preno->t1] * $preno->q1 +
+                $preno_new['sum_prezzo'][$preno->t2] * $preno->q2 +
+                $preno_new['sum_prezzo'][$preno->t3] * $preno->q3 +
+                $preno_new['sum_prezzo'][$preno->t4] * $preno->q4 +
+                $preno_new['sum_prezzo'][$preno->t5] * $preno->q5 +
+                $preno_new['sum_prezzo'][$preno->t6] * $preno->q6;
+
+        //  $today = $preno_dal ;
+        // $result =    $this->prezzi_disponibilita_model->prezzo_hotel($hotel_id, $today, $includi_prezzi = 1)  ;
+
+        return $importo;
+    }
+
 }
 ?>

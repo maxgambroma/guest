@@ -753,11 +753,14 @@ $totale_prezzo[$tipologia_id]   =  $this->prezzo_eventi($T1,$hotel_id, $today,  
         $hotel_numero_camere = $giorno['hotel_numero_camere'];
         $hotel_disp_modo = $giorno['hotel_disp_modo'];
 
-// totale soggiorno       
+// totale soggiorno   
+        $sum_prezzo[0] = 0;
+        
         foreach ($prezzo_giorno as $key => $value) {
             $sum_prezzo[$key] = array_sum($value);
         }
-
+             
+               
         $array_totale_risultati = array(
 // area prezzi
             'prezzo_giorno' => $prezzo_giorno,
@@ -785,7 +788,33 @@ $totale_prezzo[$tipologia_id]   =  $this->prezzo_eventi($T1,$hotel_id, $today,  
         return $array_totale_risultati;
     }
 
-    function somma_gg($OGGI, $gg) {
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    /**
+     * 
+     * @param type $preno_al
+     * @param type $preno_dal
+     * @return type
+     */
+    
+ 
+    
+    /**
+     * 
+     * @param type $OGGI
+     * @param type $gg
+     * @return type
+     */
+    
+  protected  function somma_gg($OGGI, $gg) {
         $appoggio = explode('-', $OGGI);
         $anno = $appoggio[0];
         $mese = $appoggio[1];

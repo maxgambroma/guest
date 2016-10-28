@@ -337,6 +337,7 @@
                     <a href="#" data-reveal-id="secondModal" class="radius button">Modifica</a>
                 </div>
             </div>
+            
             <!-- Reveal Modals begin -->
             <div id="secondModal" class="reveal-modal" data-reveal aria-labelledby="secondModalTitle" aria-hidden="true" role="dialog">
                 <h2 id="secondModalTitle">This is a modal.</h2>
@@ -359,14 +360,12 @@
                         </p>
                     </div>
                 </div>
-                <div id="new_preno">Pippo </div>
-                Cambia le date <br>
-                Stai per modificare le date della tua prenotazione<br>
-                Arrivo 	Partenza 	Prezzo<br>
-                Dati iniziali 	sab 5 nov 2016 	dom 6 nov 2016 	US$84,57<br>
-                Nuovi dati 	sab 19 nov 2016 	dom 20 nov 2016 	US$84,57<br>  </p>
-                <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+                <div id="new_preno"></div>
+                   <a class="close-reveal-modal" aria-label="Close">&#215;</a>
             </div>
+            
+            
+            
             <!-- Triggers the modals -->
             <!-- Cancella Preno -->
             <div id="firstModal" class="reveal-modal" data-reveal aria-labelledby="firstModalTitle" aria-hidden="true" role="dialog">
