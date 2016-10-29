@@ -522,5 +522,24 @@ class Agenda extends CI_Controller {
         return $importo;
     }
 
+        function pippo($preno, $preno_new) {
+
+        $importo = $preno_new['sum_prezzo'][$preno->t1] * $preno->q1 +
+                $preno_new['sum_prezzo'][$preno->t2] * $preno->q2 +
+                $preno_new['sum_prezzo'][$preno->t3] * $preno->q3 +
+                $preno_new['sum_prezzo'][$preno->t4] * $preno->q4 +
+                $preno_new['sum_prezzo'][$preno->t5] * $preno->q5 +
+                $preno_new['sum_prezzo'][$preno->t6] * $preno->q6;
+
+        //  $today = $preno_dal ;
+        // $result =    $this->prezzi_disponibilita_model->prezzo_hotel($hotel_id, $today, $includi_prezzi = 1)  ;
+
+        return $importo;
+    }
+
+    
+    
+    
+    
 }
 ?>
