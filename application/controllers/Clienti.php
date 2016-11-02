@@ -393,6 +393,7 @@ echo $this->email->print_debugger();
         $clienti_id = $this->uri->segment(4, 1);
         $preno_id = $this->uri->segment(5, 1);
         $data['rs_clienti'] = $cliente = $this->clienti_model->get_conto_cliente($conto_id, $clienti_id);
+        
         // trovo le caratteristiche della camare nelle lingue 
         $data['lg_tipologia'] = $this->agenda_model->tip_lg_preno($this->lg, $hotel_id);
         if ($data['rs_clienti']) {
@@ -443,6 +444,133 @@ echo $this->email->print_debugger();
         }
     }
 
+    
+    
+    
+    /**
+     * consente il cambio di date nelle prentoazione
+     */
+    
+    
+    
+     function edit_data_preno()
+            {	
+         
+         
+         
+        $data['lg'] = $this->lg;
+
+        $today = date('Y-m-d');
+        if ($this->input->get('hotel_id')) {
+            $hotel_id = $this->input->get('hotel_id');
+        } else {
+            $hotel_id = 1;
+        }
+        $data['today'] = $today = date('Y-m-d');
+        $data['hotel_id'] = $hotel_id;
+        $conto_id = $this->uri->segment(3, 1);
+        $clienti_id = $this->uri->segment(4, 1);
+        $preno_id = $this->uri->segment(5, 1);
+        $data['rs_clienti'] = $cliente = $this->clienti_model->get_conto_cliente($conto_id, $clienti_id);
+         
+         
+         
+         
+         
+         
+		$this->form_validation->set_rules('preno_id', 'lang:preno_id', 'trim|required');			
+		$this->form_validation->set_rules('preno_importo', 'lang:preno_importo', 'trim|required');			
+				
+		$this->form_validation->set_rules('preno_dal', 'lang:preno_dal', 'trim|required');			
+		$this->form_validation->set_rules('preno_al', 'lang:preno_al', 'trim|required');			
+		$this->form_validation->set_rules('preno_n_notti', 'lang:preno_n_notti', 'trim|required');			
+		$this->form_validation->set_rules('p1', 'lang:p1', 'trim|required');			
+		$this->form_validation->set_rules('p2', 'lang:p2', 'trim');			
+		$this->form_validation->set_rules('p3', 'lang:p3', 'trim');			
+		$this->form_validation->set_rules('p4', 'lang:p4', 'trim');			
+		$this->form_validation->set_rules('p5', 'lang:p5', 'trim');			
+		$this->form_validation->set_rules('p6', 'lang:p6', 'trim');	;				
+		$this->form_validation->set_rules('agenda_utente_id', 'lang:agenda_utente_id', 'trim');
+			
+		$this->form_validation->set_error_delimiters('<span class="error">', '</span><br /> ');
+	
+		if ($this->form_validation->run() == FALSE) // validation hasn't been passed
+		{
+                       
+                /** function find_by_id('preno_id')
+                * find preno_id
+                * @param $form_data - array
+                * @return object
+                */
+                
+//
+//                $preno_id = $this->input->get('preno_id') ; 
+//                $data['rs_agenda'] =   $this->agenda_model->find_by_id($preno_id);
+//
+//		// scegli il templete
+//		$temi = 'tem_bcb';
+//		// carica la vista del contenuto
+//		$vista = 'agenda_edit';
+//		// gestore templete
+//                
+//                $data['temp'] = array
+//                ('templete' => $temi, 
+//                'contenuto' => $vista, 
+//                'bar_1' => 'bar_1',
+//                'bar_2' => 'bar_2',
+//                'box_top' => 'box_top' );
+//                $this->load->view('templetes', $data);
+
+		//$this->load->view('agenda_edit');
+			
+		}
+		else // passed validation proceed to post success logic
+		{
+		 	// build array for the model
+			
+			$form_data = array(
+			     // 	'preno_id' => set_value('preno_id'),
+			      	'preno_importo' => set_value('preno_importo'),
+			      	'preno_impoto_mod' => set_value('preno_importo'),
+			      	'preno_dal' => set_value('preno_dal'),
+			      	'preno_al' => set_value('preno_al'),
+			      	'preno_n_notti' => set_value('preno_n_notti'),
+			      	'p1' => set_value('p1'),
+			      	'p2' => set_value('p2'),
+			      	'p3' => set_value('p3'),
+			      	'p4' => set_value('p4'),
+			      	'p5' => set_value('p5'),
+			      	'p6' => set_value('p6'),
+			    //  	'agenda_utente_id' => set_value('agenda_utente_id')
+                    );
+					
+			// run insert model to write data to db
+		
+		    $preno_id = set_value('preno_id');
+			
+
+			if ($this->agenda_model->update($preno_id, $form_data) == TRUE) // the information has therefore been successfully saved in the db
+			{
+				                                  
+                                redirect('clienti/bookings_edit/'. $conto_id.'/'. $clienti_id.'?lg='.$this->lg );
+			}
+			else
+			{
+                             redirect('clienti/bookings_edit/'. $conto_id.'/'.$clienti_id.'?lg='.$this->lg );	
+
+			}
+		}
+	}
+	
+    
+    
+    
+    
+    
+    
+    
+    
+    
     /**
      * latocliente,
      *  elenca tutti i rewiev del cliente

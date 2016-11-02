@@ -438,7 +438,7 @@ class Prezzi_disponibilita_model extends CI_Model {
         if ($this->tot_cam_occupate > 0) {
             (float) $tot_occ_percetuale_hotel = (float) $this->tot_cam_occupate / (float) $this->hotel_numero_camere;
 
-            return (float) $tot_occ_percetuale_hotel;
+            return round($tot_occ_percetuale_hotel, 4);    ;
         } else {
             return $tot_occ_percetuale_hotel = 0;
         }
@@ -718,6 +718,11 @@ $totale_prezzo[$tipologia_id]   =  $this->prezzo_eventi($T1,$hotel_id, $today,  
             $preno_al = $this->somma_gg($preno_dal, 1);
         }
 
+        
+      $notti =  $this->data_diff($preno_al, $preno_dal); 
+        
+        
+        
         $oggi = $preno_dal;
 // scorro le date per le array 
         while ($oggi < $preno_al) {
@@ -727,7 +732,7 @@ $totale_prezzo[$tipologia_id]   =  $this->prezzo_eventi($T1,$hotel_id, $today,  
 
 // array KW prezzi tipologia giorno 
             foreach ($giorno['prezzo_giorno'] as $key => $value) {
-                $prezzo_giorno[$key][$oggi] = $value;
+                $prezzo_giorno[$key][$oggi] =  round($value, 2);  ;
             }
 // array KW tableau_dett giornaliarei
             foreach ($giorno['tableau_dett'] as $key => $value) {
@@ -736,12 +741,12 @@ $totale_prezzo[$tipologia_id]   =  $this->prezzo_eventi($T1,$hotel_id, $today,  
 // array giorno
             $errore_booking[$oggi] = $giorno['errore_booking'];
             $tot_cam_opzione[$oggi] = $giorno['tot_cam_opzione'];
-            $tot_cam_in_arrivo[$oggi] = $giorno['errore_booking'];
-            $tot_cam_presenti[$oggi] = $giorno['errore_booking'];
-            $tot_cam_giorno[$oggi] = $giorno['errore_booking'];
-            $tot_cam_libere[$oggi] = $giorno['errore_booking'];
-            $style_colore[$oggi] = $giorno['errore_booking'];
-            $tot_occ_percetuale_hotel[$oggi] = $giorno['errore_booking'];
+            $tot_cam_in_arrivo[$oggi] = $giorno['tot_cam_in_arrivo'];      
+            $tot_cam_presenti[$oggi] = $giorno['tot_cam_presenti'];       
+            $tot_cam_giorno[$oggi] = $giorno['tot_cam_giorno'];           
+            $tot_cam_libere[$oggi] = $giorno['tot_cam_libere'];
+            $style_colore[$oggi] = $giorno['style_colore'];
+            $tot_occ_percetuale_hotel[$oggi] = $giorno['tot_occ_percetuale_hotel'];
 
 // incremento di un giorno loop
             $oggi = $this->somma_gg($oggi, 1);
@@ -757,14 +762,22 @@ $totale_prezzo[$tipologia_id]   =  $this->prezzo_eventi($T1,$hotel_id, $today,  
         $sum_prezzo[0] = 0;
         
         foreach ($prezzo_giorno as $key => $value) {
-            $sum_prezzo[$key] = array_sum($value);
+            $sum_prezzo[$key] = round(array_sum($value), 2);  ;
         }
              
+     // prezzo medio giornaliero
+        $avg_prezzo[0] = 0;
+                foreach ($prezzo_giorno as $key => $value) {
+            $avg_prezzo[$key] =  round(array_sum($value)/ count($value), 2);  ;
+        }
+             
+        
                
         $array_totale_risultati = array(
 // area prezzi
             'prezzo_giorno' => $prezzo_giorno,
             'sum_prezzo' => $sum_prezzo,
+            'avg_prezzo' => $avg_prezzo,
             'tableau_dett' => $tableau_dett,
             'nome_tipologia' => $nome_tipologia,
             'errore_booking' => $errore_booking,
@@ -773,7 +786,7 @@ $totale_prezzo[$tipologia_id]   =  $this->prezzo_eventi($T1,$hotel_id, $today,  
             'tot_cam_in_arrivo' => $tot_cam_in_arrivo,
             'tot_cam_presenti' => $tot_cam_presenti,
 // 'preno_gia_arrivati' => $preno_gia_arrivati,
-// 'tot_cam_giorno' => $tot_cam_occupate,
+            'tot_cam_giorno' => $tot_cam_giorno, 
             'tot_cam_libere' => $tot_cam_libere,
 //  'style_colore' => $style,
             'hotel_numero_camere' => $hotel_numero_camere,
@@ -783,6 +796,7 @@ $totale_prezzo[$tipologia_id]   =  $this->prezzo_eventi($T1,$hotel_id, $today,  
             'hotel_disp_modo' => $hotel_disp_modo, 
             'preno_dal' => $preno_dal,
             'preno_al' => $preno_al,
+            'notti' => $notti
         );
 
         return $array_totale_risultati;
