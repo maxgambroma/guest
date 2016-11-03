@@ -271,7 +271,7 @@ class Prezzi_disponibilita_model extends CI_Model {
     
         
     /**
-     * Tetemino le tipologie di camare prenotate 
+     * Detemino le tipologie di camare prenotate 
      * @param type $hotel_id
      * @param type $today
      * @param type $tipologia_id
@@ -301,6 +301,85 @@ class Prezzi_disponibilita_model extends CI_Model {
         return $return;
     }
 
+    
+       /**
+     * elenca tutte le camere vendibili sul web in una daterminta lingua
+     * solo camare reali serve per il nasting
+     * @param type $hotel_id
+     * @param type $agenzia_id
+     * @param type $lg
+     * @return type 
+     */
+    function camere_obmp($hotel_id, $tipologia_id = NULL, $agenzia_id = 279, $lg = 'en' ) {
+
+
+        if( $tipologia_id != NULL ){  
+        $filtro =    " obmp_cm_rooms.obmp_cm_rooms_tipologia_id = '$tipologia_id' AND " ;
+        }
+        else {
+        $filtro =  '';
+        }
+
+            $sql = "
+            SELECT
+              obmp_cm_rooms.obmp_cm_rooms_max_room,
+              obmp_cm.hotel_id,
+              obmp_cm.agenzia_id,
+              obmp_cm.obmp_cm_id_hotel_agenzia,
+              obmp_cm.obmp_cm_attiva,
+              obmp_cm_rooms.obmp_cm_rooms_id,
+              obmp_cm_rooms.obmp_cm_rooms_attiva,
+              obmp_cm_rooms.obmp_cm_rooms_tipologia_id,
+              obmp_cm_rooms.obmp_cm_rooms_room_var_prezzo,
+              obmp_cm_rooms.obmp_cm_rooms_room_min_prezzo,
+              obmp_cm_rooms.obmp_cm_rooms_trattamento,
+              obmp_cm_rooms.obmp_cm_rooms_max_pax,
+              obmp_cm_rooms.obmp_cm_rooms_room_note,
+              obmp_cm_lingue.obmp_cm_lingue_codice,
+              obmp_cm_lingue.obmp_cm_lingue_nome,
+              obmp_cm_lingue.obmp_cm_lingue_descrizione,
+              obmp_cm_lingue.obmp_cm_lingue_html1,
+              obmp_cm_lingue.obmp_cm_lingue_html2,
+              obmp_cm_lingue.obmp_cm_lingue_html3,
+              obmp_cm_lingue.obmp_cm_lingue_note,
+              obmp_cm_lingue.obmp_cm_lingue_politiche,
+              obmp_cm_lingue.obmp_cm_lingue_condizioni,
+              obmp_cm.obmp_cm_id,
+              obmp_cm_lingue.obmp_cm_lingue_id,
+              obmp_cm_rooms.obmp_cm_rooms_nesting,
+              obmp_cm_rooms.obmp_cm_rooms_foto,
+              obmp_cm_rooms.obmp_cm_rooms_foto270,
+              obmp_cm_rooms.obmp_cm_rooms_foto150,
+              obmp_cm_rooms.obmp_cm_rooms_foto700
+      FROM
+              obmp_cm_rooms
+              INNER JOIN obmp_cm
+               ON obmp_cm_rooms.obmp_cm_id = obmp_cm.obmp_cm_id
+              INNER JOIN obmp_cm_lingue
+               ON obmp_cm_rooms.obmp_cm_rooms_id = obmp_cm_lingue.obmp_cm_rooms_id
+            WHERE
+            obmp_cm.hotel_id = '$hotel_id' AND    
+         $filtro 
+            obmp_cm.agenzia_id = '$agenzia_id'  AND
+            obmp_cm_lingue.obmp_cm_lingue_codice = '$lg' AND  
+            obmp_cm_rooms.obmp_cm_rooms_nesting IS NOT NULL AND
+            obmp_cm_rooms.obmp_cm_rooms_max_room IS NOT NULL
+            ";
+            
+        $query = $this->db->query($sql);
+        $return = $query->result();
+        return $return;   
+            
+            
+            
+    }
+    
+    
+    
+    
+    
+    
+    
     /**
      * elenca le tipologie dell'hotel
      * @param type $hotel_id
@@ -511,8 +590,11 @@ class Prezzi_disponibilita_model extends CI_Model {
 
                 $tableau[$tipologia_id] = $appoggio[$tipologia_id]['0']->somma_tipologia;
   
-                
+// nesting                
 
+                
+            $nesting[$tipologia_id] =   $this->nesting_tipologia($hotel_id ,$tipologia_id, $tableau[$tipologia_id] );
+                
 
 // prezzo 
                 $result = $this->rs_prezzo($hotel_id, $today, $tipologia_id);
@@ -579,6 +661,7 @@ $totale_prezzo[$tipologia_id]   =  $this->prezzo_eventi($T1,$hotel_id, $today,  
                     // area prezzi
                      'prezzo_giorno' => $totale_prezzo,
                     'tableau_dett' => $tableau,
+                    'nesting' => $nesting,
                     'nome_tipologia' => $nome_tipologia,
                     'errore_booking' => $errore_booking,
                     // area disponibilita
@@ -738,6 +821,13 @@ $totale_prezzo[$tipologia_id]   =  $this->prezzo_eventi($T1,$hotel_id, $today,  
             foreach ($giorno['tableau_dett'] as $key => $value) {
                 $tableau_dett[$key][$oggi] = $value;
             }
+            
+ // array KW nesting giornaliarei
+            foreach ($giorno['nesting'] as $key => $value) {
+                $nesting[$key][$oggi] = $value;
+            }
+            
+            
 // array giorno
             $errore_booking[$oggi] = $giorno['errore_booking'];
             $tot_cam_opzione[$oggi] = $giorno['tot_cam_opzione'];
@@ -779,6 +869,7 @@ $totale_prezzo[$tipologia_id]   =  $this->prezzo_eventi($T1,$hotel_id, $today,  
             'sum_prezzo' => $sum_prezzo,
             'avg_prezzo' => $avg_prezzo,
             'tableau_dett' => $tableau_dett,
+            'nesting' => $nesting,
             'nome_tipologia' => $nome_tipologia,
             'errore_booking' => $errore_booking,
 // area disponibilita
@@ -803,73 +894,76 @@ $totale_prezzo[$tipologia_id]   =  $this->prezzo_eventi($T1,$hotel_id, $today,  
     }
 
     
-    /**
-     * elenca tutte le camere vendibili sul web in una daterminta lingua
-     * @param type $hotel_id
-     * @param type $agenzia_id
-     * @param type $lg
-     * @return type
-     */
+ 
+    
+
+      function nesting_tipologia($hotel_id , $nesting,  $tipologia_id, $tableau ) {
+          
+       $camare =  $this->camere_obmp($hotel_id, $tipologia_id );
+       
+              
+ 
+
+// singola 1 	Singola 
+if($tipologia_id == 1){
     
     
-        function camere_obmp($hotel_id, $agenzia_id = 279, $lg = 'en' ) {
+ $camere_richieste  =   $tableau[1] + $tableau[7] + $tableau[2] +$tableau[3] +$tableau[9] +$tableau[4] +$tableau[5] +$tableau[6] +$tableau[8] ;
+ 
+ if($camere_richieste <= $nesting ){}
+    
+    
+}
+//7 	Doppia Uso 
+if($tipologia_id == 7){
+    
+} 
+    
 
-            $sql = "
-            SELECT
-            obmp_cm_rooms.obmp_cm_rooms_max_room,
-            obmp_cm.hotel_id,
-            obmp_cm.agenzia_id,
-            obmp_cm.obmp_cm_id_hotel_agenzia,
-            obmp_cm.obmp_cm_attiva,
-            obmp_cm_rooms.obmp_cm_rooms_id,
-            obmp_cm_rooms.obmp_cm_rooms_attiva,
-            obmp_cm_rooms.obmp_cm_rooms_tipologia_id,
-            obmp_cm_rooms.obmp_cm_rooms_room_var_prezzo,
-            obmp_cm_rooms.obmp_cm_rooms_room_min_prezzo,
-            obmp_cm_rooms.obmp_cm_rooms_trattamento,
-            obmp_cm_rooms.obmp_cm_rooms_max_pax,
-            obmp_cm_rooms.obmp_cm_rooms_room_note,
-            obmp_cm_lingue.obmp_cm_lingue_codice,
-            obmp_cm_lingue.obmp_cm_lingue_nome,
-            obmp_cm_lingue.obmp_cm_lingue_descrizione,
-            obmp_cm_lingue.obmp_cm_lingue_html1,
-            obmp_cm_lingue.obmp_cm_lingue_html2,
-            obmp_cm_lingue.obmp_cm_lingue_html3,
-            obmp_cm_lingue.obmp_cm_lingue_note,
-            obmp_cm_lingue.obmp_cm_lingue_politiche,
-            obmp_cm_lingue.obmp_cm_lingue_condizioni
-            FROM
-            obmp_cm_rooms
-            INNER JOIN obmp_cm
-            ON obmp_cm_rooms.obmp_cm_id = obmp_cm.obmp_cm_id
-            INNER JOIN obmp_cm_lingue
-            ON obmp_cm_rooms.obmp_cm_rooms_id = obmp_cm_lingue.obmp_cm_rooms_id
-            WHERE
-            obmp_cm.hotel_id = '$hotel_id 	AND
-            obmp_cm.agenzia_id = '$agenzia_id' AND 
-            obmp_cm_lingue.obmp_cm_lingue_codice = '$lg'
-            ";
 
-        $query = $this->db->query($sql);
-        $return = $query->result();
-        return $return;   
-            
-            
-            
+//2 	Doppia
+if($tipologia_id == 2){
+    
+    
+} 
+
+//3 	Matrimoniale 
+if($tipologia_id == 3){
+    
+}
+
+//9 	Matri Balcone
+if($tipologia_id == 9){} 
+       
+
+//4 	Tripla 
+if($tipologia_id == 4){
+    
+} 
+
+//5 	Quadrupla 
+if($tipologia_id == 5){
+    
+} 
+
+//6 	Junior Suit 
+if($tipologia_id == 6){
+    
+} 
+
+
+
+//8 	Quintupla 
+if($tipologia_id == 8){
+    
+} 
+
+
+       
+        return ;
     }
     
     
-    
-    
-    
-    /**
-     * 
-     * @param type $preno_al
-     * @param type $preno_dal
-     * @return type
-     */
-    
- 
     
     /**
      * 
