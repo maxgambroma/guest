@@ -304,8 +304,9 @@ class Prezzi_disponibilita_model extends CI_Model {
     
        /**
      * elenca tutte le camere vendibili sul web in una daterminta lingua
-     * solo camare reali serve per il nasting
+     * solo su camare reali, serve per il nasting
      * @param type $hotel_id
+       @param type $tipologia_id
      * @param type $agenzia_id
      * @param type $lg
      * @return type 
@@ -370,15 +371,9 @@ class Prezzi_disponibilita_model extends CI_Model {
         $return = $query->result();
         return $return;   
             
-            
-            
     }
     
-    
-    
-    
-    
-    
+        
     
     /**
      * elenca le tipologie dell'hotel
@@ -573,6 +568,11 @@ class Prezzi_disponibilita_model extends CI_Model {
         $prezzo = array();
         $totale_prezzo = array();
 
+        
+        
+         $tableau[0] = 0;
+         $prezzo[0]= 0;
+        
         if ($includi_prezzi == 1) {
             foreach ($tipologia_camere as $key => $value) {
 
@@ -590,11 +590,7 @@ class Prezzi_disponibilita_model extends CI_Model {
 
                 $tableau[$tipologia_id] = $appoggio[$tipologia_id]['0']->somma_tipologia;
   
-// nesting                
 
-                
-            $nesting[$tipologia_id] =   $this->nesting_tipologia($hotel_id ,$tipologia_id, $tableau[$tipologia_id] );
-                
 
 // prezzo 
                 $result = $this->rs_prezzo($hotel_id, $today, $tipologia_id);
@@ -655,7 +651,17 @@ $totale_prezzo[$tipologia_id]   =  $this->prezzo_eventi($T1,$hotel_id, $today,  
                     $errore_booking = 1;
                 }
 
-// creo Ouput                
+
+            } //fine ciclo tipologia
+            
+            
+            
+     // nesting                
+
+            $nesting = $this->nesting_tipologia($hotel_id, $tableau,  $this->tot_cam_libere );
+            
+            
+            // creo Ouput                
 
                 $array_totale_risultati = array(
                     // area prezzi
@@ -678,7 +684,8 @@ $totale_prezzo[$tipologia_id]   =  $this->prezzo_eventi($T1,$hotel_id, $today,  
                     'hotel_tarif_cambia_gg' => $this->hotel_tarif_cambia_gg,
                     'hotel_disp_modo' => $this->hotel_disp_modo
                 );
-            }
+            
+            
         }
 // fine iserimento prezzi 
         else {
@@ -897,74 +904,94 @@ $totale_prezzo[$tipologia_id]   =  $this->prezzo_eventi($T1,$hotel_id, $today,  
  
     
 
-      function nesting_tipologia($hotel_id , $nesting,  $tipologia_id, $tableau ) {
-          
-       $camare =  $this->camere_obmp($hotel_id, $tipologia_id );
-       
-              
+    function nesting_tipologia($hotel_id, $tableau, $tot_cam_libere) {
+// print_r($tableau);
+// per tutte le tipologie
+        
+   // setto tutte le tipoloie a zero     
+$tab[1] = 0;
+$tab[2] = 0;
+$tab[3] = 0;
+$tab[4] = 0;
+$tab[5] = 0;
+$tab[6] = 0;
+$tab[7] = 0;
+$tab[8] = 0;
+$tab[9] = 0;
+$tab[10] = 0;
+$tab[11] = 0;
+
+
+// sovrascrivo
+ foreach ($tableau as $key => $value) {
+        
+     $tab[$key] =    $value ;
+ }
+      
  
-
-// singola 1 	Singola 
-if($tipologia_id == 1){
-    
-    
- $camere_richieste  =   $tableau[1] + $tableau[7] + $tableau[2] +$tableau[3] +$tableau[9] +$tableau[4] +$tableau[5] +$tableau[6] +$tableau[8] ;
  
- if($camere_richieste <= $nesting ){}
-    
-    
+ foreach ($tableau as $key => $value) {
+            $camere = $this->camere_obmp($hotel_id, $key);
+            foreach ($camere as $cam_value) {
+  
+//  [1] => Singola
+if ($key == 1) {
+$nesting[$key] = $cam_value->obmp_cm_rooms_nesting - $tab[$key] + $tab[1] + $tab[2] + $tab[3] + $tab[4] + $tab[5] +  $tab[7] + $tab[8] + $tab[9]   ;
 }
-//7 	Doppia Uso 
-if($tipologia_id == 7){
-    
-} 
-    
-
-
-//2 	Doppia
-if($tipologia_id == 2){
-    
-    
-} 
-
-//3 	Matrimoniale 
-if($tipologia_id == 3){
-    
+//  [7] => Doppia Uso
+if ($key == 7) {
+$nesting[$key] = $cam_value->obmp_cm_rooms_nesting - $tab[0] + $tab[1] + $tab[2] + $tab[3] + $tab[4] + $tab[5] +  $tab[7] + $tab[8] ;
 }
 
-//9 	Matri Balcone
-if($tipologia_id == 9){} 
-       
+// [2] => Doppia
+if ($key == 2) {
+$nesting[$key] = $cam_value->obmp_cm_rooms_nesting - $tab[0] + $tab[1] + $tab[2] + $tab[3] + $tab[4] + $tab[5]  + $tab[7] + $tab[8] ;
+}
 
-//4 	Tripla 
-if($tipologia_id == 4){
-    
-} 
+// [3] => Matrimoniale
+if ($key == 3) {
+$nesting[$key] = $cam_value->obmp_cm_rooms_nesting - $tab[0] + $tab[1] + $tab[2] + $tab[3] + $tab[4] + $tab[5] +  $tab[7] + $tab[8] ;
+}
 
-//5 	Quadrupla 
-if($tipologia_id == 5){
-    
-} 
-
-//6 	Junior Suit 
-if($tipologia_id == 6){
-    
-} 
+//   [4] => Tripla
+if ($key == 4) {
+$nesting[$key] = $cam_value->obmp_cm_rooms_nesting - $tab[0] +  $tab[4] + $tab[5]  + $tab[8] ;
+}
 
 
+//   [5] => Quadrupla
+if ($key == 5) {
+$nesting[$key] = $cam_value->obmp_cm_rooms_nesting - $tab[0] + $tab[5]  + $tab[8] ;
+}
 
-//8 	Quintupla 
-if($tipologia_id == 8){
-    
-} 
+//   [6] => Junior Suit
+if ($key == 6) {
+$nesting[$key] = $cam_value->obmp_cm_rooms_nesting - $tab[0] + $tab[5]  + $tab[8] ;
+}
 
 
-       
-        return ;
+//    [8] => Quintupla   
+if ($key == 8) {
+$nesting[$key] = $cam_value->obmp_cm_rooms_nesting - $tab[0] + $tab[5] + $tab[6] + $tab[8]  ;
+}
+
+//   [9] => Terrazzo   
+if ($key == 9) {
+$nesting[$key] = $cam_value->obmp_cm_rooms_nesting -  $tab[9];
+}
+
+if ($key == 0) {
+$nesting[$key] = $cam_value->obmp_cm_rooms_nesting - $tab[0] ;
+}
+
+                
+               //  $nesting[$key] = $cam_value->obmp_cm_rooms_nesting - $tab[$key] ;
+                
+            }
+        }
+        return $nesting;
     }
-    
-    
-    
+
     /**
      * 
      * @param type $OGGI

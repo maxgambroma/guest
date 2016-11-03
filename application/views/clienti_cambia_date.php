@@ -13,7 +13,7 @@
 
 	<?php // Change the css classes to suit your needs    
 	$attributes = array('class' => '', 'id' => '');
-        echo form_open(  base_url().'clienti/edit_data_preno/'.$rs_clienti[0]->conto_id .'/'. $rs_clienti[0]->clienti_id . '/'. $preno->preno_id . '?lg=en' , $attributes); ?>     
+        echo form_open(  base_url().'clienti/edit_data_preno' , $attributes); ?>     
 
 
 
