@@ -803,10 +803,60 @@ $totale_prezzo[$tipologia_id]   =  $this->prezzo_eventi($T1,$hotel_id, $today,  
     }
 
     
+    /**
+     * elenca tutte le camere vendibili sul web in una daterminta lingua
+     * @param type $hotel_id
+     * @param type $agenzia_id
+     * @param type $lg
+     * @return type
+     */
     
     
-    
-    
+        function camere_obmp($hotel_id, $agenzia_id = 279, $lg = 'en' ) {
+
+            $sql = "
+            SELECT
+            obmp_cm_rooms.obmp_cm_rooms_max_room,
+            obmp_cm.hotel_id,
+            obmp_cm.agenzia_id,
+            obmp_cm.obmp_cm_id_hotel_agenzia,
+            obmp_cm.obmp_cm_attiva,
+            obmp_cm_rooms.obmp_cm_rooms_id,
+            obmp_cm_rooms.obmp_cm_rooms_attiva,
+            obmp_cm_rooms.obmp_cm_rooms_tipologia_id,
+            obmp_cm_rooms.obmp_cm_rooms_room_var_prezzo,
+            obmp_cm_rooms.obmp_cm_rooms_room_min_prezzo,
+            obmp_cm_rooms.obmp_cm_rooms_trattamento,
+            obmp_cm_rooms.obmp_cm_rooms_max_pax,
+            obmp_cm_rooms.obmp_cm_rooms_room_note,
+            obmp_cm_lingue.obmp_cm_lingue_codice,
+            obmp_cm_lingue.obmp_cm_lingue_nome,
+            obmp_cm_lingue.obmp_cm_lingue_descrizione,
+            obmp_cm_lingue.obmp_cm_lingue_html1,
+            obmp_cm_lingue.obmp_cm_lingue_html2,
+            obmp_cm_lingue.obmp_cm_lingue_html3,
+            obmp_cm_lingue.obmp_cm_lingue_note,
+            obmp_cm_lingue.obmp_cm_lingue_politiche,
+            obmp_cm_lingue.obmp_cm_lingue_condizioni
+            FROM
+            obmp_cm_rooms
+            INNER JOIN obmp_cm
+            ON obmp_cm_rooms.obmp_cm_id = obmp_cm.obmp_cm_id
+            INNER JOIN obmp_cm_lingue
+            ON obmp_cm_rooms.obmp_cm_rooms_id = obmp_cm_lingue.obmp_cm_rooms_id
+            WHERE
+            obmp_cm.hotel_id = '$hotel_id 	AND
+            obmp_cm.agenzia_id = '$agenzia_id' AND 
+            obmp_cm_lingue.obmp_cm_lingue_codice = '$lg'
+            ";
+
+        $query = $this->db->query($sql);
+        $return = $query->result();
+        return $return;   
+            
+            
+            
+    }
     
     
     
