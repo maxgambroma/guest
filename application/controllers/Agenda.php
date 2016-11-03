@@ -527,7 +527,7 @@ class Agenda extends CI_Controller {
     function edit_data_preno()
             {	
          
-                  
+                  // max
          
 		$this->form_validation->set_rules('preno_id', 'lang:preno_id', 'trim|required');			
 		$this->form_validation->set_rules('preno_importo', 'lang:preno_importo', 'trim|required');			
