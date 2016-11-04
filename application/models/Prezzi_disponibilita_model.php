@@ -233,8 +233,7 @@ class Prezzi_disponibilita_model extends CI_Model {
         $return = $query->result();
         return $return;
     }
-    
-    
+
     /**
      * trovo il prezzo per l'evento 
      * da modificare con la data evento ora non iserita
@@ -244,8 +243,7 @@ class Prezzi_disponibilita_model extends CI_Model {
      * @param type $ref_event
      * @return type
      */
-    
-        public function  prezzo_eventi($T1,$hotel_id, $today, $ref_event ){
+    public function prezzo_eventi($T1, $hotel_id, $today, $ref_event) {
 
         $sql = "
          SELECT
@@ -268,8 +266,7 @@ class Prezzi_disponibilita_model extends CI_Model {
         $return = $query->result();
         return $return;
     }
-    
-        
+
     /**
      * Detemino le tipologie di camare prenotate 
      * @param type $hotel_id
@@ -301,27 +298,25 @@ class Prezzi_disponibilita_model extends CI_Model {
         return $return;
     }
 
-    
-       /**
+    /**
      * elenca tutte le camere vendibili sul web in una daterminta lingua
      * solo su camare reali, serve per il nasting
      * @param type $hotel_id
-       @param type $tipologia_id
+      @param type $tipologia_id
      * @param type $agenzia_id
      * @param type $lg
      * @return type 
      */
-    function camere_obmp($hotel_id, $tipologia_id = NULL, $agenzia_id = 279, $lg = 'en' ) {
+    function camere_obmp($hotel_id, $tipologia_id = NULL, $agenzia_id = 279, $lg = 'en') {
 
 
-        if( $tipologia_id != NULL ){  
-        $filtro =    " obmp_cm_rooms.obmp_cm_rooms_tipologia_id = '$tipologia_id' AND " ;
+        if ($tipologia_id != NULL) {
+            $filtro = " obmp_cm_rooms.obmp_cm_rooms_tipologia_id = '$tipologia_id' AND ";
+        } else {
+            $filtro = '';
         }
-        else {
-        $filtro =  '';
-        }
 
-            $sql = "
+        $sql = "
             SELECT
               obmp_cm_rooms.obmp_cm_rooms_max_room,
               obmp_cm.hotel_id,
@@ -366,15 +361,12 @@ class Prezzi_disponibilita_model extends CI_Model {
             obmp_cm_rooms.obmp_cm_rooms_nesting IS NOT NULL AND
             obmp_cm_rooms.obmp_cm_rooms_max_room IS NOT NULL
             ";
-            
+
         $query = $this->db->query($sql);
         $return = $query->result();
-        return $return;   
-            
+        return $return;
     }
-    
-        
-    
+
     /**
      * elenca le tipologie dell'hotel
      * @param type $hotel_id
@@ -512,7 +504,8 @@ class Prezzi_disponibilita_model extends CI_Model {
         if ($this->tot_cam_occupate > 0) {
             (float) $tot_occ_percetuale_hotel = (float) $this->tot_cam_occupate / (float) $this->hotel_numero_camere;
 
-            return round($tot_occ_percetuale_hotel, 4);    ;
+            return round($tot_occ_percetuale_hotel, 4);
+            ;
         } else {
             return $tot_occ_percetuale_hotel = 0;
         }
@@ -568,11 +561,11 @@ class Prezzi_disponibilita_model extends CI_Model {
         $prezzo = array();
         $totale_prezzo = array();
 
-        
-        
-         $tableau[0] = 0;
-         $prezzo[0]= 0;
-        
+
+
+        $tableau[0] = 0;
+        $prezzo[0] = 0;
+
         if ($includi_prezzi == 1) {
             foreach ($tipologia_camere as $key => $value) {
 
@@ -589,7 +582,7 @@ class Prezzi_disponibilita_model extends CI_Model {
 //                print_r($appoggio);
 
                 $tableau[$tipologia_id] = $appoggio[$tipologia_id]['0']->somma_tipologia;
-  
+
 
 
 // prezzo 
@@ -625,19 +618,17 @@ class Prezzi_disponibilita_model extends CI_Model {
 
 // cambio la tariffa se protetta
 
-                if ( ($this->diff_gg_preno <= $this->hotel_tarif_cambia_gg ) && ( $today >= $now )  ) {
+                if (($this->diff_gg_preno <= $this->hotel_tarif_cambia_gg ) && ( $today >= $now )) {
                     $totale_prezzo[$tipologia_id] = $this->rs_cambia_prezzo($hotel_id, $tipologia_id);
                 }
 
- // se è un evento metto il prezzo 
-                
-                if(!empty($ref_event) && isset($ref_event))
-{
-$totale_prezzo[$tipologia_id]   =  $this->prezzo_eventi($T1,$hotel_id, $today,  $ref_event ) ;
+                // se è un evento metto il prezzo 
 
-}
+                if (!empty($ref_event) && isset($ref_event)) {
+                    $totale_prezzo[$tipologia_id] = $this->prezzo_eventi($T1, $hotel_id, $today, $ref_event);
+                }
 
-              
+
 // setto l'errore
                 if ($totale_prezzo[$tipologia_id] > 1) {
                     $errore_booking = 0;
@@ -650,42 +641,35 @@ $totale_prezzo[$tipologia_id]   =  $this->prezzo_eventi($T1,$hotel_id, $today,  
                 } else {
                     $errore_booking = 1;
                 }
-
-
             } //fine ciclo tipologia
-            
-            
-            
-     // nesting                
+            // nesting                
 
-            $nesting = $this->nesting_tipologia($hotel_id, $tableau,  $this->tot_cam_libere );
-            
-            
+            $nesting = $this->nesting_tipologia($hotel_id, $tableau, $this->tot_cam_libere);
+
+
             // creo Ouput                
 
-                $array_totale_risultati = array(
-                    // area prezzi
-                     'prezzo_giorno' => $totale_prezzo,
-                    'tableau_dett' => $tableau,
-                    'nesting' => $nesting,
-                    'nome_tipologia' => $nome_tipologia,
-                    'errore_booking' => $errore_booking,
-                    // area disponibilita
-                    'tot_cam_opzione' => $this->tot_cam_in_opzione,
-                    'tot_cam_in_arrivo' => $this->tot_cam_in_arrivo,
-                    'tot_cam_presenti' => $this->tot_cam_presenti,
-                    'preno_gia_arrivati' => $this->preno_gia_arrivati,
-                    'tot_cam_giorno' => $this->tot_cam_occupate,
-                    'tot_cam_libere' => $this->tot_cam_libere,
-                    'style_colore' => $style,
-                    'hotel_numero_camere' => $this->hotel_numero_camere,
-                    'tot_occ_percetuale_hotel' => $this->tot_occ_percetuale_hotel,
-                    'diff_gg_preno' => $this->diff_gg_preno,
-                    'hotel_tarif_cambia_gg' => $this->hotel_tarif_cambia_gg,
-                    'hotel_disp_modo' => $this->hotel_disp_modo
-                );
-            
-            
+            $array_totale_risultati = array(
+                // area prezzi
+                'prezzo_giorno' => $totale_prezzo,
+                'tableau_dett' => $tableau,
+                'nesting' => $nesting,
+                'nome_tipologia' => $nome_tipologia,
+                'errore_booking' => $errore_booking,
+                // area disponibilita
+                'tot_cam_opzione' => $this->tot_cam_in_opzione,
+                'tot_cam_in_arrivo' => $this->tot_cam_in_arrivo,
+                'tot_cam_presenti' => $this->tot_cam_presenti,
+                'preno_gia_arrivati' => $this->preno_gia_arrivati,
+                'tot_cam_giorno' => $this->tot_cam_occupate,
+                'tot_cam_libere' => $this->tot_cam_libere,
+                'style_colore' => $style,
+                'hotel_numero_camere' => $this->hotel_numero_camere,
+                'tot_occ_percetuale_hotel' => $this->tot_occ_percetuale_hotel,
+                'diff_gg_preno' => $this->diff_gg_preno,
+                'hotel_tarif_cambia_gg' => $this->hotel_tarif_cambia_gg,
+                'hotel_disp_modo' => $this->hotel_disp_modo
+            );
         }
 // fine iserimento prezzi 
         else {
@@ -808,11 +792,11 @@ $totale_prezzo[$tipologia_id]   =  $this->prezzo_eventi($T1,$hotel_id, $today,  
             $preno_al = $this->somma_gg($preno_dal, 1);
         }
 
-        
-      $notti =  $this->data_diff($preno_al, $preno_dal); 
-        
-        
-        
+
+        $notti = $this->data_diff($preno_al, $preno_dal);
+
+
+
         $oggi = $preno_dal;
 // scorro le date per le array 
         while ($oggi < $preno_al) {
@@ -822,25 +806,26 @@ $totale_prezzo[$tipologia_id]   =  $this->prezzo_eventi($T1,$hotel_id, $today,  
 
 // array KW prezzi tipologia giorno 
             foreach ($giorno['prezzo_giorno'] as $key => $value) {
-                $prezzo_giorno[$key][$oggi] =  round($value, 2);  ;
+                $prezzo_giorno[$key][$oggi] = round($value, 2);
+                ;
             }
 // array KW tableau_dett giornaliarei
             foreach ($giorno['tableau_dett'] as $key => $value) {
                 $tableau_dett[$key][$oggi] = $value;
             }
-            
- // array KW nesting giornaliarei
+
+            // array KW nesting giornaliarei
             foreach ($giorno['nesting'] as $key => $value) {
                 $nesting[$key][$oggi] = $value;
             }
-            
-            
+
+
 // array giorno
             $errore_booking[$oggi] = $giorno['errore_booking'];
             $tot_cam_opzione[$oggi] = $giorno['tot_cam_opzione'];
-            $tot_cam_in_arrivo[$oggi] = $giorno['tot_cam_in_arrivo'];      
-            $tot_cam_presenti[$oggi] = $giorno['tot_cam_presenti'];       
-            $tot_cam_giorno[$oggi] = $giorno['tot_cam_giorno'];           
+            $tot_cam_in_arrivo[$oggi] = $giorno['tot_cam_in_arrivo'];
+            $tot_cam_presenti[$oggi] = $giorno['tot_cam_presenti'];
+            $tot_cam_giorno[$oggi] = $giorno['tot_cam_giorno'];
             $tot_cam_libere[$oggi] = $giorno['tot_cam_libere'];
             $style_colore[$oggi] = $giorno['style_colore'];
             $tot_occ_percetuale_hotel[$oggi] = $giorno['tot_occ_percetuale_hotel'];
@@ -857,19 +842,21 @@ $totale_prezzo[$tipologia_id]   =  $this->prezzo_eventi($T1,$hotel_id, $today,  
 
 // totale soggiorno   
         $sum_prezzo[0] = 0;
-        
+
         foreach ($prezzo_giorno as $key => $value) {
-            $sum_prezzo[$key] = round(array_sum($value), 2);  ;
+            $sum_prezzo[$key] = round(array_sum($value), 2);
+            ;
         }
-             
-     // prezzo medio giornaliero
+
+        // prezzo medio giornaliero
         $avg_prezzo[0] = 0;
-                foreach ($prezzo_giorno as $key => $value) {
-            $avg_prezzo[$key] =  round(array_sum($value)/ count($value), 2);  ;
+        foreach ($prezzo_giorno as $key => $value) {
+            $avg_prezzo[$key] = round(array_sum($value) / count($value), 2);
+            ;
         }
-             
-        
-               
+
+
+
         $array_totale_risultati = array(
 // area prezzi
             'prezzo_giorno' => $prezzo_giorno,
@@ -884,14 +871,14 @@ $totale_prezzo[$tipologia_id]   =  $this->prezzo_eventi($T1,$hotel_id, $today,  
             'tot_cam_in_arrivo' => $tot_cam_in_arrivo,
             'tot_cam_presenti' => $tot_cam_presenti,
 // 'preno_gia_arrivati' => $preno_gia_arrivati,
-            'tot_cam_giorno' => $tot_cam_giorno, 
+            'tot_cam_giorno' => $tot_cam_giorno,
             'tot_cam_libere' => $tot_cam_libere,
 //  'style_colore' => $style,
             'hotel_numero_camere' => $hotel_numero_camere,
             'tot_occ_percetuale_hotel' => $tot_occ_percetuale_hotel,
             'diff_gg_preno' => $diff_gg_preno,
             'hotel_tarif_cambia_gg' => $hotel_tarif_cambia_gg,
-            'hotel_disp_modo' => $hotel_disp_modo, 
+            'hotel_disp_modo' => $hotel_disp_modo,
             'preno_dal' => $preno_dal,
             'preno_al' => $preno_al,
             'notti' => $notti
@@ -900,96 +887,310 @@ $totale_prezzo[$tipologia_id]   =  $this->prezzo_eventi($T1,$hotel_id, $today,  
         return $array_totale_risultati;
     }
 
-    
- 
-    
-
     function nesting_tipologia($hotel_id, $tableau, $tot_cam_libere) {
 // print_r($tableau);
 // per tutte le tipologie
-        
-   // setto tutte le tipoloie a zero     
-$tab[1] = 0;
-$tab[2] = 0;
-$tab[3] = 0;
-$tab[4] = 0;
-$tab[5] = 0;
-$tab[6] = 0;
-$tab[7] = 0;
-$tab[8] = 0;
-$tab[9] = 0;
-$tab[10] = 0;
-$tab[11] = 0;
-
+        // setto tutte le tipoloie a zero     
+        $tab[1] = 0;
+        $tab[2] = 0;
+        $tab[3] = 0;
+        $tab[4] = 0;
+        $tab[5] = 0;
+        $tab[6] = 0;
+        $tab[7] = 0;
+        $tab[8] = 0;
+        $tab[9] = 0;
+        $tab[10] = 0;
+        $tab[11] = 0;
+        //print_r($tableau);
 
 // sovrascrivo
- foreach ($tableau as $key => $value) {
-        
-     $tab[$key] =    $value ;
- }
-      
- 
- 
- foreach ($tableau as $key => $value) {
-            $camere = $this->camere_obmp($hotel_id, $key);
-            foreach ($camere as $cam_value) {
+        foreach ($tableau as $key => $value) {
+            $tab[$key] = $value;
+        }
+
+
+
+        foreach ($tableau as $key => $value) {
+            
+            
+            /// preoteggo dalle tipologia 0
+            if ($key != 0) {
+                $camere = $this->camere_obmp($hotel_id, $key);
   
+
+
+
+            foreach ($camere as $cam_value) {
+
 //  [1] => Singola
-if ($key == 1) {
-$nesting[$key] = $cam_value->obmp_cm_rooms_nesting - $tab[$key] + $tab[1] + $tab[2] + $tab[3] + $tab[4] + $tab[5] +  $tab[7] + $tab[8] + $tab[9]   ;
-}
+                if ($key == 1) {
+                    $nesting[$key] = (float)$cam_value->obmp_cm_rooms_nesting  -( (float)$tab[0] + ( (float)$tab[1] + (float)$tab[7]) + ((float)$tab[3] + (float)$tab[2] + (float)$tab[9] + (float)$tab[6] ) + ((float)$tab[4]) + ((float)$tab[5]) + ((float)$tab[8]) );
+
+                    // ho diaponibilita generale
+                    if ($tot_cam_libere > 0) {
+                    // ho disponibuiluta sulla tipologia    
+                        if ($nesting[$key] > 0) {
+                    // controllo il max rooms
+                            if ($nesting[$key] < (float)$cam_value->obmp_cm_rooms_max_room) {
+                                $rooms_nesting[$key] = $nesting[$key];
+                            } else {
+                      // limito la disponibilità
+                                $rooms_nesting[$key] = (float)$cam_value->obmp_cm_rooms_max_room;
+                            }
+                        } else {
+//ho disponibilita ma tipologia terminata
+                            $rooms_nesting[$key] = 0;
+                        }
+                    }
+// fine disponibilita sui tipologie
+                    else {
+// non ho disponibilità
+                        $rooms_nesting[$key] = 0;
+                    }
+                }
 //  [7] => Doppia Uso
-if ($key == 7) {
-$nesting[$key] = $cam_value->obmp_cm_rooms_nesting - $tab[0] + $tab[1] + $tab[2] + $tab[3] + $tab[4] + $tab[5] +  $tab[7] + $tab[8] ;
-}
+                if ($key == 7) {
+                    $nesting[$key] = (float)$cam_value->obmp_cm_rooms_nesting - (( (float)$tab[0] + (float)$tab[7]) + ((float)$tab[3] + (float)$tab[2] + (float)$tab[9] + (float)$tab[6] ) + ( (float)$tab[4]) + ((float)$tab[5]) + ((float)$tab[8]));
+
+// ho diaponibilita generale
+                    if ($tot_cam_libere > 0) {
+// ho disponibuiluta sulla tipologia    
+                        if ($nesting[$key] > 0) {
+// controllo il max rooms
+                            if ($nesting[$key] < (float)$cam_value->obmp_cm_rooms_max_room) {
+                                $rooms_nesting[$key] = $nesting[$key];
+                            } else {
+// limito la disponibilità
+                                $rooms_nesting[$key] = (float)$cam_value->obmp_cm_rooms_max_room;
+                            }
+                        } else {
+//ho disponibilita ma tipologia terminata
+                            $rooms_nesting[$key] = 0;
+                        }
+                    }
+// fine disponibilita sui tipologie
+                    else {
+// non ho disponibilità
+                        $rooms_nesting[$key] = 0;
+                    }
+                }
 
 // [2] => Doppia
-if ($key == 2) {
-$nesting[$key] = $cam_value->obmp_cm_rooms_nesting - $tab[0] + $tab[1] + $tab[2] + $tab[3] + $tab[4] + $tab[5]  + $tab[7] + $tab[8] ;
-}
+                if ($key == 2) {
+                    $nesting[$key] = (float)$cam_value->obmp_cm_rooms_nesting - (( (float)$tab[0] ) + ((float)$tab[3] + (float)$tab[2] + (float)$tab[9] + (float)$tab[6] ) + (float)($tab[4]) + (float)($tab[5]) + (float)($tab[8]));
+
+
+// ho diaponibilita generale
+                    if ($tot_cam_libere > 0) {
+// ho disponibuiluta sulla tipologia    
+                        if ($nesting[$key] > 0) {
+// controllo il max rooms
+                            if ($nesting[$key] < (float)$cam_value->obmp_cm_rooms_max_room) {
+                                $rooms_nesting[$key] = $nesting[$key];
+                            } else {
+// limito la disponibilità
+                                $rooms_nesting[$key] = (float)$cam_value->obmp_cm_rooms_max_room;
+                            }
+                        } else {
+//ho disponibilita ma tipologia terminata
+                            $rooms_nesting[$key] = 0;
+                        }
+                    }
+// fine disponibilita sui tipologie
+                    else {
+// non ho disponibilità
+                        $rooms_nesting[$key] = 0;
+                    }
+                }
 
 // [3] => Matrimoniale
-if ($key == 3) {
-$nesting[$key] = $cam_value->obmp_cm_rooms_nesting - $tab[0] + $tab[1] + $tab[2] + $tab[3] + $tab[4] + $tab[5] +  $tab[7] + $tab[8] ;
-}
+                if ($key == 3) {
+                    $nesting[$key] = (float)$cam_value->obmp_cm_rooms_nesting - (( (float)$tab[0] ) + ( (float)$tab[3] + (float)$tab[2] + (float)$tab[9] + (float)$tab[6] ) + ((float)$tab[4]) + ((float)$tab[5]) + ((float)$tab[8]));
+                    ;
+
+// ho diaponibilita generale
+                    if ($tot_cam_libere > 0) {
+// ho disponibuiluta sulla tipologia    
+                        if ($nesting[$key] > 0) {
+// controllo il max rooms
+                            if ($nesting[$key] < (float)$cam_value->obmp_cm_rooms_max_room) {
+                                $rooms_nesting[$key] = $nesting[$key];
+                            } else {
+// limito la disponibilità
+                                $rooms_nesting[$key] = (float)$cam_value->obmp_cm_rooms_max_room;
+                            }
+                        } else {
+//ho disponibilita ma tipologia terminata
+                            $rooms_nesting[$key] = 0;
+                        }
+                    }
+// fine disponibilita sui tipologie
+                    else {
+// non ho disponibilità
+                        $rooms_nesting[$key] = 0;
+                    }
+                }
 
 //   [4] => Tripla
-if ($key == 4) {
-$nesting[$key] = $cam_value->obmp_cm_rooms_nesting - $tab[0] +  $tab[4] + $tab[5]  + $tab[8] ;
-}
+                if ($key == 4) {
+                    $nesting[$key] = (float)$cam_value->obmp_cm_rooms_nesting - (( (float)$tab[0] ) + ( (float)$tab[6] ) + ((float)$tab[4]) + ((float)$tab[5]) + ((float)$tab[8]));
+                    ;
 
+// ho diaponibilita generale
+                    if ($tot_cam_libere > 0) {
+// ho disponibuiluta sulla tipologia    
+                        if ($nesting[$key] > 0) {
+// controllo il max rooms
+                            if ($nesting[$key] < (float)$cam_value->obmp_cm_rooms_max_room) {
+                                $rooms_nesting[$key] = $nesting[$key];
+                            } else {
+// limito la disponibilità
+                                $rooms_nesting[$key] = (float)$cam_value->obmp_cm_rooms_max_room;
+                            }
+                        } else {
+//ho disponibilita ma tipologia terminata
+                            $rooms_nesting[$key] = 0;
+                        }
+                    }
+// fine disponibilita sui tipologie
+                    else {
+// non ho disponibilità
+                        $rooms_nesting[$key] = 0;
+                    }
+                }
 
+//
 //   [5] => Quadrupla
-if ($key == 5) {
-$nesting[$key] = $cam_value->obmp_cm_rooms_nesting - $tab[0] + $tab[5]  + $tab[8] ;
-}
+                
+                
+                        
+                if ($key == 5) {
+                 $nesting[$key] = (float)$cam_value->obmp_cm_rooms_nesting - (( (float)$tab[0] ) + ( (float)$tab[6] ) + ((float)$tab[5]) + ((float)$tab[8]));
+
+      
+//                    echo $cam_value->obmp_cm_rooms_nesting == 6 ;
+                    
+// ho diaponibilita generale
+                    if ($tot_cam_libere > 0) {
+// ho disponibuiluta sulla tipologia    
+                        if ($nesting[$key] > 0) {
+// controllo il max rooms
+                            if ($nesting[$key] < (float)$cam_value->obmp_cm_rooms_max_room) {
+                                $rooms_nesting[$key] = $nesting[$key];
+                            } else {
+// limito la disponibilità
+                                $rooms_nesting[$key] = (float)$cam_value->obmp_cm_rooms_max_room;
+                            }
+                        } else {
+//ho disponibilita ma tipologia terminata
+                            $rooms_nesting[$key] = 0;
+                        }
+                    }
+// fine disponibilita sui tipologie
+                    else {
+// non ho disponibilità
+                        $rooms_nesting[$key] = 0;
+                    }
+                }
 
 //   [6] => Junior Suit
-if ($key == 6) {
-$nesting[$key] = $cam_value->obmp_cm_rooms_nesting - $tab[0] + $tab[5]  + $tab[8] ;
-}
+                if ($key == 6) {
+                    $nesting[$key] = (float)$cam_value->obmp_cm_rooms_nesting - (( (float)$tab[0] ) + ( (float)$tab[6] ) + ((float)$tab[5]) + ((float)$tab[8]));
+
+
+// ho diaponibilita generale
+                    if ($tot_cam_libere > 0) {
+// ho disponibuiluta sulla tipologia    
+                        if ($nesting[$key] > 0) {
+// controllo il max rooms
+                            if ($nesting[$key] < (float)$cam_value->obmp_cm_rooms_max_room) {
+                                $rooms_nesting[$key] = $nesting[$key];
+                            } else {
+// limito la disponibilità
+                                $rooms_nesting[$key] = (float)$cam_value->obmp_cm_rooms_max_room;
+                            }
+                        } else {
+//ho disponibilita ma tipologia terminata
+                            $rooms_nesting[$key] = 0;
+                        }
+                    }
+// fine disponibilita sui tipologie
+                    else {
+// non ho disponibilità
+                        $rooms_nesting[$key] = 0;
+                    }
+                }
 
 
 //    [8] => Quintupla   
-if ($key == 8) {
-$nesting[$key] = $cam_value->obmp_cm_rooms_nesting - $tab[0] + $tab[5] + $tab[6] + $tab[8]  ;
-}
+                if ($key == 8) {
+                    $nesting[$key] = (float)$cam_value->obmp_cm_rooms_nesting - (( (float)$tab[0] ) + ( (float)$tab[6] ) + ((float)$tab[5]) + ((float)$tab[8]));
+
+// ho diaponibilita generale
+                    if ($tot_cam_libere > 0) {
+// ho disponibuiluta sulla tipologia    
+                        if ($nesting[$key] > 0) {
+// controllo il max rooms
+                            if ($nesting[$key] < (float)$cam_value->obmp_cm_rooms_max_room) {
+                                $rooms_nesting[$key] = $nesting[$key];
+                            } else {
+// limito la disponibilità
+                                $rooms_nesting[$key] = (float)$cam_value->obmp_cm_rooms_max_room;
+                            }
+                        } else {
+//ho disponibilita ma tipologia terminata
+                            $rooms_nesting[$key] = 0;
+                        }
+                    }
+// fine disponibilita sui tipologie
+                    else {
+// non ho disponibilità
+                        $rooms_nesting[$key] = 0;
+                    }
+                }
 
 //   [9] => Terrazzo   
-if ($key == 9) {
-$nesting[$key] = $cam_value->obmp_cm_rooms_nesting -  $tab[9];
-}
+                if ($key == 9) {
+                    $nesting[$key] = (float)$cam_value->obmp_cm_rooms_nesting - ((float)$tab[0] + (float)$tab[9] );
 
-if ($key == 0) {
-$nesting[$key] = $cam_value->obmp_cm_rooms_nesting - $tab[0] ;
-}
 
-                
-               //  $nesting[$key] = $cam_value->obmp_cm_rooms_nesting - $tab[$key] ;
-                
+// ho diaponibilita generale
+                    if ($tot_cam_libere > 0) {
+// ho disponibuiluta sulla tipologia    
+                        if ($nesting[$key] > 0) {
+// controllo il max rooms
+                            if ($nesting[$key] < (float)$cam_value->obmp_cm_rooms_max_room) {
+                                $rooms_nesting[$key] = $nesting[$key];
+                            } else {
+// limito la disponibilità
+                                $rooms_nesting[$key] = (float)$cam_value->obmp_cm_rooms_max_room;
+                            }
+                        } else {
+//ho disponibilita ma tipologia terminata
+                            $rooms_nesting[$key] = 0;
+                        }
+                    }
+// fine disponibilita sui tipologie
+                    else {
+// non ho disponibilità
+                        $rooms_nesting[$key] = 0;
+                    }
+                }
+
+                if ($key == 0) {
+                    $nesting[$key] = 0;
+                }
+
+
+                //  $nesting[$key] = $cam_value->obmp_cm_rooms_nesting - $tab[$key] ;
+            }
             }
         }
-        return $nesting;
+        
+             // return $nesting;
+        
+        return $rooms_nesting;
     }
 
     /**
@@ -998,8 +1199,7 @@ $nesting[$key] = $cam_value->obmp_cm_rooms_nesting - $tab[0] ;
      * @param type $gg
      * @return type
      */
-    
-  protected  function somma_gg($OGGI, $gg) {
+    protected function somma_gg($OGGI, $gg) {
         $appoggio = explode('-', $OGGI);
         $anno = $appoggio[0];
         $mese = $appoggio[1];
