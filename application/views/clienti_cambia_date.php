@@ -33,6 +33,7 @@
                         <th>Partenza</th>
                         <th>Prezzo</th>
                          <th>Notti</th>
+                          <th>Note</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -42,6 +43,7 @@
                         <td><?php echo $preno->preno_al; ?></td>
                         <td><?php echo $preno->preno_importo; ?></td>
                          <td><?php echo $preno->preno_n_notti; ?></td>
+                          <td></td>
                     </tr>
                     <tr>
                         <td>Nuove date</td>
@@ -49,6 +51,7 @@
                         <td><?php echo $preno_new['preno_al']; ?> </td>
                         <td> <?php echo $importo; ?> </td>
                         <td><?php echo $preno_new['notti']; ?> </td>
+                        <td><?php echo max($disponibilita); ?> </td>
                     </tr>
                 </tbody>
             </table>
