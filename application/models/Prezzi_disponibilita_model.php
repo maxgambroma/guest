@@ -792,11 +792,7 @@ class Prezzi_disponibilita_model extends CI_Model {
             $preno_al = $this->somma_gg($preno_dal, 1);
         }
 
-
         $notti = $this->data_diff($preno_al, $preno_dal);
-
-
-
         $oggi = $preno_dal;
 // scorro le date per le array 
         while ($oggi < $preno_al) {
@@ -807,18 +803,16 @@ class Prezzi_disponibilita_model extends CI_Model {
 // array KW prezzi tipologia giorno 
             foreach ($giorno['prezzo_giorno'] as $key => $value) {
                 $prezzo_giorno[$key][$oggi] = round($value, 2);
-                ;
             }
 // array KW tableau_dett giornaliarei
             foreach ($giorno['tableau_dett'] as $key => $value) {
                 $tableau_dett[$key][$oggi] = $value;
             }
 
-            // array KW nesting giornaliarei
+// array KW nesting giornaliarei
             foreach ($giorno['nesting'] as $key => $value) {
                 $nesting[$key][$oggi] = $value;
             }
-
 
 // array giorno
             $errore_booking[$oggi] = $giorno['errore_booking'];
@@ -845,17 +839,13 @@ class Prezzi_disponibilita_model extends CI_Model {
 
         foreach ($prezzo_giorno as $key => $value) {
             $sum_prezzo[$key] = round(array_sum($value), 2);
-            ;
         }
 
-        // prezzo medio giornaliero
+// prezzo medio giornaliero
         $avg_prezzo[0] = 0;
         foreach ($prezzo_giorno as $key => $value) {
             $avg_prezzo[$key] = round(array_sum($value) / count($value), 2);
-            ;
         }
-
-
 
         $array_totale_risultati = array(
 // area prezzi
@@ -890,7 +880,7 @@ class Prezzi_disponibilita_model extends CI_Model {
     function nesting_tipologia($hotel_id, $tableau, $tot_cam_libere) {
 // print_r($tableau);
 // per tutte le tipologie
-        // setto tutte le tipoloie a zero     
+// setto tutte le tipoloie a zero     
         $tab[1] = 0;
         $tab[2] = 0;
         $tab[3] = 0;
@@ -902,294 +892,266 @@ class Prezzi_disponibilita_model extends CI_Model {
         $tab[9] = 0;
         $tab[10] = 0;
         $tab[11] = 0;
-        //print_r($tableau);
-
+//print_r($tableau);
 // sovrascrivo
         foreach ($tableau as $key => $value) {
             $tab[$key] = $value;
         }
 
-
-
         foreach ($tableau as $key => $value) {
-            
-            
-            /// preoteggo dalle tipologia 0
+
+// preoteggo dalle tipologia 0
             if ($key != 0) {
                 $camere = $this->camere_obmp($hotel_id, $key);
-  
 
-
-
-            foreach ($camere as $cam_value) {
+                foreach ($camere as $cam_value) {
 
 //  [1] => Singola
-                if ($key == 1) {
-                    $nesting[$key] = (float)$cam_value->obmp_cm_rooms_nesting  -( (float)$tab[0] + ( (float)$tab[1] + (float)$tab[7]) + ((float)$tab[3] + (float)$tab[2] + (float)$tab[9] + (float)$tab[6] ) + ((float)$tab[4]) + ((float)$tab[5]) + ((float)$tab[8]) );
-
-                    // ho diaponibilita generale
-                    if ($tot_cam_libere > 0) {
-                    // ho disponibuiluta sulla tipologia    
-                        if ($nesting[$key] > 0) {
-                    // controllo il max rooms
-                            if ($nesting[$key] < (float)$cam_value->obmp_cm_rooms_max_room) {
-                                $rooms_nesting[$key] = $nesting[$key];
-                            } else {
-                      // limito la disponibilità
-                                $rooms_nesting[$key] = (float)$cam_value->obmp_cm_rooms_max_room;
-                            }
-                        } else {
-//ho disponibilita ma tipologia terminata
-                            $rooms_nesting[$key] = 0;
-                        }
-                    }
-// fine disponibilita sui tipologie
-                    else {
-// non ho disponibilità
-                        $rooms_nesting[$key] = 0;
-                    }
-                }
-//  [7] => Doppia Uso
-                if ($key == 7) {
-                    $nesting[$key] = (float)$cam_value->obmp_cm_rooms_nesting - (( (float)$tab[0] + (float)$tab[7]) + ((float)$tab[3] + (float)$tab[2] + (float)$tab[9] + (float)$tab[6] ) + ( (float)$tab[4]) + ((float)$tab[5]) + ((float)$tab[8]));
+                    if ($key == 1) {
+                        $nesting[$key] = (float) $cam_value->obmp_cm_rooms_nesting - ( (float) $tab[0] + ( (float) $tab[1] + (float) $tab[7]) + ((float) $tab[3] + (float) $tab[2] + (float) $tab[9] + (float) $tab[6] ) + ((float) $tab[4]) + ((float) $tab[5]) + ((float) $tab[8]) );
 
 // ho diaponibilita generale
-                    if ($tot_cam_libere > 0) {
+                        if ($tot_cam_libere > 0) {
 // ho disponibuiluta sulla tipologia    
-                        if ($nesting[$key] > 0) {
+                            if ($nesting[$key] > 0) {
 // controllo il max rooms
-                            if ($nesting[$key] < (float)$cam_value->obmp_cm_rooms_max_room) {
-                                $rooms_nesting[$key] = $nesting[$key];
-                            } else {
+                                if ($nesting[$key] < (float) $cam_value->obmp_cm_rooms_max_room) {
+                                    $rooms_nesting[$key] = $nesting[$key];
+                                } else {
 // limito la disponibilità
-                                $rooms_nesting[$key] = (float)$cam_value->obmp_cm_rooms_max_room;
-                            }
-                        } else {
+                                    $rooms_nesting[$key] = (float) $cam_value->obmp_cm_rooms_max_room;
+                                }
+                            } else {
 //ho disponibilita ma tipologia terminata
+                                $rooms_nesting[$key] = 0;
+                            }
+                        }
+// fine disponibilita sui tipologie
+                        else {
+// non ho disponibilità
                             $rooms_nesting[$key] = 0;
                         }
                     }
+
+//  [7] => Doppia Uso
+                    if ($key == 7) {
+                        $nesting[$key] = (float) $cam_value->obmp_cm_rooms_nesting - (( (float) $tab[0] + (float) $tab[7]) + ((float) $tab[3] + (float) $tab[2] + (float) $tab[9] + (float) $tab[6] ) + ( (float) $tab[4]) + ((float) $tab[5]) + ((float) $tab[8]));
+// ho diaponibilita generale
+                        if ($tot_cam_libere > 0) {
+// ho disponibuiluta sulla tipologia    
+                            if ($nesting[$key] > 0) {
+// controllo il max rooms
+                                if ($nesting[$key] < (float) $cam_value->obmp_cm_rooms_max_room) {
+                                    $rooms_nesting[$key] = $nesting[$key];
+                                } else {
+// limito la disponibilità
+                                    $rooms_nesting[$key] = (float) $cam_value->obmp_cm_rooms_max_room;
+                                }
+                            } else {
+//ho disponibilita ma tipologia terminata
+                                $rooms_nesting[$key] = 0;
+                            }
+                        }
 // fine disponibilita sui tipologie
-                    else {
+                        else {
 // non ho disponibilità
-                        $rooms_nesting[$key] = 0;
+                            $rooms_nesting[$key] = 0;
+                        }
                     }
-                }
 
 // [2] => Doppia
-                if ($key == 2) {
-                    $nesting[$key] = (float)$cam_value->obmp_cm_rooms_nesting - (( (float)$tab[0] ) + ((float)$tab[3] + (float)$tab[2] + (float)$tab[9] + (float)$tab[6] ) + (float)($tab[4]) + (float)($tab[5]) + (float)($tab[8]));
-
-
+                    if ($key == 2) {
+                        $nesting[$key] = (float) $cam_value->obmp_cm_rooms_nesting - (( (float) $tab[0] ) + ((float) $tab[3] + (float) $tab[2] + (float) $tab[9] + (float) $tab[6] ) + (float) ($tab[4]) + (float) ($tab[5]) + (float) ($tab[8]));
 // ho diaponibilita generale
-                    if ($tot_cam_libere > 0) {
+                        if ($tot_cam_libere > 0) {
 // ho disponibuiluta sulla tipologia    
-                        if ($nesting[$key] > 0) {
+                            if ($nesting[$key] > 0) {
 // controllo il max rooms
-                            if ($nesting[$key] < (float)$cam_value->obmp_cm_rooms_max_room) {
-                                $rooms_nesting[$key] = $nesting[$key];
-                            } else {
+                                if ($nesting[$key] < (float) $cam_value->obmp_cm_rooms_max_room) {
+                                    $rooms_nesting[$key] = $nesting[$key];
+                                } else {
 // limito la disponibilità
-                                $rooms_nesting[$key] = (float)$cam_value->obmp_cm_rooms_max_room;
-                            }
-                        } else {
+                                    $rooms_nesting[$key] = (float) $cam_value->obmp_cm_rooms_max_room;
+                                }
+                            } else {
 //ho disponibilita ma tipologia terminata
+                                $rooms_nesting[$key] = 0;
+                            }
+                        }
+// fine disponibilita sui tipologie
+                        else {
+// non ho disponibilità
                             $rooms_nesting[$key] = 0;
                         }
                     }
-// fine disponibilita sui tipologie
-                    else {
-// non ho disponibilità
-                        $rooms_nesting[$key] = 0;
-                    }
-                }
 
 // [3] => Matrimoniale
-                if ($key == 3) {
-                    $nesting[$key] = (float)$cam_value->obmp_cm_rooms_nesting - (( (float)$tab[0] ) + ( (float)$tab[3] + (float)$tab[2] + (float)$tab[9] + (float)$tab[6] ) + ((float)$tab[4]) + ((float)$tab[5]) + ((float)$tab[8]));
-                    ;
-
+                    if ($key == 3) {
+                        $nesting[$key] = (float) $cam_value->obmp_cm_rooms_nesting - (( (float) $tab[0] ) + ( (float) $tab[3] + (float) $tab[2] + (float) $tab[9] + (float) $tab[6] ) + ((float) $tab[4]) + ((float) $tab[5]) + ((float) $tab[8]));
 // ho diaponibilita generale
-                    if ($tot_cam_libere > 0) {
+                        if ($tot_cam_libere > 0) {
 // ho disponibuiluta sulla tipologia    
-                        if ($nesting[$key] > 0) {
+                            if ($nesting[$key] > 0) {
 // controllo il max rooms
-                            if ($nesting[$key] < (float)$cam_value->obmp_cm_rooms_max_room) {
-                                $rooms_nesting[$key] = $nesting[$key];
-                            } else {
+                                if ($nesting[$key] < (float) $cam_value->obmp_cm_rooms_max_room) {
+                                    $rooms_nesting[$key] = $nesting[$key];
+                                } else {
 // limito la disponibilità
-                                $rooms_nesting[$key] = (float)$cam_value->obmp_cm_rooms_max_room;
-                            }
-                        } else {
+                                    $rooms_nesting[$key] = (float) $cam_value->obmp_cm_rooms_max_room;
+                                }
+                            } else {
 //ho disponibilita ma tipologia terminata
+                                $rooms_nesting[$key] = 0;
+                            }
+                        }
+// fine disponibilita sui tipologie
+                        else {
+// non ho disponibilità
                             $rooms_nesting[$key] = 0;
                         }
                     }
-// fine disponibilita sui tipologie
-                    else {
-// non ho disponibilità
-                        $rooms_nesting[$key] = 0;
-                    }
-                }
 
 //   [4] => Tripla
-                if ($key == 4) {
-                    $nesting[$key] = (float)$cam_value->obmp_cm_rooms_nesting - (( (float)$tab[0] ) + ( (float)$tab[6] ) + ((float)$tab[4]) + ((float)$tab[5]) + ((float)$tab[8]));
-                    ;
-
+                    if ($key == 4) {
+                        $nesting[$key] = (float) $cam_value->obmp_cm_rooms_nesting - (( (float) $tab[0] ) + ( (float) $tab[6] ) + ((float) $tab[4]) + ((float) $tab[5]) + ((float) $tab[8]));
 // ho diaponibilita generale
-                    if ($tot_cam_libere > 0) {
+                        if ($tot_cam_libere > 0) {
 // ho disponibuiluta sulla tipologia    
-                        if ($nesting[$key] > 0) {
+                            if ($nesting[$key] > 0) {
 // controllo il max rooms
-                            if ($nesting[$key] < (float)$cam_value->obmp_cm_rooms_max_room) {
-                                $rooms_nesting[$key] = $nesting[$key];
-                            } else {
+                                if ($nesting[$key] < (float) $cam_value->obmp_cm_rooms_max_room) {
+                                    $rooms_nesting[$key] = $nesting[$key];
+                                } else {
 // limito la disponibilità
-                                $rooms_nesting[$key] = (float)$cam_value->obmp_cm_rooms_max_room;
-                            }
-                        } else {
+                                    $rooms_nesting[$key] = (float) $cam_value->obmp_cm_rooms_max_room;
+                                }
+                            } else {
 //ho disponibilita ma tipologia terminata
+                                $rooms_nesting[$key] = 0;
+                            }
+                        }
+// fine disponibilita sui tipologie
+                        else {
+// non ho disponibilità
                             $rooms_nesting[$key] = 0;
                         }
                     }
-// fine disponibilita sui tipologie
-                    else {
-// non ho disponibilità
-                        $rooms_nesting[$key] = 0;
-                    }
-                }
-
 //
 //   [5] => Quadrupla
-                
-                
-                        
-                if ($key == 5) {
-                 $nesting[$key] = (float)$cam_value->obmp_cm_rooms_nesting - (( (float)$tab[0] ) + ( (float)$tab[6] ) + ((float)$tab[5]) + ((float)$tab[8]));
-
-      
+                    if ($key == 5) {
+                        $nesting[$key] = (float) $cam_value->obmp_cm_rooms_nesting - (( (float) $tab[0] ) + ( (float) $tab[6] ) + ((float) $tab[5]) + ((float) $tab[8]));
 //                    echo $cam_value->obmp_cm_rooms_nesting == 6 ;
-                    
 // ho diaponibilita generale
-                    if ($tot_cam_libere > 0) {
+                        if ($tot_cam_libere > 0) {
 // ho disponibuiluta sulla tipologia    
-                        if ($nesting[$key] > 0) {
+                            if ($nesting[$key] > 0) {
 // controllo il max rooms
-                            if ($nesting[$key] < (float)$cam_value->obmp_cm_rooms_max_room) {
-                                $rooms_nesting[$key] = $nesting[$key];
-                            } else {
+                                if ($nesting[$key] < (float) $cam_value->obmp_cm_rooms_max_room) {
+                                    $rooms_nesting[$key] = $nesting[$key];
+                                } else {
 // limito la disponibilità
-                                $rooms_nesting[$key] = (float)$cam_value->obmp_cm_rooms_max_room;
-                            }
-                        } else {
+                                    $rooms_nesting[$key] = (float) $cam_value->obmp_cm_rooms_max_room;
+                                }
+                            } else {
 //ho disponibilita ma tipologia terminata
+                                $rooms_nesting[$key] = 0;
+                            }
+                        }
+// fine disponibilita sui tipologie
+                        else {
+// non ho disponibilità
                             $rooms_nesting[$key] = 0;
                         }
                     }
-// fine disponibilita sui tipologie
-                    else {
-// non ho disponibilità
-                        $rooms_nesting[$key] = 0;
-                    }
-                }
 
 //   [6] => Junior Suit
-                if ($key == 6) {
-                    $nesting[$key] = (float)$cam_value->obmp_cm_rooms_nesting - (( (float)$tab[0] ) + ( (float)$tab[6] ) + ((float)$tab[5]) + ((float)$tab[8]));
-
-
+                    if ($key == 6) {
+                        $nesting[$key] = (float) $cam_value->obmp_cm_rooms_nesting - (( (float) $tab[0] ) + ( (float) $tab[6] ) + ((float) $tab[5]) + ((float) $tab[8]));
 // ho diaponibilita generale
-                    if ($tot_cam_libere > 0) {
+                        if ($tot_cam_libere > 0) {
 // ho disponibuiluta sulla tipologia    
-                        if ($nesting[$key] > 0) {
+                            if ($nesting[$key] > 0) {
 // controllo il max rooms
-                            if ($nesting[$key] < (float)$cam_value->obmp_cm_rooms_max_room) {
-                                $rooms_nesting[$key] = $nesting[$key];
-                            } else {
+                                if ($nesting[$key] < (float) $cam_value->obmp_cm_rooms_max_room) {
+                                    $rooms_nesting[$key] = $nesting[$key];
+                                } else {
 // limito la disponibilità
-                                $rooms_nesting[$key] = (float)$cam_value->obmp_cm_rooms_max_room;
-                            }
-                        } else {
+                                    $rooms_nesting[$key] = (float) $cam_value->obmp_cm_rooms_max_room;
+                                }
+                            } else {
 //ho disponibilita ma tipologia terminata
+                                $rooms_nesting[$key] = 0;
+                            }
+                        }
+// fine disponibilita sui tipologie
+                        else {
+// non ho disponibilità
                             $rooms_nesting[$key] = 0;
                         }
                     }
-// fine disponibilita sui tipologie
-                    else {
-// non ho disponibilità
-                        $rooms_nesting[$key] = 0;
-                    }
-                }
-
 
 //    [8] => Quintupla   
-                if ($key == 8) {
-                    $nesting[$key] = (float)$cam_value->obmp_cm_rooms_nesting - (( (float)$tab[0] ) + ( (float)$tab[6] ) + ((float)$tab[5]) + ((float)$tab[8]));
-
+                    if ($key == 8) {
+                        $nesting[$key] = (float) $cam_value->obmp_cm_rooms_nesting - (( (float) $tab[0] ) + ( (float) $tab[6] ) + ((float) $tab[5]) + ((float) $tab[8]));
 // ho diaponibilita generale
-                    if ($tot_cam_libere > 0) {
+                        if ($tot_cam_libere > 0) {
 // ho disponibuiluta sulla tipologia    
-                        if ($nesting[$key] > 0) {
+                            if ($nesting[$key] > 0) {
 // controllo il max rooms
-                            if ($nesting[$key] < (float)$cam_value->obmp_cm_rooms_max_room) {
-                                $rooms_nesting[$key] = $nesting[$key];
-                            } else {
+                                if ($nesting[$key] < (float) $cam_value->obmp_cm_rooms_max_room) {
+                                    $rooms_nesting[$key] = $nesting[$key];
+                                } else {
 // limito la disponibilità
-                                $rooms_nesting[$key] = (float)$cam_value->obmp_cm_rooms_max_room;
-                            }
-                        } else {
+                                    $rooms_nesting[$key] = (float) $cam_value->obmp_cm_rooms_max_room;
+                                }
+                            } else {
 //ho disponibilita ma tipologia terminata
+                                $rooms_nesting[$key] = 0;
+                            }
+                        }
+// fine disponibilita sui tipologie
+                        else {
+// non ho disponibilità
                             $rooms_nesting[$key] = 0;
                         }
                     }
-// fine disponibilita sui tipologie
-                    else {
-// non ho disponibilità
-                        $rooms_nesting[$key] = 0;
-                    }
-                }
 
 //   [9] => Terrazzo   
-                if ($key == 9) {
-                    $nesting[$key] = (float)$cam_value->obmp_cm_rooms_nesting - ((float)$tab[0] + (float)$tab[9] );
-
-
+                    if ($key == 9) {
+                        $nesting[$key] = (float) $cam_value->obmp_cm_rooms_nesting - ((float) $tab[0] + (float) $tab[9] );
 // ho diaponibilita generale
-                    if ($tot_cam_libere > 0) {
+                        if ($tot_cam_libere > 0) {
 // ho disponibuiluta sulla tipologia    
-                        if ($nesting[$key] > 0) {
+                            if ($nesting[$key] > 0) {
 // controllo il max rooms
-                            if ($nesting[$key] < (float)$cam_value->obmp_cm_rooms_max_room) {
-                                $rooms_nesting[$key] = $nesting[$key];
-                            } else {
+                                if ($nesting[$key] < (float) $cam_value->obmp_cm_rooms_max_room) {
+                                    $rooms_nesting[$key] = $nesting[$key];
+                                } else {
 // limito la disponibilità
-                                $rooms_nesting[$key] = (float)$cam_value->obmp_cm_rooms_max_room;
-                            }
-                        } else {
+                                    $rooms_nesting[$key] = (float) $cam_value->obmp_cm_rooms_max_room;
+                                }
+                            } else {
 //ho disponibilita ma tipologia terminata
+                                $rooms_nesting[$key] = 0;
+                            }
+                        }
+// fine disponibilita sui tipologie
+                        else {
+// non ho disponibilità
                             $rooms_nesting[$key] = 0;
                         }
                     }
-// fine disponibilita sui tipologie
-                    else {
-// non ho disponibilità
-                        $rooms_nesting[$key] = 0;
+
+                    if ($key == 0) {
+                        $nesting[$key] = 0;
                     }
+
+//  $nesting[$key] = $cam_value->obmp_cm_rooms_nesting - $tab[$key] ;
                 }
-
-                if ($key == 0) {
-                    $nesting[$key] = 0;
-                }
-
-
-                //  $nesting[$key] = $cam_value->obmp_cm_rooms_nesting - $tab[$key] ;
-            }
             }
         }
-        
-             // return $nesting;
-        
+
+// return $nesting;
         return $rooms_nesting;
     }
 
