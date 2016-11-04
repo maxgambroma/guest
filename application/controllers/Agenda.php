@@ -496,13 +496,14 @@ class Agenda extends CI_Controller {
         $data['preno'] = $preno = $this->agenda_model->find_by_id($preno_id);
         $data['preno_new'] = $preno_new = $this->prezzi_disponibilita_model->prezzo_web($hotel_id, $preno_dal, $preno_al, $includi_prezzi = 0);
         $data['importo'] = $this->new_iporto($preno, $preno_new);
+        $data['disponibilita'] = $diso =  $this->new_dispo($preno, $preno_new) ;
         $this->load->view('clienti_cambia_date', $data);
         
         
     }
 
     /**
-     * 
+     * trovo l'importo totale del nuovo perido stessa preno
      * @param type $preno
      * @param type $preno_new
      * @return type
@@ -522,8 +523,83 @@ class Agenda extends CI_Controller {
         return $importo;
     }
 
-
     
+    
+    
+        /**
+     * controllo la disponibilita del nuovo perido stessa PRENO 
+     * @param type $preno
+     * @param type $preno_new
+     * @return type
+     */
+    function new_dispo($preno, $preno_new) {
+
+        $preno_new['nesting'][0] = 0;
+        $preno_new['nesting'][10] = 0;
+
+// minimo camare libere er il periodo 
+        $cam_libere = min($preno_new['tot_cam_libere']);
+
+// controllo che ho pui camere rispetto a quelle richieste
+        if ($preno->Tot_cam <= $cam_libere) {
+
+// per ogni singola tipologia t1,
+            if ($preno->t1 > 0) {
+                if (min($preno_new['nesting'][$preno->t1]) >= $preno->q1) {
+                    $errore[$preno->t1] = 0;
+                } else {
+                    $errore[$preno->t1] = 1;
+                }
+            }
+// per ogni singola tipologia t2,
+            if ($preno->t2 > 0) {
+                if (min($preno_new['nesting'][$preno->t2]) >= $preno->q2) {
+                    $errore[$preno->t2] = 0;
+                } else {
+                    $errore[$preno->t2] = 1;
+                }
+            }
+// per ogni singola tipologia t3,
+            if ($preno->t3 > 0) {
+                if (min($preno_new['nesting'][$preno->t3]) >= $preno->q3) {
+                    $errore[$preno->t3] = 0;
+                } else {
+                    $errore[$preno->t3] = 1;
+                }
+            }
+// per ogni singola tipologia t4,
+            if ($preno->t4 > 0) {
+                if (min($preno_new['nesting'][$preno->t4]) >= $preno->q4) {
+                    $errore[$preno->t4] = 0;
+                } else {
+                    $errore[$preno->t4] = 1;
+                }
+            }
+// per ogni singola tipologia t5,
+            if ($preno->t5 > 0) {
+                if (min($preno_new['nesting'][$preno->t5]) >= $preno->q5) {
+                    $errore[$preno->t5] = 0;
+                } else {
+                    $errore[$preno->t5] = 1;
+                }
+            }
+// per ogni singola tipologia t6,
+            if ($preno->t6 > 0) {
+                if (min($preno_new['nesting'][$preno->t6]) >= $preno->q6) {
+                    $errore[$preno->t6] = 0;
+                } else {
+                    $errore[$preno->t6] = 1;
+                }
+            }
+        }
+// non ho disponibilita 
+        else {
+            $errore[10] = 1;
+        }
+
+        return $errore;
+    }
+
     function edit_data_preno()
             {	
          
