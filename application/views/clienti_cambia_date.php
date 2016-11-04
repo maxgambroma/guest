@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-//print_r($preno_new);
+print_r($preno_new);
 
  ?>
 
