@@ -15,7 +15,7 @@
 
 	<?php // Change the css classes to suit your needs    
 	$attributes = array('class' => '', 'id' => '');
-        echo form_open(  base_url().'clienti/edit_data_preno' , $attributes); ?>     
+        echo form_open(  base_url().'index.php/agenda/edit_data_preno' , $attributes); ?>     
 
 
 
@@ -62,9 +62,12 @@
 
 
             <ul class="button-group">
-                <li><a href="#" class="button alert"   >Annulla</a></li>
-                <li><a class="button success " type="submit"  >Confermo</a></li>
-
+                                  
+            <?php if ( max($disponibilita)   == 0  ) {   ?>   <li><input class="button success " type="submit" value="aggiorna" name="go" /></li>  <?php }   
+             else{ 
+               
+                echo 'Non e possibile modificare con queste date cambia periodo'  ;
+             } ?>   
             </ul>
         </div>
 
@@ -72,6 +75,20 @@
 
        <input id="cambia_data" type="hidden" name="cambia_data"  value="1"  />
 
+       <input id="disponibilita" type="hidden" name="disponibilita"  value="<?php echo max($disponibilita)  ?>"  />
+               
+       
+       
+       
+        
+        
+        
+       
+         
+          <input id="conto_id" type="hidden" name="conto_id"  value="<?php echo $this->input->get('conto_id');   ?>"  />
+          <input id="clienti_id" type="hidden" name="clienti_id"  value="<?php echo  $this->input->get('clienti_id');  ?>"  />
+         
+       
                <input id="preno_id" type="hidden" name="preno_id"  value="<?php echo $preno->preno_id  ?>"  />
 	       <input id="preno_dal" type="hidden" name="preno_dal"  value="<?php echo $preno_new['preno_dal'] ?>"  />
 	       <input id="preno_al" type="hidden" name="preno_al"  value="<?php echo $preno_new['preno_al'] ;  ?>"  />

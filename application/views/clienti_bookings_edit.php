@@ -361,6 +361,7 @@
                     </div>
                 </div>
                 <div id="new_preno"></div>
+                
                    <a class="close-reveal-modal" aria-label="Close">&#215;</a>
             </div>
             
@@ -429,7 +430,7 @@
              // trovo i nuovi valori    
              var preno_dal = $('#preno_dal').val();
             var preno_al = $('#preno_al').val();
-            $("div#new_preno").load("<?php echo base_url(); ?>index.php/agenda/cambia_date?preno_dal=" + preno_dal + "&preno_al=" + preno_al + "&preno_id=<?php echo $row_new->preno_id ?>&hotel_id=<?php echo $row_new->hotel_id ?>");
+            $("div#new_preno").load("<?php echo base_url(); ?>index.php/agenda/cambia_date?preno_dal=" + preno_dal + "&preno_al=" + preno_al + "&preno_id=<?php echo $row_new->preno_id ?>&hotel_id=<?php echo $row_new->hotel_id ?>&conto_id=<?php echo $rs_clienti[0]->conto_id; ?>&clienti_id=<?php echo $rs_clienti[0]->clienti_id; ?>&lg=<?php echo $lg; ?>");
 
                 
                 
@@ -456,7 +457,7 @@
         $("#preno_al").change(function () {
             var preno_dal = $('#preno_dal').val();
             var preno_al = $('#preno_al').val();
-            $("div#new_preno").load("<?php echo base_url(); ?>index.php/agenda/cambia_date?preno_dal=" + preno_dal + "&preno_al=" + preno_al + "&preno_id=<?php echo $row_new->preno_id ?>&hotel_id=<?php echo $row_new->hotel_id ?>");
+            $("div#new_preno").load("<?php echo base_url(); ?>index.php/agenda/cambia_date?preno_dal=" + preno_dal + "&preno_al=" + preno_al + "&preno_id=<?php echo $row_new->preno_id ?>&hotel_id=<?php echo $row_new->hotel_id ?>&conto_id=<?php echo $rs_clienti[0]->conto_id; ?>&clienti_id=<?php echo $rs_clienti[0]->clienti_id; ?>&lg=<?php echo $lg; ?>");
         });
     });
 </script> 
@@ -468,7 +469,7 @@
         $("#aggiorna_preno").click(function () {
             var preno_dal = $('#preno_dal').val();
             var preno_al = $('#preno_al').val();
-            $("div#new_preno").load("<?php echo base_url(); ?>index.php/agenda/cambia_date?preno_dal=" + preno_dal + "&preno_al=" + preno_al + "&preno_id=<?php echo $row_new->preno_id ?>&hotel_id=<?php echo $row_new->hotel_id ?>");
+            $("div#new_preno").load("<?php echo base_url(); ?>index.php/agenda/cambia_date?preno_dal=" + preno_dal + "&preno_al=" + preno_al + "&preno_id=<?php echo $row_new->preno_id ?>&hotel_id=<?php echo $row_new->hotel_id ?>&conto_id=<?php echo $rs_clienti[0]->conto_id; ?>&clienti_id=<?php echo $rs_clienti[0]->clienti_id; ?>&lg=<?php echo $lg; ?>");
         });
     });
 </script> 

@@ -600,55 +600,49 @@ class Agenda extends CI_Controller {
         return $errore;
     }
 
+    
+    
+    /**
+     * aggiorna la prenotazione dal form
+     */
+    
+    
     function edit_data_preno()
             {	
          
-                  // max
-         
-		$this->form_validation->set_rules('preno_id', 'lang:preno_id', 'trim|required');			
-		$this->form_validation->set_rules('preno_importo', 'lang:preno_importo', 'trim|required');			
-				
-		$this->form_validation->set_rules('preno_dal', 'lang:preno_dal', 'trim|required');			
-		$this->form_validation->set_rules('preno_al', 'lang:preno_al', 'trim|required');			
-		$this->form_validation->set_rules('preno_n_notti', 'lang:preno_n_notti', 'trim|required');			
-		$this->form_validation->set_rules('p1', 'lang:p1', 'trim|required');			
-		$this->form_validation->set_rules('p2', 'lang:p2', 'trim');			
-		$this->form_validation->set_rules('p3', 'lang:p3', 'trim');			
-		$this->form_validation->set_rules('p4', 'lang:p4', 'trim');			
-		$this->form_validation->set_rules('p5', 'lang:p5', 'trim');			
-		$this->form_validation->set_rules('p6', 'lang:p6', 'trim');	;				
-		$this->form_validation->set_rules('agenda_utente_id', 'lang:agenda_utente_id', 'trim');
+
+             
+                $this->form_validation->set_rules('disponibilita', 'lang:disponibilita', 'trim|required');
+                $this->form_validation->set_rules('preno_id', 'lang:preno_id', 'trim|required');			
+                $this->form_validation->set_rules('preno_importo', 'lang:preno_importo', 'trim|required');			
+
+                $this->form_validation->set_rules('preno_dal', 'lang:preno_dal', 'trim|required');			
+                $this->form_validation->set_rules('preno_al', 'lang:preno_al', 'trim|required');			
+                $this->form_validation->set_rules('preno_n_notti', 'lang:preno_n_notti', 'trim|required');			
+                $this->form_validation->set_rules('p1', 'lang:p1', 'trim|required');			
+                $this->form_validation->set_rules('p2', 'lang:p2', 'trim');			
+                $this->form_validation->set_rules('p3', 'lang:p3', 'trim');			
+                $this->form_validation->set_rules('p4', 'lang:p4', 'trim');			
+                $this->form_validation->set_rules('p5', 'lang:p5', 'trim');			
+                $this->form_validation->set_rules('p6', 'lang:p6', 'trim');	;				
+                $this->form_validation->set_rules('agenda_utente_id', 'lang:agenda_utente_id', 'trim');
 			
 		$this->form_validation->set_error_delimiters('<span class="error">', '</span><br /> ');
 	
-		if ($this->form_validation->run() == FALSE) // validation hasn't been passed
+		if ($this->form_validation->run() == FALSE && set_value('preno_importo') == 1 && set_value('disponibilita') !=1 ) // validation hasn't been passed
 		{
-                       
-                /** function find_by_id('preno_id')
-                * find preno_id
-                * @param $form_data - array
-                * @return object
-                */
-                
-//
-//                $preno_id = $this->input->get('preno_id') ; 
-//                $data['rs_agenda'] =   $this->agenda_model->find_by_id($preno_id);
-//
-//		// scegli il templete
-//		$temi = 'tem_bcb';
-//		// carica la vista del contenuto
-//		$vista = 'agenda_edit';
-//		// gestore templete
-//                
-//                $data['temp'] = array
-//                ('templete' => $temi, 
-//                'contenuto' => $vista, 
-//                'bar_1' => 'bar_1',
-//                'bar_2' => 'bar_2',
-//                'box_top' => 'box_top' );
-//                $this->load->view('templetes', $data);
+                    
+                    
+                 //  echo 'errore'  ;
+                    
+                    
+//<input id="conto_id" type="hidden" name="conto_id"  value="159576"  />
+//<input id="clienti_id" type="hidden" name="clienti_id"  value="67491"  />
+//<input id="preno_id" type="hidden" name="preno_id"  value="135779"  />
 
-		//$this->load->view('agenda_edit');
+                    
+                       
+                    redirect(  base_url().'index.php/clienti/bookings/'. $this->input->post('conto_id').'/'. $this->input->post('clienti_id') .'?lg='. $this->lg );
 			
 		}
 		else // passed validation proceed to post success logic
@@ -656,7 +650,7 @@ class Agenda extends CI_Controller {
 		 	// build array for the model
 			
 			$form_data = array(
-			     // 	'preno_id' => set_value('preno_id'),
+			     // 'preno_id' => set_value('preno_id'),
 			      	'preno_importo' => set_value('preno_importo'),
 			      	'preno_impoto_mod' => set_value('preno_importo'),
 			      	'preno_dal' => set_value('preno_dal'),
@@ -678,12 +672,19 @@ class Agenda extends CI_Controller {
 
 			if ($this->agenda_model->update($preno_id, $form_data) == TRUE) // the information has therefore been successfully saved in the db
 			{
-				                                  
-                                redirect('clienti/bookings_edit/'. $conto_id.'/'. $clienti_id.'?lg='.$this->lg );
+				 
+                         
+                            
+                                                
+                              
+                                redirect( base_url().'index.php/clienti/bookings/'. $this->input->post('conto_id').'/'. $this->input->post('clienti_id').'/?lg='.$this->lg );
 			}
 			else
 			{
-                             redirect('clienti/bookings_edit/'. $conto_id.'/'.$clienti_id.'?lg='.$this->lg );	
+                         
+                            
+                       
+                            redirect( base_url().'index.php/clienti/bookings/'. $this->input->post('conto_id').'/'. $this->input->post('clienti_id').'/?lg='.$this->lg );
 
 			}
 		}
