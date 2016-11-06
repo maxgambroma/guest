@@ -758,24 +758,6 @@ class Prezzi_disponibilita_model extends CI_Model {
     }
 
     /**
-     * 
-     * @param type $preno_al
-     * @param type $preno_dal
-     * @return type
-     */
-    public function data_diff($preno_al, $preno_dal) {
-
-        if ($preno_al >= $preno_dal) {
-            $differenza_date = strtotime($preno_al) - strtotime($preno_dal);
-            return $data_diff = date('z', $differenza_date);
-        } else {
-
-            $differenza_date = (strtotime($preno_dal) - strtotime($preno_al));
-            return $data_diff = date('z', $differenza_date);
-        }
-    }
-
-    /**
      * Cerco le tariffe dei singoli giorni di soggiorno 
      * @param type $hotel_id
      * @param type $preno_dal
@@ -900,7 +882,7 @@ class Prezzi_disponibilita_model extends CI_Model {
 
         foreach ($tableau as $key => $value) {
 
-// preoteggo dalle tipologia 0
+// proteggo dalle tipologia 0
             if ($key != 0) {
                 $camere = $this->camere_obmp($hotel_id, $key);
 
@@ -911,22 +893,12 @@ class Prezzi_disponibilita_model extends CI_Model {
                         $nesting[$key] = (float) $cam_value->obmp_cm_rooms_nesting - ( (float) $tab[0] + ( (float) $tab[1] + (float) $tab[7]) + ((float) $tab[3] + (float) $tab[2] + (float) $tab[9] + (float) $tab[6] ) + ((float) $tab[4]) + ((float) $tab[5]) + ((float) $tab[8]) );
 
 // ho diaponibilita generale
-                        if ($tot_cam_libere > 0) {
-// ho disponibuiluta sulla tipologia    
-                            if ($nesting[$key] > 0) {
-// controllo il max rooms
-                                if ($nesting[$key] < (float) $cam_value->obmp_cm_rooms_max_room) {
-                                    $rooms_nesting[$key] = $nesting[$key];
-                                } else {
-// limito la disponibilità
-                                    $rooms_nesting[$key] = (float) $cam_value->obmp_cm_rooms_max_room;
-                                }
-                            } else {
-//ho disponibilita ma tipologia terminata
-                                $rooms_nesting[$key] = 0;
-                            }
+                        if ($tot_cam_libere > 0 && $nesting[$key] > 0) {
+
+// trovo il valore minimo da mostrare
+                            $rooms_nesting[$key] = min((float) $cam_value->obmp_cm_rooms_max_room, $nesting[$key], $tot_cam_libere);
                         }
-// fine disponibilita sui tipologie
+//      non ho disponoibilita e metto zero
                         else {
 // non ho disponibilità
                             $rooms_nesting[$key] = 0;
@@ -937,22 +909,12 @@ class Prezzi_disponibilita_model extends CI_Model {
                     if ($key == 7) {
                         $nesting[$key] = (float) $cam_value->obmp_cm_rooms_nesting - (( (float) $tab[0] + (float) $tab[7]) + ((float) $tab[3] + (float) $tab[2] + (float) $tab[9] + (float) $tab[6] ) + ( (float) $tab[4]) + ((float) $tab[5]) + ((float) $tab[8]));
 // ho diaponibilita generale
-                        if ($tot_cam_libere > 0) {
-// ho disponibuiluta sulla tipologia    
-                            if ($nesting[$key] > 0) {
-// controllo il max rooms
-                                if ($nesting[$key] < (float) $cam_value->obmp_cm_rooms_max_room) {
-                                    $rooms_nesting[$key] = $nesting[$key];
-                                } else {
-// limito la disponibilità
-                                    $rooms_nesting[$key] = (float) $cam_value->obmp_cm_rooms_max_room;
-                                }
-                            } else {
-//ho disponibilita ma tipologia terminata
-                                $rooms_nesting[$key] = 0;
-                            }
+                        if ($tot_cam_libere > 0 && $nesting[$key] > 0) {
+
+// trovo il valore minimo da mostrare
+                            $rooms_nesting[$key] = min((float) $cam_value->obmp_cm_rooms_max_room, $nesting[$key], $tot_cam_libere);
                         }
-// fine disponibilita sui tipologie
+//      non ho disponoibilita e metto zero
                         else {
 // non ho disponibilità
                             $rooms_nesting[$key] = 0;
@@ -963,22 +925,12 @@ class Prezzi_disponibilita_model extends CI_Model {
                     if ($key == 2) {
                         $nesting[$key] = (float) $cam_value->obmp_cm_rooms_nesting - (( (float) $tab[0] ) + ((float) $tab[3] + (float) $tab[2] + (float) $tab[9] + (float) $tab[6] ) + (float) ($tab[4]) + (float) ($tab[5]) + (float) ($tab[8]));
 // ho diaponibilita generale
-                        if ($tot_cam_libere > 0) {
-// ho disponibuiluta sulla tipologia    
-                            if ($nesting[$key] > 0) {
-// controllo il max rooms
-                                if ($nesting[$key] < (float) $cam_value->obmp_cm_rooms_max_room) {
-                                    $rooms_nesting[$key] = $nesting[$key];
-                                } else {
-// limito la disponibilità
-                                    $rooms_nesting[$key] = (float) $cam_value->obmp_cm_rooms_max_room;
-                                }
-                            } else {
-//ho disponibilita ma tipologia terminata
-                                $rooms_nesting[$key] = 0;
-                            }
+                        if ($tot_cam_libere > 0 && $nesting[$key] > 0) {
+
+// trovo il valore minimo da mostrare
+                            $rooms_nesting[$key] = min((float) $cam_value->obmp_cm_rooms_max_room, $nesting[$key], $tot_cam_libere);
                         }
-// fine disponibilita sui tipologie
+//      non ho disponoibilita e metto zero
                         else {
 // non ho disponibilità
                             $rooms_nesting[$key] = 0;
@@ -989,22 +941,12 @@ class Prezzi_disponibilita_model extends CI_Model {
                     if ($key == 3) {
                         $nesting[$key] = (float) $cam_value->obmp_cm_rooms_nesting - (( (float) $tab[0] ) + ( (float) $tab[3] + (float) $tab[2] + (float) $tab[9] + (float) $tab[6] ) + ((float) $tab[4]) + ((float) $tab[5]) + ((float) $tab[8]));
 // ho diaponibilita generale
-                        if ($tot_cam_libere > 0) {
-// ho disponibuiluta sulla tipologia    
-                            if ($nesting[$key] > 0) {
-// controllo il max rooms
-                                if ($nesting[$key] < (float) $cam_value->obmp_cm_rooms_max_room) {
-                                    $rooms_nesting[$key] = $nesting[$key];
-                                } else {
-// limito la disponibilità
-                                    $rooms_nesting[$key] = (float) $cam_value->obmp_cm_rooms_max_room;
-                                }
-                            } else {
-//ho disponibilita ma tipologia terminata
-                                $rooms_nesting[$key] = 0;
-                            }
+                        if ($tot_cam_libere > 0 && $nesting[$key] > 0) {
+
+// trovo il valore minimo da mostrare
+                            $rooms_nesting[$key] = min((float) $cam_value->obmp_cm_rooms_max_room, $nesting[$key], $tot_cam_libere);
                         }
-// fine disponibilita sui tipologie
+//      non ho disponoibilita e metto zero
                         else {
 // non ho disponibilità
                             $rooms_nesting[$key] = 0;
@@ -1015,49 +957,28 @@ class Prezzi_disponibilita_model extends CI_Model {
                     if ($key == 4) {
                         $nesting[$key] = (float) $cam_value->obmp_cm_rooms_nesting - (( (float) $tab[0] ) + ( (float) $tab[6] ) + ((float) $tab[4]) + ((float) $tab[5]) + ((float) $tab[8]));
 // ho diaponibilita generale
-                        if ($tot_cam_libere > 0) {
-// ho disponibuiluta sulla tipologia    
-                            if ($nesting[$key] > 0) {
-// controllo il max rooms
-                                if ($nesting[$key] < (float) $cam_value->obmp_cm_rooms_max_room) {
-                                    $rooms_nesting[$key] = $nesting[$key];
-                                } else {
-// limito la disponibilità
-                                    $rooms_nesting[$key] = (float) $cam_value->obmp_cm_rooms_max_room;
-                                }
-                            } else {
-//ho disponibilita ma tipologia terminata
-                                $rooms_nesting[$key] = 0;
-                            }
+                        if ($tot_cam_libere > 0 && $nesting[$key] > 0) {
+
+// trovo il valore minimo da mostrare
+                            $rooms_nesting[$key] = min((float) $cam_value->obmp_cm_rooms_max_room, $nesting[$key], $tot_cam_libere);
                         }
-// fine disponibilita sui tipologie
+//      non ho disponoibilita e metto zero
                         else {
 // non ho disponibilità
                             $rooms_nesting[$key] = 0;
                         }
                     }
-//
+
 //   [5] => Quadrupla
                     if ($key == 5) {
                         $nesting[$key] = (float) $cam_value->obmp_cm_rooms_nesting - (( (float) $tab[0] ) + ( (float) $tab[6] ) + ((float) $tab[5]) + ((float) $tab[8]));
-//                    echo $cam_value->obmp_cm_rooms_nesting == 6 ;
 // ho diaponibilita generale
-                        if ($tot_cam_libere > 0) {
-// ho disponibuiluta sulla tipologia    
-                            if ($nesting[$key] > 0) {
-// controllo il max rooms
-                                if ($nesting[$key] < (float) $cam_value->obmp_cm_rooms_max_room) {
-                                    $rooms_nesting[$key] = $nesting[$key];
-                                } else {
-// limito la disponibilità
-                                    $rooms_nesting[$key] = (float) $cam_value->obmp_cm_rooms_max_room;
-                                }
-                            } else {
-//ho disponibilita ma tipologia terminata
-                                $rooms_nesting[$key] = 0;
-                            }
+                        if ($tot_cam_libere > 0 && $nesting[$key] > 0) {
+
+// trovo il valore minimo da mostrare
+                            $rooms_nesting[$key] = min((float) $cam_value->obmp_cm_rooms_max_room, $nesting[$key], $tot_cam_libere);
                         }
-// fine disponibilita sui tipologie
+//      non ho disponoibilita e metto zero
                         else {
 // non ho disponibilità
                             $rooms_nesting[$key] = 0;
@@ -1068,22 +989,12 @@ class Prezzi_disponibilita_model extends CI_Model {
                     if ($key == 6) {
                         $nesting[$key] = (float) $cam_value->obmp_cm_rooms_nesting - (( (float) $tab[0] ) + ( (float) $tab[6] ) + ((float) $tab[5]) + ((float) $tab[8]));
 // ho diaponibilita generale
-                        if ($tot_cam_libere > 0) {
-// ho disponibuiluta sulla tipologia    
-                            if ($nesting[$key] > 0) {
-// controllo il max rooms
-                                if ($nesting[$key] < (float) $cam_value->obmp_cm_rooms_max_room) {
-                                    $rooms_nesting[$key] = $nesting[$key];
-                                } else {
-// limito la disponibilità
-                                    $rooms_nesting[$key] = (float) $cam_value->obmp_cm_rooms_max_room;
-                                }
-                            } else {
-//ho disponibilita ma tipologia terminata
-                                $rooms_nesting[$key] = 0;
-                            }
+                        if ($tot_cam_libere > 0 && $nesting[$key] > 0) {
+
+// trovo il valore minimo da mostrare
+                            $rooms_nesting[$key] = min((float) $cam_value->obmp_cm_rooms_max_room, $nesting[$key], $tot_cam_libere);
                         }
-// fine disponibilita sui tipologie
+//      non ho disponoibilita e metto zero
                         else {
 // non ho disponibilità
                             $rooms_nesting[$key] = 0;
@@ -1094,22 +1005,12 @@ class Prezzi_disponibilita_model extends CI_Model {
                     if ($key == 8) {
                         $nesting[$key] = (float) $cam_value->obmp_cm_rooms_nesting - (( (float) $tab[0] ) + ( (float) $tab[6] ) + ((float) $tab[5]) + ((float) $tab[8]));
 // ho diaponibilita generale
-                        if ($tot_cam_libere > 0) {
-// ho disponibuiluta sulla tipologia    
-                            if ($nesting[$key] > 0) {
-// controllo il max rooms
-                                if ($nesting[$key] < (float) $cam_value->obmp_cm_rooms_max_room) {
-                                    $rooms_nesting[$key] = $nesting[$key];
-                                } else {
-// limito la disponibilità
-                                    $rooms_nesting[$key] = (float) $cam_value->obmp_cm_rooms_max_room;
-                                }
-                            } else {
-//ho disponibilita ma tipologia terminata
-                                $rooms_nesting[$key] = 0;
-                            }
+                        if ($tot_cam_libere > 0 && $nesting[$key] > 0) {
+
+// trovo il valore minimo da mostrare
+                            $rooms_nesting[$key] = min((float) $cam_value->obmp_cm_rooms_max_room, $nesting[$key], $tot_cam_libere);
                         }
-// fine disponibilita sui tipologie
+//      non ho disponoibilita e metto zero
                         else {
 // non ho disponibilità
                             $rooms_nesting[$key] = 0;
@@ -1120,22 +1021,12 @@ class Prezzi_disponibilita_model extends CI_Model {
                     if ($key == 9) {
                         $nesting[$key] = (float) $cam_value->obmp_cm_rooms_nesting - ((float) $tab[0] + (float) $tab[9] );
 // ho diaponibilita generale
-                        if ($tot_cam_libere > 0) {
-// ho disponibuiluta sulla tipologia    
-                            if ($nesting[$key] > 0) {
-// controllo il max rooms
-                                if ($nesting[$key] < (float) $cam_value->obmp_cm_rooms_max_room) {
-                                    $rooms_nesting[$key] = $nesting[$key];
-                                } else {
-// limito la disponibilità
-                                    $rooms_nesting[$key] = (float) $cam_value->obmp_cm_rooms_max_room;
-                                }
-                            } else {
-//ho disponibilita ma tipologia terminata
-                                $rooms_nesting[$key] = 0;
-                            }
+                        if ($tot_cam_libere > 0 && $nesting[$key] > 0) {
+
+// trovo il valore minimo da mostrare
+                            $rooms_nesting[$key] = min((float) $cam_value->obmp_cm_rooms_max_room, $nesting[$key], $tot_cam_libere);
                         }
-// fine disponibilita sui tipologie
+//      non ho disponoibilita e metto zero
                         else {
 // non ho disponibilità
                             $rooms_nesting[$key] = 0;
@@ -1156,7 +1047,7 @@ class Prezzi_disponibilita_model extends CI_Model {
     }
 
     /**
-     * 
+     * sommo i giorni ad una data
      * @param type $OGGI
      * @param type $gg
      * @return type
@@ -1168,6 +1059,24 @@ class Prezzi_disponibilita_model extends CI_Model {
         $giorno = $appoggio[2];
 
         return $data_gg = date("Y-m-d", mktime(0, 0, 0, $mese, ($giorno + $gg), $anno));
+    }
+
+    /**
+     *  trovo i giorni tra due date
+     * @param type $preno_al
+     * @param type $preno_dal
+     * @return type
+     */
+    public function data_diff($preno_al, $preno_dal) {
+
+        if ($preno_al >= $preno_dal) {
+            $differenza_date = strtotime($preno_al) - strtotime($preno_dal);
+            return $data_diff = date('z', $differenza_date);
+        } else {
+
+            $differenza_date = (strtotime($preno_dal) - strtotime($preno_al));
+            return $data_diff = date('z', $differenza_date);
+        }
     }
 
 }
