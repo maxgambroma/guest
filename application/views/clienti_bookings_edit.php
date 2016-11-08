@@ -355,9 +355,9 @@
                         <input id="preno_al" type="text" name="preno_al"   value="<?php echo  $row_new->preno_al; ?>"  />
                     </div>
                     <div  class="large-3 columns"> 
-                        <p> 
+<!--                        <p> 
                             <a href="#"  id="aggiorna_preno"  class="button right">Default Button</a>
-                        </p>
+                        </p>-->
                     </div>
                 </div>
                 <div id="new_preno"></div>
@@ -373,29 +373,38 @@
                 <h2 id="firstModalTitle">Cancella Prenotazione</h2>
                 <p>
                     <!--  agenda_edit.php  -->
-                <fieldset>
-                    <?php echo form_error('preno_stato'); ?>
+                <fieldset>                                
                     <legend>Agenda:</legend>	
                     <?php
 // Change the css classes to suit your needs    
                     $attributes = array('class' => '', 'id' => '');
-                    echo form_open(uri_string() . '?' . $_SERVER['QUERY_STRING'], $attributes);
-                    ?>     
-                    <p> </p>
-                    Qual è il motivo principale della cancellazione?<br>
+                  echo form_open( base_url().'index.php/agenda/cax_preno', $attributes); 
+                  ?>
+               <p>
+                     Qual è il motivo principale della cancellazione?<br>
                     La risposta è facoltativa, ma rispondendo ci aiuterai a fornirti un servizio sempre migliore <br>
                     <input type="radio" name="motivo" value="1" id="motivo1" /> <label for="motivo1"> Ho trovato un posto migliore in cui soggiornare </label>  <br>
                     <input type="radio" name="motivo" value="2" id="motivo2"  /> <label for="motivo1">Ho trovato un tariffa migliore in su un altro sito </label><br>
                     <input type="radio" name="motivo" value="3" id="motivo3"  /> <label for="motivo1">Devo modificare i dettagli della mia prenotazione </label><br>
                     <input type="radio" name="motivo" value="4" id="motivo4"  /> <label for="motivo1">Non devo più andare in questa destinazione</label><br>
                     <input type="radio" name="motivo" value="5" id="motivo5"  /> <label for="motivo1">Motivi personali </label><br>
+                    </p>
                     <label class="inline" for="preno_stato" >Si voglio cancellare questa Prenotazione
                         <div class="switch round">
                             <input id="preno_stato" type="checkbox" name="preno_stato" value="9"  >
                             <label for="preno_stato"></label>  
                         </div>
                     </label>
-                    <input id="agenda_utente_id" type="hidden" name="agenda_utente_id"  value="<?php echo (!set_value('agenda_utente_id')) ? $preno[0]->agenda_utente_id : set_value('agenda_utente_id'); ?>"  />
+                    
+<input id="agenda_utente_id" type="hidden" name="agenda_utente_id"  value="<?php echo (!set_value('agenda_utente_id')) ? $preno[0]->agenda_utente_id : set_value('agenda_utente_id'); ?>"  />    
+<input id="cancella_user" type="hidden" name="cancella_user"  value="1"  />
+<input id="conto_id" type="hidden" name="conto_id"  value="<?php echo $this->uri->segment(3, 1); ?>"  />
+<input id="clienti_id" type="hidden" name="clienti_id"  value="<?php echo $this->uri->segment(4, 1); ?>"  />
+<input id="preno_id" type="hidden" name="preno_id"  value="<?php echo $row_new->preno_id ?>"  />
+                    
+                    
+                    
+                    
                     <p>
                         <?php echo form_submit('submit', 'Cancella', 'class="button"'); ?>
                     </p>

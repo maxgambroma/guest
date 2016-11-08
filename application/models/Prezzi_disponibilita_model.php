@@ -619,13 +619,41 @@ class Prezzi_disponibilita_model extends CI_Model {
 // cambio la tariffa se protetta
 
                 if (($this->diff_gg_preno <= $this->hotel_tarif_cambia_gg ) && ( $today >= $now )) {
-                    $totale_prezzo[$tipologia_id] = $this->rs_cambia_prezzo($hotel_id, $tipologia_id);
+
+                    if ($tipologia_id == 0) {
+                        $totale_prezzo[$tipologia_id] = 0;
+                    } else {
+
+                        $protetta = $this->rs_cambio_prezzo($hotel_id, $tipologia_id);
+                       
+                      //  print_r($protetta);
+                        
+                                             
+                        
+                       
+                        
+                        $totale_prezzo[$tipologia_id] =  $protetta->listino_prezzo;
+                        
+                        
+                         if ($result) {
+                    $prezzo[$key] = $result[0];
+                 
+                    $soldi = $prezzo[$key]->listino_prezzo;
+                } else {
+         
+                    $soldi = 0;
+                }
+                        
+                        
+                        
+                    }
                 }
 
-                // se è un evento metto il prezzo 
+// se è un evento metto il prezzo 
 
                 if (!empty($ref_event) && isset($ref_event)) {
-                    $totale_prezzo[$tipologia_id] = $this->prezzo_eventi($T1, $hotel_id, $today, $ref_event);
+                    $evento = $this->prezzo_eventi($T1, $hotel_id, $today, $ref_event);
+                    $totale_prezzo[$tipologia_id] = $evento->listino_prezzo;
                 }
 
 

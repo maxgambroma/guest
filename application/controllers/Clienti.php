@@ -380,7 +380,6 @@ echo $this->email->print_debugger();
 
 
         $data['lg'] = $this->lg;
-
         $today = date('Y-m-d');
         if ($this->input->get('hotel_id')) {
             $hotel_id = $this->input->get('hotel_id');
@@ -407,12 +406,8 @@ echo $this->email->print_debugger();
 
         $data['albergo'] = $this->hotel_model->hotel($hotel_id);
 
-// per l'aggiornamento
-        $this->form_validation->set_rules('preno_id', 'lang:preno_id', 'trim');
-        $this->form_validation->set_rules('hotel_id', 'lang:hotel_id', 'trim');
-        $this->form_validation->set_rules('preno_stato', 'lang:preno_stato', 'required|trim');
-        $this->form_validation->set_error_delimiters('<span class="error">', '</span><br /> ');
-        if ($this->form_validation->run() == FALSE) { // validation hasn't been passed
+       
+        
             // scegli il templete
             $temi = 'tem_clienti';
             // carica la vista del contenuto
@@ -425,24 +420,9 @@ echo $this->email->print_debugger();
                 'bar_2' => 'bar_booking',
                 'box_top' => 'box_top');
             $this->load->view('templetes_clienti', $data);
-        } else { // passed validation proceed to post success logic
-// build array for the model
-            $form_data = array(
-                'preno_stato' => set_value('preno_stato'),
-                'cancella_user' => set_value('cancella_user'),
-                'agenda_utente_id' => set_value('agenda_utente_id')
-            );
-
-// run insert model to write data to db
-            $preno_id = $this->input->get('preno_id');
-            if ($this->agenda_model->update($preno_id, $form_data) == TRUE) { // the information has therefore been successfully saved in the db
-
-                redirect('agenda/index/?' . $_SERVER['QUERY_STRING']);
-            } else {
-                redirect('agenda/index/?error=noupdata&' . $_SERVER['QUERY_STRING']);
-            }
+     
         }
-    }
+
 
     
     

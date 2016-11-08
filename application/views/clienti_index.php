@@ -142,7 +142,7 @@ if ($rs_clienti) {
                     <div class="small-12 large-12 columns"> 
                         <p>
                         <ul class="button-group radius ">
-                            <li><a href="#" class="button">Cancella Prentoazione</a></li>
+<!--                            <li><a href="#" class="button">Cancella Prentoazione</a></li>-->
                             <li><a href="<?php echo base_url(); ?>/index.php/clienti/bookings_edit/<?php echo $rs_clienti[0]->conto_id; ?>/<?php echo $rs_clienti[0]->clienti_id; ?>/<?php echo $row_new->preno_id; ?>?lg=<?php echo $this->lg; ?>" class="button">Vedi Prenotazione</a></li>
                         </ul> 
                         </p>
