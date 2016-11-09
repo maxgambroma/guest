@@ -127,12 +127,25 @@ class Agenda_model extends CI_Model {
                
     /**
      * elenca le prenotazioni che hanno la stessa email forse dello stesso cliente
+     *  $filtro = 1 solo le confermate o attive
      * @param type $email
      * @return type
      */
     
     
-    function get_booking_by_email($email) {
+    function get_booking_by_email($email, $filtro = 0 ) {
+        
+       if( $filtro == 1){ 
+      $filtro =  " AND 
+
+	((agenda.preno_stato = '1') OR
+            ((agenda.preno_stato = '2') AND
+            (agenda.data_opzione >= '$now')))" ;
+
+       }
+ else {
+          $filtro = NULL ; 
+       }
         
         $now = date('Y-m-d');
         $query = $this->db->query("
@@ -156,10 +169,9 @@ FROM
 	 ON agenda.hotel_id = hotels.hotel_id
 WHERE
     agenda.preno_email = '$email' AND
-       	 agenda.preno_dal > '$now' AND
-	((agenda.preno_stato = '1')
-	OR ((agenda.preno_stato = '2') AND
-        (agenda.data_opzione >= '$now')))
+        agenda.preno_dal > '$now' 
+        $filtro
+
 ORDER BY
 	agenda.preno_dal ASC,
 	agenda.preno_al DESC

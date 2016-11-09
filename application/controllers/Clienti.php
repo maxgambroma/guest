@@ -324,7 +324,7 @@ echo $this->email->print_debugger();
     function bookings() {
         
         
-         $data['lg'] = $this->lg;
+        $data['lg'] = $this->lg;
 
         $today = date('Y-m-d');
         if ($this->input->get('hotel_id')) {
@@ -334,30 +334,30 @@ echo $this->email->print_debugger();
         }
         $data['today'] = $today = date('Y-m-d');
         $data['hotel_id'] = $hotel_id;
-      
-          $conto_id = $this->uri->segment(3, 1 );
-          $clienti_id = $this->uri->segment(4, 1 );  
-     
-       $data['rs_clienti'] =  $cliente =  $this->clienti_model->get_conto_cliente($conto_id, $clienti_id );
-       
-       if ($data['rs_clienti']) {
+
+        $conto_id = $this->uri->segment(3, 1);
+        $clienti_id = $this->uri->segment(4, 1);
+
+        $data['rs_clienti'] = $cliente = $this->clienti_model->get_conto_cliente($conto_id, $clienti_id);
+
+        if ($data['rs_clienti']) {
             $hotel_id = $cliente[0]->hotel_id;
 
             $email = $cliente[0]->clienti_email;
-            //trovo i vecchi conti
+//trovo i vecchi conti
             $data['conti_old'] = $conti_old = $this->clienti_model->conti_by_clienti($clienti_id);
-            // trovo le nuove preno
+// trovo le nuove preno
             $data['preno'] = $preno = $this->agenda_model->get_booking_by_email($email);
         }
 
         $data['albergo'] = $this->hotel_model->hotel($hotel_id);
-                  
-  
-        // scegli il templete
+
+
+// scegli il templete
         $temi = 'tem_clienti';
-        // carica la vista del contenuto
+// carica la vista del contenuto
         $vista = 'clienti_bookings';
-        // gestore templete
+// gestore templete
         $data['temp'] = array
             ('templete' => $temi,
             'contenuto' => $vista,
@@ -365,8 +365,6 @@ echo $this->email->print_debugger();
             'bar_2' => 'bar_booking',
             'box_top' => 'box_top');
         $this->load->view('templetes_clienti', $data);
-        
-        
     }
     
     /**

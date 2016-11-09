@@ -218,22 +218,30 @@
                 <fieldset>
                     <legend> Booking id : <?php echo $row_new->preno_id; ?></legend>
                     <div class="row">
-                        <div class="small-5 large-5 columns">
+                        <div class="small-5 large-5 <?php if($row_new->preno_stato == 9){ ?>  box_cancellata <?php } ?>  columns">
                             <img src="<?php echo base_url(); ?><?php echo $row_new->hotel_foto_piccola; ?>"/>
                         </div>
-                        <div class="small-7 large-7 columns">
+                        <div class="small-7 large-7  <?php if($row_new->preno_stato == 9){ ?>  box_cancellata <?php } ?> columns">
                             <h4>  <?php echo $row_new->hotel_tipologia; ?>  <?php echo $row_new->nome_hotel; ?></h4>
                             <p>
                                 <?php if ($row_new->agenzia_nome) { ?>  By <?php echo ($row_new->agenzia_nome ) . '<br>';
                         } ?>
                                 IN: <?php echo $row_new->preno_dal; ?> <br>
                                 OUT: <?php echo $row_new->preno_al; ?> <br>
+                               
                             </p>
                         </div>
                     </div>
                     <div class="row">
                         <div class="small-12 large-12 columns">
-                            <a href="<?php echo base_url(); ?>/index.php/clienti/bookings_edit/<?php echo $rs_clienti[0]->conto_id; ?>/<?php echo $rs_clienti[0]->clienti_id; ?>/<?php echo $row_new->preno_id; ?>?lg=<?php echo $this->lg; ?>" class="button success small right">Amministra Preno </a>
+                            
+                            <?php if($row_new->preno_stato != 9){ ?>
+                            
+                            <a href="<?php echo base_url(); ?>/index.php/clienti/bookings_edit/<?php echo $rs_clienti[0]->conto_id; ?>/<?php echo $rs_clienti[0]->clienti_id; ?>/<?php echo $row_new->preno_id; ?>?lg=<?php echo $this->lg; ?>" class="button success right">Amministra Preno </a>
+                       
+                            <?php } else { ?>
+                            <a href="#" class="button alert right">Cancellata</a>
+    <?php  } ?>
                         </div>
                     </div>
                 </fieldset>
@@ -291,23 +299,26 @@
                     </p>
                     </div>
                     </div>
-                    <div class="row">
-                        <?php if (!isset($row->review_id)) { ?>
-                        
-                            <div class="small-12 large-12 columns">
-                                <a href="<?php echo base_url(); ?>index.php/obmp_review/insert/<?php echo $row->conto_id; ?>/<?php  echo  $row->clienti_id; ?>?lg=<?php echo $this->lg; ?>  " class="button small round right">Scrivi Review</a>
-                            </div>
-                            <?php } else { ?>
-                            <div class="small-12 large-12 columns">
-                                <a href="<?php echo base_url(); ?>index.php/obmp_review/edit/<?php echo $row->conto_id; ?>/<?php  echo  $row->clienti_id; ?>?lg=<?php echo $this->lg; ?> " class="button small success round right">You Review </a>
-                                <a href="<?php echo base_url(); ?>index.php/clienti/bookings_edit/<?php echo $row->conto_id; ?>/<?php  echo  $row->clienti_id; ?>/<?php  echo  $row->preno_id; ?>?lg=<?php echo $this->lg; ?>" class="button success small ">Amministra Preno </a>
+                   
+            <div class="row">
+               
+                 <div class="small-12 large-4 columns">Punti </div>
+                  <div class="small-12 large-4 columns">
+                     <a href="<?php echo base_url(); ?>index.php/clienti/bookings_edit/<?php echo $row->conto_id; ?>/<?php  echo  $row->clienti_id; ?>/<?php  echo  $row->preno_id; ?>?lg=<?php echo $this->lg; ?>" class="button success small ">Amministra Preno </a>  
+                  </div>
+                   <div class="small-12 large-4 columns">
+                   <?php if (!isset($row->review_id)) { ?>
+                        <a href="<?php echo base_url(); ?>index.php/obmp_review/insert/<?php echo $row->conto_id; ?>/<?php  echo  $row->clienti_id; ?>?lg=<?php echo $this->lg; ?>  " class="button small round right">Scrivi Review</a>
+                      <?php } else { ?>
+                                                       <a href="<?php echo base_url(); ?>index.php/obmp_review/edit/<?php echo $row->conto_id; ?>/<?php  echo  $row->clienti_id; ?>?lg=<?php echo $this->lg; ?> " class="button small success round right">You Review </a>
 
-                            
-                            
-                            </div>
-                         <?php } ?>
-                    </div>
-                
+                      <?php } ?>
+                       
+                   
+                   
+                   
+                   </div>
+            </div>
             
         </fieldset>
     </div>
