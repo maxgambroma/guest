@@ -63,6 +63,7 @@ echo form_open( base_url().'index.php/agenda/edit_data_preno', $attributes);
             </ul>
         </div>
 </fieldset>
+<input id="preno_importo" type="hidden" name="preno_importo"  value="<?php echo $importo; ?> "  />
 <input id="cambia_data" type="hidden" name="cambia_data"  value="1"  />
 <input id="disponibilita" type="hidden" name="disponibilita"  value="<?php echo max($disponibilita) ?>"  />
 <input id="conto_id" type="hidden" name="conto_id"  value="<?php echo $this->input->get('conto_id'); ?>"  />
