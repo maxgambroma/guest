@@ -282,3 +282,16 @@ $lang['restrizione1'] = "Soggetto a disponibilità ";
 
 
 $lang['punti_tex'] = "Punti Totalizzati ";
+
+
+
+
+//
+$lang['punti_spesi_id'] = 'Punti_spesi_id';
+$lang['hotel_id'] = 'Hotel_id';
+$lang['cliente_id'] = 'Cliente_id';
+$lang['conto_id'] = 'Conto_id';
+$lang['punti'] = 'Punti';
+$lang['data'] = 'Data';
+$lang['data_record'] = 'Data_record';
+$lang['utente_id'] = 'Utente_id';
