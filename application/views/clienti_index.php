@@ -49,6 +49,7 @@ if ($rs_clienti) {
             (*) Questo servizio è soggetto a disponibilità
         </p>
     </div>
+
     <?php if (isset($punti)) { ?>
         <div class="panel callout radius">
             <p> 
@@ -114,6 +115,34 @@ if ($rs_clienti) {
     <?php
 }
 ?>
+
+
+<?php
+
+// conti aperti
+print_r($conti) ;
+
+//foreach ($conti as $key => $value) {
+    
+
+
+?>
+
+<ul class="pricing-table">
+  <li class="title">Standard</li>
+  <li class="price">$99.99</li>
+  <li class="description">An awesome description</li>
+  <li class="bullet-item">1 Database</li>
+  <li class="bullet-item">5GB Storage</li>
+  <li class="bullet-item">20 Users</li>
+  <li class="cta-button"><a class="button" href="#">Buy Now</a></li>
+</ul>
+
+
+<?php // } ?>
+
+
+
 <?php if (isset($preno)) { ?>
     <?php foreach ($preno as $key => $row_new) { ?>
         <div>
