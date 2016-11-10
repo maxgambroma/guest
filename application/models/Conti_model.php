@@ -785,16 +785,18 @@ class Conti_model extends CI_Model {
 
         $sql = "
 SELECT
-refer_clienti.clienti_id,
-refer_clienti.conto_id,
-refer_clienti.hotel_id,
-refer_clienti.ps_valore,
-refer_clienti.refer_clienti_utente_id
+	refer_clienti.clienti_id,
+	refer_clienti.conto_id,
+	refer_clienti.hotel_id,
+	refer_clienti.ps_valore,
+	refer_clienti.refer_clienti_utente_id
 FROM
-refer_clienti
+	conti
+	INNER JOIN refer_clienti
+	 ON conti.foglio_id = refer_clienti.conto_id
 WHERE
-refer_clienti.clienti_id = $clienti_id AND
-'conti_stato_camere <>  7 ";
+	refer_clienti.clienti_id = $clienti_id
+	AND conti.conti_stato_camere <> 7 ";
 
         $query = $this->db->query($sql);
         $return = $query->result();

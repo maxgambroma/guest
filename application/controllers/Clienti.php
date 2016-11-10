@@ -11,6 +11,7 @@ class Clienti extends CI_Controller {
         $this->load->model('agenda_model');
         $this->load->model('tipologia_camera_model');
         $this->load->model('obmp_review_model');
+         $this->load->model('conti_model');
         $this->load->library('form_validation');
         $this->load->library('table');
         $this->load->library('pagination');
@@ -218,10 +219,14 @@ class Clienti extends CI_Controller {
        
           
           
-          // trovo i bunti per i fidelizzati
+          // trovo i punti per i fidelizzati
            $data['punti'] = $this->clienti_model->clienti_punti($clienti_id );
+           
+           // trovo i conti aperti
+           $data['conti'] = $this->conti_model->conti_clienti($clienti_id) ;
+           
+           
           // elenco le nuove prenotazioni 
-          
            $email = $cliente[0]->clienti_email;
             // trovo le nuove preno
             $data['preno'] = $preno = $this->agenda_model->get_booking_by_email($email);       
