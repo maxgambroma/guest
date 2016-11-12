@@ -210,7 +210,7 @@ class Clienti extends CI_Controller {
         $data['today'] = $today = date('Y-m-d');
         $data['hotel_id'] = $hotel_id;
       
-        
+        $today = date('Y-m-d');
          
           $conto_id = $this->uri->segment(3, 1 );
           $clienti_id = $this->uri->segment(4, 1 );  
@@ -223,7 +223,13 @@ class Clienti extends CI_Controller {
            $data['punti'] = $this->clienti_model->clienti_punti($clienti_id );
            
            // trovo i conti aperti
-           $data['conti'] = $this->conti_model->conti_clienti($clienti_id) ;
+           
+           
+            $data['conti']=  $conti =  $this->conti_model->rs_conto_id($hotel_id, $conto_id, $today);
+           
+           // print_r($conti);
+            
+            $data['conti_saldo']= $conti_saldo = $this->conti_model->totale_conto_camera($hotel_id, $conto_id, $today) ;
            
            
           // elenco le nuove prenotazioni 
