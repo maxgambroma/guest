@@ -117,61 +117,26 @@ if ($rs_clienti) {
 ?>
 
 
-<?php
-
-// conti aperti
-// 
-
- print_r($conti_saldo) ;
-
-//foreach ($conti as $key => $value) {
-//    
-//    [conto_id] => 159576
-//            [hotel_id] => 
-//            [foglio_id] => 187459
-//            [clienti_id] => 67491
-//            [in_conto] => 2012-12-06
-//            [in_conto_time] => 2012-12-06 10:06:05
-//            [out_preno] => 2012-12-07
-//            [out_conto] => 2012-12-07
-//            [preno_id] => 88262
-//            [camera_id] => 68
-//            [numero_camera] => 204
-//            [trattamento_sog] => BB
-//            [tipo_camera] => Doppia Uso
-//            [tipologia_id] => 7
-//            [prezzo] => 125.00
-//            [nome_cliente] => ROBERTO
-//            [cognome_cliente] => PAOLUZZI
-//            [preno_agenzia] => 0
-//            [mercato] => 
-//            [conti_stato_camere] => 7
-//            [acconto] => 
-//            [conto_pag_modalita] => 
-//            [data_record] => 2012-12-07 08:48:37
-//       
-//ray
-//(
-//    [totale_notti] => 1
-//    [iporto_conto_camera] => 0
-//    [totale_extra] => 2
-//    [totale_acconti] => 127
-//    [totale_a_saldo] => -125
-//    [totale_saldo_previsto] => -125
-//    [totale_conto_previsto] => 2
-//)
-
-?>
 
 <ul class="pricing-table">
-  <li class="title">MR  <?php echo $conti[0]->clienti_nome; ?>  ROOM N° <?php echo $conti[0]->numero_camera; ?></li>
-  <li class="price"> Importo Camera <?php echo $conti_saldo['iporto_conto_camera']; ?></li>
+  <li class="title">ROOM N° <?php echo $conti[0]->numero_camera; ?></li>
+  <li class="price"> Importo Camera <?php echo $conti_saldo['conto_camera']; ?></li>
+  
   <li class="description"> IN <?php echo $conti[0]->in_conto; ?> OUT <?php echo $conti[0]->out_preno; ?></li>
-  <li class="bullet-item">Acconto <?php echo $conti_saldo['totale_acconti']; ?></li>
-  <li class="bullet-item">Totale a Saldo ad oggi <?php echo $conti_saldo['totale_a_saldo']; ?></li>
-  <li class="bullet-item">Saldo previsto <?php echo $conti_saldo['totale_saldo_previsto']; ?></li>
-    <li class="bullet-item"><?php echo $conti_saldo['totale_conto_previsto']; ?></li>
-  <li class="cta-button"><a class="button" href="#">Buy Now</a></li>
+  
+  
+  <li class="bullet-item">Extra <?php echo $conti_saldo['totale_extra']; ?></li>
+  <li class="bullet-item">Acconti <?php echo $conti_saldo['totale_acconti']; ?></li>
+  <li class="bullet-item">Saldo Soggiorno <?php echo $conti_saldo['saldo_preno']; ?></li>
+
+
+   
+   
+   <li class="cta-button"><a class="button" href="#">Buy Now</a></li>
+
+
+
+
 </ul>
 
 

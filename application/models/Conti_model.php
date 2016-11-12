@@ -15,7 +15,7 @@ class Conti_model extends CI_Model {
      * 
      * @return type
      */
-    function rs_conto_id($hotel_id, $conto_id, $today) {
+    function rs_conto_id( $conto_id, $today) {
         $query = $this->db->query(
                 "SELECT *, conti.camera_id,   
                 (to_days('$today') - to_days(in_conto)) AS numero_notti,   
@@ -27,8 +27,7 @@ class Conti_model extends CI_Model {
                 LEFT JOIN clienti ON refer_clienti.clienti_id = clienti.clienti_id
                 LEFT JOIN agenzie ON conti.preno_agenzia = agenzie.agenzia_id
                 WHERE
-                (conti.conto_id = '$conto_id')AND
-                (conti.hotel_id = '$hotel_id') "
+                (conti.conto_id = '$conto_id') "
         );
 
         $result = $query->result();
@@ -42,7 +41,7 @@ class Conti_model extends CI_Model {
      * @param type $hotel_id
      * @return type 
      */
-    function rs_diff_data($today, $conto_id, $hotel_id) {
+    function rs_diff_data($today, $conto_id ) {
 
         $sql = "
     SELECT *,
@@ -53,8 +52,8 @@ class Conti_model extends CI_Model {
     FROM
     conti 
     WHERE
-    (conti.conto_id = '$conto_id')AND 
-    (conti.hotel_id = '$hotel_id')";
+    (conti.conto_id = '$conto_id')
+    ";
 
         $query = $this->db->query($sql);
         $return = $query->result();
@@ -67,11 +66,11 @@ class Conti_model extends CI_Model {
      * @param type $hotel_id
      * @return type
      */
-    function rs_tot_extra($conto_id, $hotel_id) {
+    function rs_tot_extra($conto_id) {
 
         $sql = "
         SELECT adebiti.prezzo,
-        SUM(adebiti.prezzo * adebiti.quantita) AS tot_extra,
+        SUM( adebiti.prezzo * adebiti.quantita ) AS tot_extra,
         adebiti.descrizione,
         adebiti.prodotto_id,
         adebiti.conto_id,
@@ -82,8 +81,7 @@ class Conti_model extends CI_Model {
         FROM
         adebiti
         WHERE
-        (adebiti.conto_id = '$conto_id') AND 
-        (adebiti.hotel_id = '$hotel_id')
+        (adebiti.conto_id = '$conto_id') 
         GROUP BY
         adebiti.conto_id";
 
@@ -98,17 +96,32 @@ class Conti_model extends CI_Model {
      * @param type $hotel_id
      * @return type
      */
-    function rs_acconti($conto_id, $hotel_id) {
+    function rs_acconti($conto_id ) {
 
         $sql = "
-    SELECT
-    SUM(cassa.pagamento_importo_pag) AS tot_contanti
-    FROM
-    cassa
-    LEFT OUTER JOIN agenda ON (cassa.preno_id = agenda.preno_id)
-    WHERE
-    (cassa.conto_id = '$conto_id')AND 
-    (cassa.hotel_id = '$hotel_id')
+SELECT
+	SUM( cassa.pagamento_importo_pag ) AS tot_p_acconti,
+	cassa.cassa_id,
+	cassa.hotel_id,
+	cassa.preno_id,
+	cassa.conto_id,
+	cassa.out_conto,
+	cassa.totale_modificato,
+	cassa.pagamento_importo_pag,
+	cassa.pagamento_forma,
+	cassa.cassa_stato_camera,
+	cassa.sospeso,
+	cassa.fattura_numero,
+	cassa.nome_pagante,
+	cassa.cassa_data_record,
+	cassa.cassa_utente_id
+FROM
+	cassa
+WHERE
+	(cassa.conto_id = '$conto_id')
+GROUP BY
+	cassa.conto_id    
+
 ";
 
         $query = $this->db->query($sql);
@@ -122,18 +135,17 @@ class Conti_model extends CI_Model {
      * @param type $hotel_id
      * @return type
      */
-    function rs_tax($conto_id, $hotel_id) {
+    function rs_tax($conto_id ) {
 
         $sql = "
     SELECT   tax_pagamento.hotel_id,
-    SUM(tax_pagamento.importo) AS totale_pagato,
-    COUNT(tax_pagamento.tax_pagamento_id) AS pax_numero
+    SUM( tax_pagamento.importo ) AS totale_pagato,
+    COUNT( tax_pagamento.tax_pagamento_id ) AS pax_numero
     FROM
     tax_pagamento
     WHERE
-    (tax_pagamento.hotel_id = '$hotel_id') AND
-    (tax_pagamento.tassa_stato = '1') AND 
-    (tax_pagamento.conto_id = '$conto_id') 
+    (tax_pagamento.conto_id = '$conto_id') AND
+    (tax_pagamento.tassa_stato = '1') 
     GROUP BY   tax_pagamento.hotel_id
 
 ";
@@ -143,22 +155,78 @@ class Conti_model extends CI_Model {
         return $return;
     }
 
-    function totale_conto_camera($hotel_id, $conto_id, $today) {
+    
+    
+    
+       function conto_aperto_cliente_id($clienti_id ) {
+
+        $sql = "
+SELECT
+ conti.conti_stato_camere,
+	refer_clienti.clienti_id,
+	conti.conto_id,
+	conti.hotel_id,
+	conti.foglio_id,
+	conti.clienti_id,
+	conti.in_conto,
+	conti.in_conto_time,
+	conti.out_preno,
+	conti.out_conto,
+	conti.preno_id,
+	conti.camera_id,
+	conti.numero_camera,
+	conti.trattamento_sog,
+	conti.tipo_camera,
+	conti.tipologia_id,
+	conti.prezzo,
+	conti.nome_cliente,
+	conti.cognome_cliente,
+	conti.preno_agenzia,
+	conti.mercato,
+	conti.conti_utente_id
+FROM
+	conti
+	LEFT OUTER JOIN refer_clienti
+	 ON conti.conto_id = refer_clienti.conto_id
+WHERE
+	conti.conti_stato_camere <> 7
+	AND refer_clienti.clienti_id = '$clienti_id'
+            ORDER BY
+	conti.conto_id DESC
+";
+        $query = $this->db->query($sql);
+        $return = $query->result();
+        return $return;
+    }
+
+    
+    
+    
+    
+    
+    
+    
+    function totale_conto_camera($conto_id, $today) {
         /* ----------------inizio  Calcola il Totale Notti ------------------------------------------ */
 
+        
+
+     
+        
 // conto 
-        $diff_data = $this->rs_diff_data($today, $conto_id, $hotel_id);
+        $diff_data = $this->rs_diff_data($today, $conto_id);
 
-        print_r($diff_data);
-
+   
 // e4xtra
-        $rs_tot_extra = $this->rs_tot_extra($conto_id, $hotel_id);
+        $rs_tot_extra = $this->rs_tot_extra($conto_id);
 //acconti
-        $rs_acconti = $this->rs_acconti($conto_id, $hotel_id);
+        $acconti = $this->rs_acconti($conto_id) ;
+        
+       
 // tax
-        $rs_tax = $this->rs_tax($conto_id, $hotel_id);
+     //   $rs_tax = $this->rs_tax($conto_id);
 
-        $numero_notti = $diff_data[0]->numero_notti;
+        $numero_notti = (float) $diff_data[0]->numero_notti;
 
         /* Arrivi nella notte se il check in e prima delle 6.59 si calcola una altra notte  */
         if ($diff_data[0]->ora_check_in < 7) {
@@ -186,17 +254,17 @@ class Conti_model extends CI_Model {
         /* fine  */
 
 
-        $notti_preno = $diff_data[0]->notti_previste; // notti previste 
-        $prezzo_camara = $diff_data[0]->prezzo; // prezzo Camera 
-        $notti_solare = $diff_data[0]->numero_notti; // notti solare 
-        $notti_conto = ($numero_notti + $ora_gg_in + $ora_gg_out + $ora_gg_cl ); // notti da pagare
-        $conto_camera = $diff_data[0]->prezzo * $notti_conto;     // importo del pernotto attuale 
-        $conto_camera_preno = $diff_data[0]->prezzo * $notti_preno;     // importo del pernotto previsto
-        $totale_extra = $rs_tot_extra[0]->tot_extra;  // impoto degli extra
-        $totale_acconti = $rs_acconti[0]->tot_contanti; // totale Acconti 
-        $saldo = $conto_camera + $totale_extra - $totale_acconti; // saldo  attuale
-        $saldo_preno = $conto_camera_preno + $totale_extra - $totale_acconti; // saldo da reno
-        $tot_conto_preno = $conto_camera_preno + $totale_extra;
+        $notti_preno = (float)  $diff_data[0]->notti_previste; // notti previste 
+        $prezzo_camara = (float) $diff_data[0]->prezzo; // prezzo Camera 
+        $notti_solare =  (float) $diff_data[0]->numero_notti; // notti solare 
+        $notti_conto = (float)  $numero_notti + (float) $ora_gg_in + (float) $ora_gg_out + (float) $ora_gg_cl ; // notti da pagare
+        $conto_camera = (float) $diff_data[0]->prezzo * (float) $notti_conto;     // importo del pernotto attuale 
+        $conto_camera_preno = (float) $diff_data[0]->prezzo * (float) $notti_preno;     // importo del pernotto previsto
+        $totale_extra = (float) $rs_tot_extra[0]->tot_extra;  // impoto degli extra
+        $totale_acconti = (float)  $acconti[0]->tot_p_acconti; // totale Acconti 
+        $saldo = (float)  $conto_camera + (float) $totale_extra - (float) $totale_acconti; // saldo  attuale
+        $saldo_preno = (float) $conto_camera_preno + (float) $totale_extra -(float)  $totale_acconti; // saldo da reno
+        $tot_conto_preno = (float) $conto_camera_preno + (float) $totale_extra;
 
         /* ----------------------- Fine Calcola il Totale Notti----------------------------------- */
 
@@ -215,7 +283,7 @@ class Conti_model extends CI_Model {
             "saldo" => round($saldo, 3),
             "saldo_preno" => round($saldo_preno, 3),
             "tot_conto_preno" => round($tot_conto_preno, 3),
-            "tot_tax_pagato" => round($tot_tax_pagato, 3),
+         //   "tot_tax_pagato" => round($tot_tax_pagato, 3),
         );
 
         return $dati;
