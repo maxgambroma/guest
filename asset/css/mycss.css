@@ -301,3 +301,22 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cfe7fa', end
 	vertical-align: middle;
     
 }
+
+
+.box_sconto{
+    
+background-color:  #2cc36b;
+}
+
+
+.av-summary{
+
+        background-color: #f5f5f5;
+    border-bottom: 1px solid #e5ebfb;
+    border-top: 1px solid #e5ebfb;
+    margin: 0 0 20px;
+    padding: 1em;
+
+    
+    
+}

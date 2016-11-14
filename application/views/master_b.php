@@ -11,7 +11,7 @@
     
     
     
-    <div class="small-12 large-9 columns" id="col_principale" >
+    <div class="small-12  medium-8  large-9 columns" id="col_principale" >
         <div class="row">
             <div class="small-12 large-12 columns">
                 
@@ -176,83 +176,73 @@
             <fieldset>
 
                 <div class="row">
-                    <!--    immagine-->
-                    <div class="small-12 large-4 columns">
-                        <ul class="clearing-thumbs clearing-feature" data-clearing>
-                            <!--    img featured-->
-                            <li class="clearing-featured-img">
-                                <a href="http://placehold.it/800x500" alt="Photo of 1 Uranus." ><img src="http://placehold.it/250x250" alt="Photo  1 TH." ></a>
-                            </li>
-                            <li>
-                                <a href="http://placehold.it/800x500"  alt="Photo of 2 Uranus." > <img src="http://placehold.it/250X250"   alt="Photo  1 TH." ></a>
-                            </li>
-                            <li>
-                                <a href="http://placehold.it/800x500" alt="Photo of 3 Uranus."><img src="http://placehold.it/250X250"   alt="Photo  1 TH." ></a>
-                            </li>
-                        </ul>          
-                        <!--<img class="thumbnail" src="http://placehold.it/250x250" alt="Photo of Uranus.">-->
+                        <!--    immagine-->
+                        <div class="small-12 large-4 columns">
+                            <ul class="clearing-thumbs clearing-feature" data-clearing>
+                                <!--    img featured-->
+                                <li class="clearing-featured-img">
+                                    <a href="http://placehold.it/800x500" alt="Photo of 1 Uranus." ><img src="http://placehold.it/250x250" alt="Photo  1 TH." ></a>
+                                </li>
+                                <li>
+                                    <a href="http://placehold.it/800x500"  alt="Photo of 2 Uranus." > <img src="http://placehold.it/250X250"   alt="Photo  1 TH." ></a>
+                                </li>
+                                <li>
+                                    <a href="http://placehold.it/800x500" alt="Photo of 3 Uranus."><img src="http://placehold.it/250X250"   alt="Photo  1 TH." ></a>
+                                </li>
+                            </ul>          
+                            <!--<img class="thumbnail" src="http://placehold.it/250x250" alt="Photo of Uranus.">-->
+                        </div>
+                        <!--  corpo-->
+                        <div class="small-12 large-8 columns">
+                            <!--    1 riga  titolo e sconto -->
+                            <div class="row">
+                                <div class="small-6  large-8 columns">
+                                    <p>   STANDARD SINGLEE</p>
+                                </div>
+                                <div class="small-6  large-4 columns">
+                                    <p> SCONTO 30%</p> 
+                                </div>
+                            </div>
+                             <!--    2 riga selezione  -->
+                            <div class="row">
+                                <div class="small-4 large-6 columns">
+                                    <p>  STARTING FROM 144.00€ </p>  
+                                </div>
+                                <div class="small-4  large-3 columns">
+                                    <!--                             camara-->
+                                    <input type="hidden" name="cm_rooms_id[]" value="<?php echo $a; ?>" id="cm_rooms_id_<?php echo $a; ?>"  />
+                                    <!--                            prezzo-->
+                                    <input type="hidden" name="price[]" value="<?php echo $a; ?>" id="price_<?php echo $a; ?>"  />
+                                    <!--                              quantita -->
+                                    <select name="num[]" id="num_<?php echo $a; ?>" >
+                                        <option value="0">0  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;     &#8364; 0</option>
+                                        <option value="1">1  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;     &#8364; 100</option>
+                                        <option value="2">2  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;     &#8364; 200</option>
+                                        <option value="3">3  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;     &#8364; 300</option>
+                                    </select>
+                                </div>
+                                <div class="small-4  large-3 columns">
+                                    <!--  booking-->
+                                    <div id="book_bot_<?php echo $a ?>" > <span title="Seleziona la quantita "> Seleziona </span>  </div>
+                                </div>
+                            </div>
+                            <!-- 3 riga  informazioni -->
+                            <div class="row">
+                                <div class="small-12 large-12 columns">
+                                    <span id="info_<?php echo $a ?>" >
+                                        <p> 
+                                            Special Offer, Welcome drink, Free Wi-Fi, Air conditioning,.more..
+                                        </p>
+                                    </span> 
+                                    <p> 
+                                        <button type="button"  id="bottone_<?php echo $a ?>" class=" tiny button info "> More </button>
+                                    </p>
+                                </div>
+                            </div>
+                        </div> 
                     </div>
-                    <!--  corpo-->
-                    <div class="small-12 large-6 columns">
-                        <!--    1 riga  -->
-                        
-                      
-                        
-                        <div class="row">
-                            <div class="small-12 large-8 columns">
-                                STANDARD SINGLEE
-                            </div>
-                            <div class="small-12 large-4 columns">
-                                
-                           
-                                
-<!--                             camara-->
-                                <input type="hidden" name="cm_rooms_id[]" value="<?php echo $a ; ?>" id="cm_rooms_id_<?php echo $a ; ?>"  />
-<!--                            prezzo-->
-                                <input type="hidden" name="price[]" value="<?php echo $a ; ?>" id="price_<?php echo $a ; ?>"  />
-<!--                              quantita -->
-
-
-                                <select name="num[]" id="num_<?php echo $a ; ?>" >
-                                    <option value="0">0  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;     &#8364; 0</option>
-                                    <option value="1">1  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;     &#8364; 100</option>
-                                    <option value="2">2  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;     &#8364; 200</option>
-                                    <option value="3">3  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;     &#8364; 300</option>
-                                </select>
-                              </div>
-                        </div>
-                        <!--    2 riga  -->
-                        <div class="row">
-                            <div class="small-12 large-12 columns">
-                                1 NIGHT STARTING FROM 144.00€ 
-                            </div>
-                        </div>
-                        <!-- 3 riga-->
-                        <div class="row">
-                            <div class="small-12 large-12 columns">
-                                <span id="info_<?php echo $a ?>" >  Special Offer, Welcome drink, Free Wi-Fi, Air conditioning,.more..<i class="fi-arrows-expand"></i>  </span> 
-                                <p> 
-                                <button type="button"  id="bottone_<?php echo $a ?>" class=" tiny button info "> More </button>
-                            </p>
-                            </div>
-                        </div>
-                        
-                        
-                        
-                        
-                    </div> 
-                    <!--  booking-->
-                    <div class="small-12 large-2 columns">
-                    
-                        <div id="book_bot_<?php echo $a ?>" > <span title="Seleziona la quantita "> Seleziona </span>  </div>
-                        
-
-                    
-                    </div>
-                </div>
-            </fieldset>
-            
-           
+                </fieldset>
+          
             
             <!--                                    contenuto nascondi -->
             <div id="tipologia_id_<?php echo $a ?>" style="display: none;" class="av-summary" >  
@@ -393,7 +383,7 @@
     </div>
     
     
-    <div class="small-12 large-3 columns" id="col_riepilogo" >
+    <div class="show-for-medium-up small-12 medium-4 large-3 columns" id="col_riepilogo" >
         <div id="riepilogo" >  
             <fieldset>  
                 riepilogo <br> 
@@ -558,11 +548,9 @@ SUMMARY
 
     <a class="close-reveal-modal" aria-label="Close">&#215;</a>
 </div>
-<script>
-//    $(window).scroll(function () {
-//        $("#riepilogo").stop().animate({"marginTop": ($(window).scrollTop()) + "px", "marginLeft": ($(window).scrollLeft()) + "px"}, "slow");
-//    });
-</script>
+
+
+
 <script>
 
 
@@ -611,3 +599,14 @@ SUMMARY
 
     });
 </script>
+
+
+<div class="show-for-large-up"> 
+
+<script>
+   $(window).scroll(function () {
+      $("#riepilogo").stop().animate({"marginTop": ($(window).scrollTop()) + "px", "marginLeft": ($(window).scrollLeft()) + "px"}, "slow");
+  });
+</script>
+
+</div>
