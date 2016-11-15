@@ -14,6 +14,9 @@ class Obmp extends CI_Controller {
         $this->load->model('tipologia_camera_model');
         $this->load->model('obmp_review_model');
          $this->load->model('conti_model');
+         $this->load->model('prezzi_disponibilita_model');
+         
+         
         $this->load->library('form_validation');
         $this->load->library('table');
         $this->load->library('pagination');
@@ -57,7 +60,7 @@ class Obmp extends CI_Controller {
                 
                 
                 
-                 $data['lg'] = $this->lg;
+                 $data['lg'] = $lg = $this->lg;
 
         $today = date('Y-m-d');
         if ($this->input->get('hotel_id')) {
@@ -72,19 +75,25 @@ class Obmp extends CI_Controller {
 
     //    $data['rs_clienti'] = $this->clienti_model->get_privacy($today, $hotel_id);
 
+        
+        
+        $data['camere_obmp'] = $this->prezzi_disponibilita_model->camere_obmp($hotel_id ) ;
+        
+        
+        
 
         // scegli il templete
-        $temi = 'tem_full';
+        $temi = 'tem_cb_obmp';
         // carica la vista del contenuto
-        $vista = 'master_b';
+        $vista = 'obmp';
         // gestore templete
         $data['temp'] = array
             ('templete' => $temi,
             'contenuto' => $vista,
-            'bar_1' => 'bar_1',
+            'bar_1' => 'bar_1_obmp',
             'bar_2' => 'bar_2',
             'box_top' => 'box_top');
-        $this->load->view('templetes_guest', $data);
+        $this->load->view('templetes_obmp', $data);
                 
                 
                 
@@ -138,19 +147,22 @@ class Obmp extends CI_Controller {
 
 
         
+        
         // scegli il templete
-        $temi = 'tem_full';
+        $temi = 'tem_cb_obmp';
         // carica la vista del contenuto
         $vista = 'master_b_availability';
         // gestore templete
         $data['temp'] = array
             ('templete' => $temi,
             'contenuto' => $vista,
-            'bar_1' => 'bar_1',
+            'bar_1' => 'bar_1_obmp',
             'bar_2' => 'bar_2',
             'box_top' => 'box_top');
-        $this->load->view('templetes_guest', $data);
-                
+        $this->load->view('templetes_obmp', $data);
+        
+        
+        
                 
                 
 	}
@@ -179,19 +191,23 @@ class Obmp extends CI_Controller {
 
     //    $data['rs_clienti'] = $this->clienti_model->get_privacy($today, $hotel_id);
 
+    
+        
 
+        
         // scegli il templete
-        $temi = 'tem_full';
+        $temi = 'tem_cb_obmp';
         // carica la vista del contenuto
         $vista = 'master_b_confirmation';
         // gestore templete
         $data['temp'] = array
             ('templete' => $temi,
             'contenuto' => $vista,
-            'bar_1' => 'bar_1',
+            'bar_1' => 'bar_1_obmp',
             'bar_2' => 'bar_2',
             'box_top' => 'box_top');
-        $this->load->view('templetes_guest', $data);
+        $this->load->view('templetes_obmp', $data);
+        
                 
                 
                 

@@ -12,6 +12,7 @@
     
     
     <div class="small-12  medium-8  large-9 columns" id="col_principale" >
+        
         <div class="row">
             <div class="small-12 large-12 columns">
                 
@@ -476,15 +477,6 @@ SUMMARY
     
 </div>
 <!--dettagli-->
-<div class="row">
-    <div class="small-12 large-10 columns"> ... </div>
-    <div class="small-12 large-2 columns"> ... </div>
-</div>
-<div class="row">
-    <div class="small-12 large-12 columns"> ... </div>
-</div>
-
-
 
 
 

@@ -79,7 +79,7 @@ class Tex_lingue extends CI_Controller {
         $data['albergo'] = $this->hotel_model->hotel($hotel_id);
             
             
-                $limit = 15; 
+                $limit = 300; 
                 $this->cont_record =  $this->tex_lingue_model->record_count() ;            
                
                 $config['base_url'] = base_url().'index.php/tex_lingue';
