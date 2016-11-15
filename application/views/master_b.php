@@ -18,13 +18,13 @@
                 <div id="calendario1" class="av-summary" > 
                     <div class="row"> 
                         <div class="small-4 large-3 columns">
-                            From  <br> 13/11/201
+                            <p>   From  <br> 13/11/201</p>
                         </div>
                         <div class="small-4 large-3 columns">
-                            To <br> 14/11/2016 <br>
+                         <p>   To <br> 14/11/2016 </p>
                              </div>
                            <div class="small-4 large-3 columns">
-                           Soggiorno:  <br> 2 notti) 
+                         <p>  Soggiorno:  <br> 2 notti)  </p>
                            
                         </div>
                  

@@ -1,5 +1,4 @@
 <?php
-
 //$lang['ok']='Success';
 //$lang['noisert'] ='No data entered in the same';
 //$lang['noupdata'] ='No Record Updated';
@@ -61,6 +60,9 @@
 //$lang['ip_review'] ='Ip_review';
 //$lang['data_review'] ='Data_review';
 //$lang['review_data_record'] ='Review_data_record';
+
+
+
 
 $lang['ok'] = "Success";
 $lang['noisert'] = "Entered data do not";
@@ -295,3 +297,14 @@ $lang['punti'] = 'Punti';
 $lang['data'] = 'Data';
 $lang['data_record'] = 'Data_record';
 $lang['utente_id'] = 'Utente_id';
+
+
+
+
+$lang['tex_lingue_id'] = 'Tex_lingue_id';
+$lang['etichetta_lg'] = 'Etichetta_lg';
+$lang['en'] = 'En';
+$lang['it'] = 'It';
+$lang['es'] = 'Es';
+$lang['fr'] = 'Fr';
+$lang['de'] = 'De';
