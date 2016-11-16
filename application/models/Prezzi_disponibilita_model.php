@@ -307,55 +307,74 @@ class Prezzi_disponibilita_model extends CI_Model {
      * @param type $lg
      * @return type 
      */
-    function camere_obmp($hotel_id, $tipologia_id = NULL, $agenzia_id = 279, $lg = 'en') {
+    function camere_obmp($hotel_id, $tipologia_id = NULL, $agenzia_id = 279, $lg = 'en', $stato = NULL) {
 
 
         if ($tipologia_id != NULL) {
-            $filtro = " obmp_cm_rooms.obmp_cm_rooms_tipologia_id = '$tipologia_id' AND ";
+            $filtro_a = " obmp_cm_rooms.obmp_cm_rooms_tipologia_id = '$tipologia_id' AND ";
         } else {
-            $filtro = '';
+            $filtro_a = '';
         }
+
+
+
+        if ($stato != NULL) {
+            $filtro_b = " obmp_cm_rooms.obmp_cm_rooms_attiva = '$stato' AND ";
+        } else {
+            $filtro_b = '';
+        }
+
+
+
+
+
+        $filtro = $filtro_a . $filtro_b;
+
 
         $sql = "
             SELECT
-              obmp_cm_rooms.obmp_cm_rooms_max_room,
-              obmp_cm.hotel_id,
-              obmp_cm.agenzia_id,
-              obmp_cm.obmp_cm_id_hotel_agenzia,
-              obmp_cm.obmp_cm_attiva,
-              obmp_cm_rooms.obmp_cm_rooms_id,
-              obmp_cm_rooms.obmp_cm_rooms_attiva,
-              obmp_cm_rooms.obmp_cm_rooms_tipologia_id,
-              obmp_cm_rooms.obmp_cm_rooms_room_var_prezzo,
-              obmp_cm_rooms.obmp_cm_rooms_room_min_prezzo,
-              obmp_cm_rooms.obmp_cm_rooms_trattamento,
-              obmp_cm_rooms.obmp_cm_rooms_max_pax,
-              obmp_cm_rooms.obmp_cm_rooms_room_note,
-              obmp_cm_lingue.obmp_cm_lingue_codice,
-              obmp_cm_lingue.obmp_cm_lingue_nome,
-              obmp_cm_lingue.obmp_cm_lingue_descrizione,
-              obmp_cm_lingue.obmp_cm_lingue_html1,
-              obmp_cm_lingue.obmp_cm_lingue_html2,
-              obmp_cm_lingue.obmp_cm_lingue_html3,
-              obmp_cm_lingue.obmp_cm_lingue_note,
-              obmp_cm_lingue.obmp_cm_lingue_politiche,
-              obmp_cm_lingue.obmp_cm_lingue_condizioni,
-              obmp_cm.obmp_cm_id,
-              obmp_cm_lingue.obmp_cm_lingue_id,
-              obmp_cm_rooms.obmp_cm_rooms_nesting,
-              obmp_cm_rooms.obmp_cm_rooms_foto,
-              obmp_cm_rooms.obmp_cm_rooms_foto270,
-              obmp_cm_rooms.obmp_cm_rooms_foto150,
-              obmp_cm_rooms.obmp_cm_rooms_foto700
-      FROM
-              obmp_cm_rooms
-              INNER JOIN obmp_cm
-               ON obmp_cm_rooms.obmp_cm_id = obmp_cm.obmp_cm_id
-              INNER JOIN obmp_cm_lingue
-               ON obmp_cm_rooms.obmp_cm_rooms_id = obmp_cm_lingue.obmp_cm_rooms_id
+            obmp_cm_rooms.obmp_cm_rooms_max_room,
+            obmp_cm.hotel_id,
+            obmp_cm.agenzia_id,
+            obmp_cm.obmp_cm_id_hotel_agenzia,
+            obmp_cm.obmp_cm_attiva,
+            obmp_cm_rooms.obmp_cm_rooms_id,
+            obmp_cm_rooms.obmp_cm_rooms_attiva,
+            obmp_cm_rooms.obmp_cm_rooms_tipologia_id,
+            obmp_cm_rooms.obmp_cm_rooms_room_var_prezzo,
+            obmp_cm_rooms.obmp_cm_rooms_room_min_prezzo,
+            obmp_cm_rooms.obmp_cm_rooms_trattamento,
+            obmp_cm_rooms.obmp_cm_rooms_max_pax,
+            obmp_cm_rooms.obmp_cm_rooms_room_note,
+            obmp_cm_lingue.obmp_cm_lingue_codice,
+            obmp_cm_lingue.obmp_cm_lingue_nome,
+            obmp_cm_lingue.obmp_cm_lingue_descrizione,
+            obmp_cm_lingue.obmp_cm_lingue_html1,
+            obmp_cm_lingue.obmp_cm_lingue_html2,
+            obmp_cm_lingue.obmp_cm_lingue_html3,
+            obmp_cm_lingue.obmp_cm_lingue_note,
+            obmp_cm_lingue.obmp_cm_lingue_politiche,
+            obmp_cm_lingue.obmp_cm_lingue_condizioni,
+            obmp_cm.obmp_cm_id,
+            obmp_cm_lingue.obmp_cm_lingue_id,
+            obmp_cm_rooms.obmp_cm_rooms_nesting,
+            obmp_cm_rooms.obmp_cm_rooms_foto,
+            obmp_cm_rooms.obmp_cm_rooms_foto270,
+            obmp_cm_rooms.obmp_cm_rooms_foto150,
+            obmp_cm_rooms.obmp_cm_rooms_foto700,
+            tipologia_camera.tipologia_sigla,
+            tipologia_camera.numero_pax
+            FROM
+            obmp_cm_rooms
+            INNER JOIN obmp_cm
+            ON obmp_cm_rooms.obmp_cm_id = obmp_cm.obmp_cm_id
+            INNER JOIN obmp_cm_lingue
+            ON obmp_cm_rooms.obmp_cm_rooms_id = obmp_cm_lingue.obmp_cm_rooms_id
+            INNER JOIN tipologia_camera
+            ON obmp_cm_rooms.obmp_cm_rooms_tipologia_id = tipologia_camera.tipologia_id
             WHERE
             obmp_cm.hotel_id = '$hotel_id' AND    
-         $filtro 
+            $filtro 
             obmp_cm.agenzia_id = '$agenzia_id'  AND
             obmp_cm_lingue.obmp_cm_lingue_codice = '$lg' AND  
             obmp_cm_rooms.obmp_cm_rooms_nesting IS NOT NULL AND

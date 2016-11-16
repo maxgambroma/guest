@@ -76,8 +76,8 @@ class Obmp extends CI_Controller {
     //    $data['rs_clienti'] = $this->clienti_model->get_privacy($today, $hotel_id);
 
         
-        
-        $data['camere_obmp'] = $this->prezzi_disponibilita_model->camere_obmp($hotel_id ) ;
+        $stato = 1 ; // camera attive
+        $data['camere_obmp'] = $this->prezzi_disponibilita_model->camere_obmp($hotel_id, $tipologia_id = NULL, $agenzia_id = 279, $lg , $stato ) ;
         
         
         
