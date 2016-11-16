@@ -842,6 +842,8 @@ class Prezzi_disponibilita_model extends CI_Model {
         $nome_tipologia = $giorno['nome_tipologia'];
         $hotel_numero_camere = $giorno['hotel_numero_camere'];
         $hotel_disp_modo = $giorno['hotel_disp_modo'];
+       
+        
 
 // totale soggiorno   
         $sum_prezzo[0] = 0;
@@ -849,6 +851,13 @@ class Prezzi_disponibilita_model extends CI_Model {
         foreach ($prezzo_giorno as $key => $value) {
             $sum_prezzo[$key] = round(array_sum($value), 2);
         }
+        
+// min_nesting
+        
+        foreach ($nesting as $key => $value) {
+            $min_nesting[$key] = min($value);
+        }
+        
 
 // prezzo medio giornaliero
         $avg_prezzo[0] = 0;
@@ -861,6 +870,7 @@ class Prezzi_disponibilita_model extends CI_Model {
             'prezzo_giorno' => $prezzo_giorno,
             'sum_prezzo' => $sum_prezzo,
             'avg_prezzo' => $avg_prezzo,
+            'min_nesting' => $min_nesting,
             'tableau_dett' => $tableau_dett,
             'nesting' => $nesting,
             'nome_tipologia' => $nome_tipologia,
@@ -886,6 +896,17 @@ class Prezzi_disponibilita_model extends CI_Model {
         return $array_totale_risultati;
     }
 
+    
+    
+    /**
+     * 
+     * @param type $hotel_id
+     * @param type $tableau
+     * @param type $tot_cam_libere
+     * @return int
+     */
+    
+    
     function nesting_tipologia($hotel_id, $tableau, $tot_cam_libere) {
 // print_r($tableau);
 // per tutte le tipologie

@@ -4,13 +4,13 @@
                 <div id="calendario1" class="av-summary" > 
                     <div class="row"> 
                         <div class="small-4 large-3 columns">
-                            <p>   From  <br> 13/11/201</p>
+                            <p>   From  <br> <?php echo date("D M j Y", strtotime($preno_dal));  ; ?></p>
                         </div>
                         <div class="small-4 large-3 columns">
-                         <p>   To <br> 14/11/2016 </p>
+                         <p>   To <br> <?php echo date("D M j Y", strtotime($preno_al));  ; ?> </p>
                              </div>
                            <div class="small-4 large-3 columns">
-                         <p>  Soggiorno:  <br> 2 notti)  </p>
+                         <p>  Soggiorno:  <br> <?php $night; ?> notti)  </p>
                            
                         </div>
                  
@@ -33,14 +33,14 @@
                                     <div class="row">
                                         <div class="   large-12 columns">
                                             <label>Arrivo  
-                                                <input class="calendario_jquery " name="preno_dal" id="preno_dal_c" value="" type="text">
+                                                <input class="calendario_jquery " name="preno_dal" id="preno_dal_c" value="<?php echo $preno_dal; ?>" type="text">
                                             </label>
                                         </div> 
                                     </div>
                                     <div class="row">
                                         <div class=" large-12 columns">
                                             <label>Partenza
-                                                <input class="calendario_jquery " name="preno_al" id="preno_al_c" value="" type="text">
+                                                <input class="calendario_jquery " name="preno_al" id="preno_al_c" value="<?php echo $preno_al; ?>" type="text">
                                             </label>
                                         </div>
                                     </div>
@@ -59,19 +59,27 @@
                                     </div>  -->
                                     <div class="row">
                                         <div class="  large-12 columns">
-                                            <label>Numero Camere    <select name="Q1" id="select2">
-                                                    <option value="1" selected="selected"> 1</option>
-                                                    <option value="2"> 2</option>
-                                                    <option value="3"> 3</option>
-                                                    <option value="4"> 4</option>
-                                                    <option value="5"> 5</option>
-                                                    <option value="6"> 6</option>
-                                                    <option value="7"> 7</option>
-                                                    <option value="8"> 8</option>
-                                                    <option value="9"> 9</option>
-                                                    <option value="10"> 10</option>
-                                                </select>
+                                            <label>Numero Camere   
+                                                               <?php
+                                            $options = array(
+                                                '0' => 'Please Select',
+                                                '1' => '1',
+                                                '2' => '2',
+                                                '3' => '3',
+                                                '4' => '4',
+                                                '5' => '5',
+                                            );
+                                            ?>
+                                             <?php echo form_dropdown('Q1', $options,   (! set_value('Q1')) ?  $Q1 :  set_value('Q1')   )?>
+                                                    
                                             </label>
+                                            
+                                            
+                          
+</p>            
+                                            
+                                            
+                                            
                                         </div>
                                     </div>
                                     <div class="row">

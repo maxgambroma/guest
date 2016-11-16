@@ -1,4 +1,3 @@
-
         <div id="riepilogo" >  
             <fieldset>  
                 riepilogo <br> 
@@ -10,10 +9,10 @@
                                 <span> Check-in</span>
                             </div>
                             <div class="ContenitoreGiorno">
-                                <span>13</span>
+                                <span><?php echo date("d", strtotime($preno_dal));  ; ?> </span>
                             </div>
                             <div class="ContenitoreGiornoSettimana">
-                                <span>NOV 2016</span>
+                                <span><?php echo date("M y", strtotime($preno_dal));   ?> </span>
                             </div>
                         </div>
                     </div>
@@ -24,10 +23,10 @@
                                 <span> Check-out</span>
                             </div>
                             <div class="ContenitoreGiorno">
-                                <span>14</span>
+                                <span><?php echo date("d", strtotime($preno_al));  ; ?>  </span>
                             </div>
                             <div class="ContenitoreGiornoSettimana">
-                                <span> NOV 2016</span>
+                                <span><?php echo date("M y", strtotime($preno_al));   ?> </span>
                             </div>
                         </div>
                     </div>
@@ -38,7 +37,7 @@
                                 <span>N° of nights</span>
                             </div>
                             <div class="ContenitoreGiornonotti">
-                                <span>1</span>
+                                <span>1<?php echo $night; ?> </span>
                             </div>
                             <div class="ContenitoreGiornoSettimananotti">
                                 <span></span>

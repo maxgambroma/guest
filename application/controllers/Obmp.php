@@ -21,6 +21,7 @@ class Obmp extends CI_Controller {
         $this->load->library('table');
         $this->load->library('pagination');
         $this->load->library('email');
+         $this->load->library('my_tools');
         $this->load->helper('form');
         $this->load->helper('url');
         $this->load->helper('security');
@@ -68,17 +69,46 @@ class Obmp extends CI_Controller {
         } else {
             $hotel_id = 1;
         }
+        
+        
+        
+        
         $data['today'] = $today = date('Y-m-d');
         $data['hotel_id'] = $hotel_id;
 
         $data['albergo'] = $this->hotel_model->hotel($hotel_id);
 
-    //    $data['rs_clienti'] = $this->clienti_model->get_privacy($today, $hotel_id);
+        
+        
+        $preno_dal = $today ;
+        $preno_al = $this->my_tools->somma_gg($today, 1);
+        $Q1 = 1 ;
+        
+        if($this->input->get_post('preno_dal') && $this->input->get_post('preno_al')){
+            
+        $preno_dal = $this->input->get_post('preno_dal');   
+        $preno_al   = $this->input->get_post('preno_al') ;
+   
+        $Q1 =  $this->input->get_post('Q1') ;
+        
+        }
+        
+       
+        $data['preno_dal'] =  $preno_dal;
+        $data['preno_al'] =  $preno_al;
+         $data['Q1'] =  $Q1;
+        
+        $data['night']  = $this->my_tools->data_diff($preno_al, $preno_dal);
+        
+        
+        $data['rs_clienti'] = $this->clienti_model->get_privacy($today, $hotel_id);
 
         
         $stato = 1 ; // camera attive
         $data['camere_obmp'] = $this->prezzi_disponibilita_model->camere_obmp($hotel_id, $tipologia_id = NULL, $agenzia_id = 279, $lg , $stato ) ;
         
+        
+        $data['prezzi'] =  $this->prezzi_disponibilita_model->prezzo_web($hotel_id, $preno_dal, $preno_al, $includi_prezzi = 1) ;
         
         
 
@@ -249,7 +279,7 @@ $camara_cm = $this->input->get('camara_cm');
 
 
 if($num_cm){
-     echo $num_cm . ' Camera ' .$camara_cm .  ' @ '. $prezzo_cm  ;
+     echo $num_cm . ' Camera ' .$camara_cm .  ' @ '. (float)$prezzo_cm * (float) $num_cm ;
 }  else {
      echo '';
 }

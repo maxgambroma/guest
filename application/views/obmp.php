@@ -1,4 +1,4 @@
- <?php // print_r($camere_obmp) ;
+ <?php // print_r($prezzi) ;
  
  
  $url_img = 'http://www.ciaohotel.com/html/obmpmax/obmpmax/'; 
@@ -106,20 +106,23 @@
                              <!--    2 riga selezione  -->
                             <div class="row">
                                 <div class="small-4 large-6 columns">
-                                    <p>  STARTING FROM 144.00€ </p>  
+                                    <p>  STARTING FROM   </p>  
                                 </div>
                                 <div class="small-4  large-3 columns">
                                     <!--                             camara-->
                                     <input type="hidden" name="cm_rooms_id[]" value="<?php  echo $row_rooms->obmp_cm_rooms_id ; ?>" id="cm_rooms_id_<?php echo $row_rooms->obmp_cm_rooms_id ; ?>"  />
                                     <!--                            prezzo-->
-                                    <input type="hidden" name="price[]" value="<?php echo $row_rooms->obmp_cm_rooms_id; ?>" id="price_<?php echo $row_rooms->obmp_cm_rooms_id ; ?>"  />
-                                    <!--                              quantita -->
+                                    <input type="hidden" name="price[]" value="<?php echo $prezzi['avg_prezzo'][$row_rooms->obmp_cm_rooms_tipologia_id] ; ?>" id="price_<?php echo $row_rooms->obmp_cm_rooms_id ; ?>"  />
+                                    <!--  
+                                    quantita -->
                                     <select name="num[]" id="num_<?php echo $row_rooms->obmp_cm_rooms_id ; ?>" >
-                                        <option value="0">0  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;     &#8364; 0</option>
-                                        <option value="1">1  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;     &#8364; 100</option>
-                                        <option value="2">2  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;     &#8364; 200</option>
-                                        <option value="3">3  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;     &#8364; 300</option>
+                                     <option value="0">0  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;    &#8364; 0 </option>                     
+                                    <?php    for ( $i = 1 ; $i <= (float)  min( $Q1, (float)$prezzi['min_nesting'][$row_rooms->obmp_cm_rooms_tipologia_id]) ;   $i++ )
+                                    { ?>
+                                     <option value="<?php echo $i; ?>"><?php echo $i; ?>  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;     &#8364; <?php echo   $prezzi['avg_prezzo'][$row_rooms->obmp_cm_rooms_tipologia_id] * $i ; ?></option>
+                                      <?php } ?>
                                     </select>
+                                    
                                 </div>
                                 <div class="small-4  large-3 columns">
                                     <!--  booking-->
