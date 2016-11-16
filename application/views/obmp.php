@@ -97,7 +97,7 @@
                             <!--    1 riga  titolo e sconto -->
                             <div class="row">
                                 <div class="small-6  large-8 columns">
-                                    <p> <?php echo $row_rooms->obmp_cm_lingue_nome ; ?></p>
+                                    <p> <?php echo $row_rooms->obmp_cm_lingue_nome ; ?>     </p>
                                 </div>
                                 <div class="small-6  large-4 columns ">
                                     <span class="sconto"> SCONTO 30% </span>
