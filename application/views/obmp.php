@@ -1,4 +1,7 @@
- <?php print_r($camere_obmp) ;
+ <?php // print_r($camere_obmp) ;
+ 
+ 
+ $url_img = 'http://www.ciaohotel.com/html/obmpmax/obmpmax/'; 
  
 // 
 //  [0] => stdClass Object
@@ -55,8 +58,8 @@
 
 
        <?php
-        $attributes = array('class' => '', 'id' => '');	           
-        echo form_open( base_url(). 'index.php/obmp/availability/?'. $_SERVER['QUERY_STRING'], $attributes); 
+        $adttributes = array('class' => '', 'id' => '');	           
+        echo form_open( base_url(). 'index.php/obmp/availability/?'. $_SERVER['QUERY_STRING'], $adttributes); 
         ?>   
         
  
@@ -78,7 +81,7 @@
                             <ul class="clearing-thumbs clearing-feature" data-clearing>
                                 <!--    img featured-->
                                 <li class="clearing-featured-img">
-                                    <a href="http://placehold.it/800x500" alt="Photo of 1 Uranus." ><img src="http://placehold.it/250x250" alt="Photo  1 TH." ></a>
+                                    <a href="<?php  echo $url_img . $row_rooms->obmp_cm_rooms_foto150 ;  ?> " alt="Photo of 1 Uranus." ><img src="<?php  echo $url_img . $row_rooms->obmp_cm_rooms_foto150 ;  ?> " alt="Photo  1 TH." ></a>
                                 </li>
                                 <li>
                                     <a href="http://placehold.it/800x500"  alt="Photo of 2 Uranus." > <img src="http://placehold.it/250X250"   alt="Photo  1 TH." ></a>
@@ -94,7 +97,7 @@
                             <!--    1 riga  titolo e sconto -->
                             <div class="row">
                                 <div class="small-6  large-8 columns">
-                                    <p>   STANDARD SINGLEE</p>
+                                    <p> <?php echo $row_rooms->obmp_cm_lingue_nome ; ?></p>
                                 </div>
                                 <div class="small-6  large-4 columns ">
                                     <span class="sconto"> SCONTO 30% </span>
@@ -107,9 +110,9 @@
                                 </div>
                                 <div class="small-4  large-3 columns">
                                     <!--                             camara-->
-                                    <input type="hidden" name="cm_rooms_id[]" value="<?php echo $a; ?>" id="cm_rooms_id_<?php echo $row_rooms->obmp_cm_rooms_id ; ?>"  />
+                                    <input type="hidden" name="cm_rooms_id[]" value="<?php  echo $row_rooms->obmp_cm_rooms_id ; ?>" id="cm_rooms_id_<?php echo $row_rooms->obmp_cm_rooms_id ; ?>"  />
                                     <!--                            prezzo-->
-                                    <input type="hidden" name="price[]" value="<?php echo $a; ?>" id="price_<?php echo $row_rooms->obmp_cm_rooms_id ; ?>"  />
+                                    <input type="hidden" name="price[]" value="<?php echo $row_rooms->obmp_cm_rooms_id; ?>" id="price_<?php echo $row_rooms->obmp_cm_rooms_id ; ?>"  />
                                     <!--                              quantita -->
                                     <select name="num[]" id="num_<?php echo $row_rooms->obmp_cm_rooms_id ; ?>" >
                                         <option value="0">0  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;     &#8364; 0</option>
@@ -134,7 +137,7 @@
                                     <p> 
                                            <span id="bottone_<?php echo $row_rooms->obmp_cm_rooms_id ; ?>" class="apri_pannello"  > <i  class="fi-plus"></i>   </span>
                                         
-                                        <!--<button type="button"  id="bottone_<?php echo $a ?>" class=" tiny button info "> More </button>-->
+                                        <!--<button type="button"  id="bottone_<?php echo $row_rooms->obmp_cm_rooms_id ?>" class=" tiny button info "> More </button>-->
                                     </p>
                                 </div>
                             </div>
@@ -149,8 +152,8 @@
                 <fieldset>
                     <div class="row">
                         <div class="small-12 large-12 columns"> 
-                            <a href="#" class="accordion-title">Accordion 1</a>
-                            <div class="accordion-content" data-tab-content>
+                            
+                            <div class="" >
 
 
                                 <div class="row">
@@ -170,7 +173,7 @@
 
                                     </div>
                                     <div class="small-12 large-4 columns"> 
-                                        <img src="http://placehold.it/250x250" alt="Photo  1 TH." >   
+                                        <img src="<?php  echo $url_img . $row_rooms->obmp_cm_rooms_foto700 ;  ?>" alt="Photo  1 TH." >   
                                     </div>
                                 </div>
 
