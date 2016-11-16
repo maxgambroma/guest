@@ -151,7 +151,7 @@ class Obmp extends CI_Controller {
         // scegli il templete
         $temi = 'tem_cb_obmp';
         // carica la vista del contenuto
-        $vista = 'master_b_availability';
+        $vista = 'obmp_availability';
         // gestore templete
         $data['temp'] = array
             ('templete' => $temi,
@@ -198,7 +198,7 @@ class Obmp extends CI_Controller {
         // scegli il templete
         $temi = 'tem_cb_obmp';
         // carica la vista del contenuto
-        $vista = 'master_b_confirmation';
+        $vista = 'obmp_confirmation';
         // gestore templete
         $data['temp'] = array
             ('templete' => $temi,
