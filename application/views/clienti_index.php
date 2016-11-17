@@ -118,6 +118,8 @@ if ($rs_clienti) {
 
 
 
+<?php   if($conti){  ?>
+
 <ul class="pricing-table">
   <li class="title">ROOM N° <?php echo $conti[0]->numero_camera; ?></li>
   <li class="price"> Importo Camera <?php echo $conti_saldo['conto_camera']; ?></li>
@@ -129,8 +131,6 @@ if ($rs_clienti) {
   <li class="bullet-item">Acconti <?php echo $conti_saldo['totale_acconti']; ?></li>
   <li class="bullet-item">Saldo Soggiorno <?php echo $conti_saldo['saldo_preno']; ?></li>
 
-
-   
    
    <li class="cta-button"><a class="button" href="#">Buy Now</a></li>
 
@@ -139,6 +139,7 @@ if ($rs_clienti) {
 
 </ul>
 
+<?php } ?>
 
 <?php // } ?>
 

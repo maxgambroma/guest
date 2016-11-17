@@ -151,8 +151,14 @@ GROUP BY
 ";
 
         $query = $this->db->query($sql);
-        $return = $query->result();
-        return $return;
+        $return = $query->row();
+        
+  
+            return $return;
+     
+   
+        
+        
     }
 
     
@@ -217,14 +223,13 @@ WHERE
         $diff_data = $this->rs_diff_data($today, $conto_id);
 
    
-// e4xtra
+// extra
         $rs_tot_extra = $this->rs_tot_extra($conto_id);
 //acconti
         $acconti = $this->rs_acconti($conto_id) ;
         
        
-// tax
-     //   $rs_tax = $this->rs_tax($conto_id);
+
 
         $numero_notti = (float) $diff_data[0]->numero_notti;
 
@@ -270,7 +275,8 @@ WHERE
 
 
 
-        $tot_tax_pagato = $rs_tax[0]->totale_pagato;
+         // tax
+        $tot_tax_pagato = $this->rs_tax($conto_id );
 
         $dati = array(
             "notti_preno" => round($notti_preno, 3),
@@ -283,7 +289,7 @@ WHERE
             "saldo" => round($saldo, 3),
             "saldo_preno" => round($saldo_preno, 3),
             "tot_conto_preno" => round($tot_conto_preno, 3),
-         //   "tot_tax_pagato" => round($tot_tax_pagato, 3),
+            "tot_tax_pagato" => round($tot_tax_pagato, 3),
         );
 
         return $dati;

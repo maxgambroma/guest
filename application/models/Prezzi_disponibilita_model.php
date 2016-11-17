@@ -911,17 +911,17 @@ class Prezzi_disponibilita_model extends CI_Model {
 // print_r($tableau);
 // per tutte le tipologie
 // setto tutte le tipoloie a zero     
-        $tab[1] = 0;
-        $tab[2] = 0;
-        $tab[3] = 0;
-        $tab[4] = 0;
-        $tab[5] = 0;
-        $tab[6] = 0;
-        $tab[7] = 0;
-        $tab[8] = 0;
-        $tab[9] = 0;
-        $tab[10] = 0;
-        $tab[11] = 0;
+$tab[1] = 0; // X
+$tab[2] = 0; // XX
+$tab[3] = 0; // M
+$tab[4] = 0; // MX
+$tab[5] = 0; // MXX
+$tab[6] = 0; // JS
+$tab[7] = 0; // DUS
+$tab[8] = 0; // MMX
+$tab[9] = 0; // MT
+$tab[10] = 0;
+$tab[11] = 0;
 //print_r($tableau);
 // sovrascrivo
         foreach ($tableau as $key => $value) {
@@ -938,8 +938,9 @@ class Prezzi_disponibilita_model extends CI_Model {
 
 //  [1] => Singola
                     if ($key == 1) {
+                        
                         $nesting[$key] = (float) $cam_value->obmp_cm_rooms_nesting - ( (float) $tab[0] + ( (float) $tab[1] + (float) $tab[7]) + ((float) $tab[3] + (float) $tab[2] + (float) $tab[9] + (float) $tab[6] ) + ((float) $tab[4]) + ((float) $tab[5]) + ((float) $tab[8]) );
-
+                        
 // ho diaponibilita generale
                         if ($tot_cam_libere > 0 && $nesting[$key] > 0) {
 
@@ -953,6 +954,10 @@ class Prezzi_disponibilita_model extends CI_Model {
                         }
                     }
 
+                    
+                    
+                    
+                    
 //  [7] => Doppia Uso
                     if ($key == 7) {
                         $nesting[$key] = (float) $cam_value->obmp_cm_rooms_nesting - (( (float) $tab[0] + (float) $tab[7]) + ((float) $tab[3] + (float) $tab[2] + (float) $tab[9] + (float) $tab[6] ) + ( (float) $tab[4]) + ((float) $tab[5]) + ((float) $tab[8]));
@@ -961,6 +966,12 @@ class Prezzi_disponibilita_model extends CI_Model {
 
 // trovo il valore minimo da mostrare
                             $rooms_nesting[$key] = min((float) $cam_value->obmp_cm_rooms_max_room, $nesting[$key], $tot_cam_libere);
+                            
+                            
+     
+                            
+                            
+                            
                         }
 //      non ho disponoibilita e metto zero
                         else {
@@ -1093,6 +1104,51 @@ class Prezzi_disponibilita_model extends CI_Model {
 // return $nesting;
         return $rooms_nesting;
     }
+    
+    
+    
+    
+     function qualcosa() {
+      
+    
+$tab[1] = 0; // X
+$tab[2] = 0; // XX
+
+$tab[3] = 0; // M
+$tab[4] = 0; // MX
+$tab[5] = 0; // MXX
+$tab[6] = 0; // JS
+$tab[7] = 0; // DUS
+$tab[8] = 0; // MMX
+$tab[9] = 0; // MT    
+         
+         
+// elenco la camare
+         $camere = $this->camere_obmp($hotel_id, $key);
+
+    
+                    
+                 $dif_nest[2] =   ((float) $cam_value[2]->obmp_cm_rooms_max_room - (float) $cam_value[1]->obmp_cm_rooms_max_room ) ; // DUS  -X
+                 
+                 $dif_nest[2] =   ((float) $cam_value[3]->obmp_cm_rooms_max_room - (float) $cam_value[2]->obmp_cm_rooms_max_room ) ; // M - XX
+                 $dif_nest[2] =   ((float) $cam_value[2]->obmp_cm_rooms_max_room - (float) $cam_value[1]->obmp_cm_rooms_max_room ) ; // - 
+                 $dif_nest[2] =   ((float) $cam_value[2]->obmp_cm_rooms_max_room - (float) $cam_value[1]->obmp_cm_rooms_max_room ) ;
+                 $dif_nest[2] =   ((float) $cam_value[2]->obmp_cm_rooms_max_room - (float) $cam_value[1]->obmp_cm_rooms_max_room ) ;
+                 $dif_nest[2] =   ((float) $cam_value[2]->obmp_cm_rooms_max_room - (float) $cam_value[1]->obmp_cm_rooms_max_room ) ;
+                    
+      
+                    
+                    
+    
+         
+         
+
+        return $data_gg;
+    }
+
+    
+    
+    
 
     /**
      * sommo i giorni ad una data
