@@ -58,7 +58,7 @@ SUMMARY
 
 
 
-<div class="" id="summary_a_<?php echo $row_rooms->obmp_cm_rooms_id ; ?>" ></div>
+<div class="room-summary" id="summary_a_<?php echo $row_rooms->obmp_cm_rooms_id ; ?>" ></div>
 
        <script>
     $(function() {
