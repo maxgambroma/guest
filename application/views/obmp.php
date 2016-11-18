@@ -128,7 +128,7 @@
                                 </div>
                                 <div class="small-4  large-3 columns">
                                     <!--  booking-->
-                                    <div id="book_bot_<?php echo $row_rooms->obmp_cm_rooms_id ; ?>" > <span title="Seleziona la quantita "> Seleziona </span>  </div>
+                                    <div id="book_bot_<?php echo $row_rooms->obmp_cm_rooms_id ; ?>" > <span class="room-select" title="Seleziona la quantita "> Seleziona </span>  </div>
                                 </div>
                             </div>
                             <!-- 3 riga  informazioni -->

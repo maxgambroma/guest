@@ -308,7 +308,7 @@ $camara_cm = $this->input->get('camara_cm');
 
 
 if($num_cm){
-         echo '<button type = "submit"  class="button small ">Book</button>' ;
+         echo '<button class="room-select" type = "submit"  class="button small ">Book</button>' ;
 }  else {
      echo 'Seleziona';
 
