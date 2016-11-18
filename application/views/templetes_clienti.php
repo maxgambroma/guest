@@ -6,18 +6,30 @@
 <?php $this->load->view('sections/head_html_guest'); ?>
 <?php  $this->load->view('sections/head_guest'); ?>
 <?php 
+
+
 if( $temp['templete'] == 'tem_cb' )
 {  
     $this->load->view('sections/tem_cb'); 
 } 
+
+
+if( $temp['templete'] == 'tem_cb_clienti' )
+{  
+    $this->load->view('sections/tem_cb_clienti'); 
+} 
+
+
 if( $temp['templete'] == 'tem_bc' )
 {  
     $this->load->view('sections/tem_bc'); 
 }
+
 if( $temp['templete'] == 'tem_bcb' )
 {  
     $this->load->view('sections/tem_bcb'); 
 }
+
 if( $temp['templete'] == 'tem_m' )
 {  
     $this->load->view('sections/tem_m'); 

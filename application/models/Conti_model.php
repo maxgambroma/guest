@@ -224,12 +224,26 @@ WHERE
 
    
 // extra
-        $rs_tot_extra = $this->rs_tot_extra($conto_id);
-//acconti
-        $acconti = $this->rs_acconti($conto_id) ;
+        $tot_extra = $this->rs_tot_extra($conto_id);
         
+        if($tot_extra){
+            $rs_tot_extra = $tot_extra[0]->tot_extra ; 
+        }
        
+ else {
+      $rs_tot_extra = 0;
+     
+ }
+//acconti
+        $acconti_a = $this->rs_acconti($conto_id) ;
+        
+        if ($acconti_a) {
+            $acconti = $acconti_a[0]->tot_p_acconti ;
+        }
 
+ else {
+       $acconti = 0 ;
+ }
 
         $numero_notti = (float) $diff_data[0]->numero_notti;
 
@@ -265,8 +279,8 @@ WHERE
         $notti_conto = (float)  $numero_notti + (float) $ora_gg_in + (float) $ora_gg_out + (float) $ora_gg_cl ; // notti da pagare
         $conto_camera = (float) $diff_data[0]->prezzo * (float) $notti_conto;     // importo del pernotto attuale 
         $conto_camera_preno = (float) $diff_data[0]->prezzo * (float) $notti_preno;     // importo del pernotto previsto
-        $totale_extra = (float) $rs_tot_extra[0]->tot_extra;  // impoto degli extra
-        $totale_acconti = (float)  $acconti[0]->tot_p_acconti; // totale Acconti 
+        $totale_extra = (float) $rs_tot_extra;  // impoto degli extra
+        $totale_acconti = (float)  $acconti; // totale Acconti 
         $saldo = (float)  $conto_camera + (float) $totale_extra - (float) $totale_acconti; // saldo  attuale
         $saldo_preno = (float) $conto_camera_preno + (float) $totale_extra -(float)  $totale_acconti; // saldo da reno
         $tot_conto_preno = (float) $conto_camera_preno + (float) $totale_extra;

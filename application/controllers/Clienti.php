@@ -239,7 +239,7 @@ if($conti_new){
         $data['albergo'] = $this->hotel_model->hotel($hotel_id);
 
 // scegli il templete
-        $temi = 'tem_clienti';
+        $temi = 'tem_cb_clienti';
 // carica la vista del contenuto
         $vista = 'clienti_index';
 // gestore templete
@@ -342,7 +342,7 @@ if($conti_new){
         $data['albergo'] = $this->hotel_model->hotel($hotel_id);
 
 // scegli il templete
-        $temi = 'tem_clienti';
+        $temi = 'tem_cb_clienti';
 // carica la vista del contenuto
         $vista = 'clienti_bookings';
 // gestore templete
@@ -391,7 +391,7 @@ if($conti_new){
         $data['albergo'] = $this->hotel_model->hotel($hotel_id);
 
 // scegli il templete
-        $temi = 'tem_clienti';
+        $temi = 'tem_cb_clienti';
 // carica la vista del contenuto
         $vista = 'clienti_bookings_edit';
 // gestore templete
@@ -437,7 +437,7 @@ if($conti_new){
 
 //         print_r($reviews);
 // scegli il templete
-        $temi = 'tem_clienti';
+        $temi = 'tem_cb_clienti';
 // carica la vista del contenuto
         $vista = 'review_clienti';
 // gestore templete
@@ -494,7 +494,7 @@ if($conti_new){
 
         if ($this->form_validation->run() == FALSE) { // validation hasn't been passed
 // scegli il templete
-            $temi = 'tem_clienti';
+            $temi = 'tem_cb_clienti';
 // carica la vista del contenuto
             $vista = 'clienti_impostazioni';
 // gestore templete
@@ -579,7 +579,7 @@ if($conti_new){
 
         if ($this->form_validation->run() == FALSE) { // validation hasn't been passed
 // scegli il templete
-            $temi = 'tem_clienti';
+            $temi = 'tem_cb_clienti';
 // carica la vista del contenuto
             $vista = 'clienti_privacy_utente';
 // gestore templete

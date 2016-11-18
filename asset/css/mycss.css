@@ -320,11 +320,9 @@ background-color:  #2cc36b;
 
 .av-summary{
 
-        background-color: #E5EBFB;   
-    border-bottom: 1px solid #e5ebfb;
-    border-top: 1px solid #e5ebfb;
-    margin: 0 0 20px;
-    padding: 1em;
+    background-color: #e2e2e2;
+    margin: 3px;
+    padding: 1e
 
     
     
@@ -369,7 +367,7 @@ background-color:  #2cc36b;
  }
  
  
- .pricing-table .title {
+ .pricing-table.title {
     background-color: #919191;
     color: #eeeeee;
     font-family: "Helvetica Neue",Helvetica,Roboto,Arial,sans-serif;
