@@ -14,6 +14,11 @@ if ($rs_clienti) {
             Ciao <?php echo $rs_clienti[0]->clienti_nome; ?>, <br>  
             Prenota il tuo prossimo viaggio direttamente qui e avrai i seguenti Vantaggi 
         </p>
+        
+        <span id="vantaggi_apri" class="apri_pannello"> <i class="fi-plus"></i>   </span>
+        <p>&nbsp;</p>
+        <div id="vantaggi" style="display: none;" >
+            
         <br>
         <table width="100%">
             <thead>
@@ -47,14 +52,25 @@ if ($rs_clienti) {
         </table>
         <p>
             (*) Questo servizio è soggetto a disponibilità
+             <span id="vantaggi_chiudi" class="chiudi_pannello"> <i class="fi-x-circle"></i>   </span>
         </p>
+          <p>&nbsp;</p>
+       
+        
+                </div>   
+
+        
     </div>
 
     <?php if (isset($punti)) { ?>
         <div class="panel callout radius">
             <p> 
             <h2> <?php echo lang('punti_tex') ?>: <?php echo $punti; ?></h2>
-            <p>         
+            <p>    
+                        <span id="punti_apri" class="apri_pannello"> <i class="fi-plus"></i>   </span>
+<p>&nbsp;</p>
+                
+            <div id="punti" style="display: none;" >   
                 Ogni volta che soggiorni * nei nostri alberghi ricevi 1 punto per ogni 10 Euro speso per  il soggiorno
             <table width="100%">
                 <thead>
@@ -101,7 +117,14 @@ if ($rs_clienti) {
             (*) vengono  calcolato solo i soggiorni  prenotati on-line sul booking dell’hotel e hanno scadenze annuale 
             <br>
             (**)Il Coupon è spendibile in ogni nostro hotel 
+            
+            <span id="punti_chiudi" class="chiudi_pannello"> <i class="fi-x-circle"></i> </span>
+            
+            
             </p> 
+            <p>&nbsp;</p>
+
+           </div>    
         </div>
         <?php
     }
@@ -119,6 +142,9 @@ if ($rs_clienti) {
 
 
 <?php   if($conti){  ?>
+
+<fieldset> 
+    <legend>Conto  <?php echo $conti[0]->numero_camera; ?></legend>
 
 <ul class="pricing-table">
   <li class="title">ROOM N° <?php echo $conti[0]->numero_camera; ?></li>
@@ -138,7 +164,7 @@ if ($rs_clienti) {
 
 
 </ul>
-
+</fieldset>
 <?php } ?>
 
 <?php // } ?>
@@ -183,3 +209,36 @@ if ($rs_clienti) {
         </div>
     <?php } ?>
 <?php } ?>
+
+
+
+
+            <script>
+                $("#vantaggi_apri").click(function () {
+                    $("#vantaggi").toggle("slow");
+                });
+
+                
+               
+                    $("#vantaggi_chiudi").click(function () {
+                    $("#vantaggi").toggle("slow");
+                });
+
+
+
+
+
+     $("#punti_apri").click(function () {
+                    $("#punti").toggle("slow");
+                });
+
+               
+                    $("#punti_chiudi").click(function () {
+                    $("#punti").toggle("slow");
+                });
+
+               
+               
+               
+            </script>
+            
