@@ -51,23 +51,23 @@
                             <div class="icon-bar  five-up">
                                 <a class="item" href="<?php echo base_url(); ?>index.php/clienti/index/<?php echo $rs_clienti[0]->conto_id; ?>/<?php echo $rs_clienti[0]->clienti_id; ?>?lg=<?php echo $this->lg; ?>" >
                                     <i class="fi-home"></i>
-                                    <label>Home</label>
+                                    <label class="show-for-medium-up" >Home</label>
                                 </a>
                                 <a class="item"  href="<?php echo base_url(); ?>index.php/clienti/bookings/<?php echo $rs_clienti[0]->conto_id; ?>/<?php echo $rs_clienti[0]->clienti_id; ?>?lg=<?php echo $this->lg; ?>"  >
                                     <i class="fi-key"></i>
-                                    <label>Bookings</label>
+                                    <label class="show-for-medium-up" >Bookings</label>
                                 </a>
                                 <a class="item" href="<?php echo base_url(); ?>index.php/clienti/review/<?php echo $rs_clienti[0]->conto_id; ?>/<?php echo $rs_clienti[0]->clienti_id; ?>?lg=<?php echo $this->lg; ?>" >
                                     <i class="fi-comment"></i>
-                                    <label>Review</label>
+                                    <label class="show-for-medium-up">Review</label>
                                 </a>
                                 <a class="item" href="<?php echo base_url(); ?>index.php/clienti/impostazioni/<?php echo $rs_clienti[0]->conto_id; ?>/<?php echo $rs_clienti[0]->clienti_id; ?>?lg=<?php echo $this->lg; ?>">
                                     <i class="fi-wrench"></i>
-                                    <label>Impostazioni</label>
+                                    <label class="show-for-medium-up">Impostazioni</label>
                                 </a>
                                 <a class="item" href="<?php echo base_url(); ?>index.php/clienti/imp_privacy/<?php echo $rs_clienti[0]->conto_id; ?>/<?php echo $rs_clienti[0]->clienti_id; ?>?lg=<?php echo $this->lg; ?>">
                                     <i class="fi-widget"></i>
-                                    <label>Privacy</label>
+                                    <label class="show-for-medium-up">Privacy</label>
                                 </a>
                             </div>
                         </div> 
@@ -75,11 +75,16 @@
                 </div>
             </div>
         </div>
-    <?php } ?>
+
 
     
 <div>
-    <div class="row"> </div>
+    <div class="row">
+        <div class="large-12  columns">&nbsp; </div>
+    </div>
+    
+    
+     <?php } ?>   
     
 </div>
     
@@ -92,7 +97,7 @@
             
 
             
-            <button href="<?php echo uri_string(); ?>" data-dropdown="drop1" aria-controls="drop1" aria-expanded="false" class="button right dropdown"><img src="<?php echo base_url(); ?>asset/img/flags/<?php echo $lg; ?>.gif" alt="Hotel rome" border="0" /> Language</button>
+            <button href="<?php echo uri_string(); ?>" data-dropdown="drop1" aria-controls="drop1" aria-expanded="false" class="button right dropdown"><img src="<?php echo base_url(); ?>asset/img/flags/<?php echo $lg; ?>.gif" alt="Hotel rome" border="0" />   Language  </button>
             <br>
             <ul id="drop1" data-dropdown-content class="f-dropdown" aria-hidden="true">
                 <li><a href="<?php echo base_url(); ?>index.php/<?php echo uri_string(); ?>?<?php echo $_SERVER['QUERY_STRING'] ?>&lg=en" ><img src="<?php echo base_url(); ?>asset/img/flags/en.gif"  border="0" /> English </a> </li>
