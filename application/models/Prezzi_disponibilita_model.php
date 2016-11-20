@@ -68,7 +68,7 @@ class Prezzi_disponibilita_model extends CI_Model {
     }
 
     /** conti aperti che provengono da preno di $today in avanti (CONTI) da sottrarre alle rs_preno_da_oggi
-     * 
+     * ANY_VALUE() 
      * @param type $hotel_id
      * @param type $today
      * @param type $now
@@ -78,11 +78,11 @@ class Prezzi_disponibilita_model extends CI_Model {
 
         $sql = "
             SELECT   COUNT(*) AS preno_arrivate,
-            conti.conto_id,
-            conti.foglio_id,
-            conti.preno_id,
+            ANY_VALUE(conti.conto_id),
+            ANY_VALUE(conti.foglio_id),
+            ANY_VALUE(conti.preno_id),
             conti.in_conto,
-            agenda.preno_id,
+            ANY_VALUE(agenda.preno_id),
             agenda.preno_dal
             FROM conti INNER JOIN agenda ON (conti.preno_id = agenda.preno_id) AND 
             (conti.in_conto = agenda.preno_dal) WHERE (conti.in_conto >= '$now') AND 
