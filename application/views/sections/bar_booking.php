@@ -39,7 +39,7 @@
 <?php echo lang('numbers', 'Numbers'); ?> 
 <?php echo form_error('numbers'); ?>    
             <select id="numbers" name="Q1" class="rooms_jquery"  >
-                <option selected="selected" value="1"> 1</option>
+                <option selected="selected" value="1">1</option>
                 <option value="2"> 2</option>
                 <option value="3"> 3</option>
                 <option value="4"> 4</option>

@@ -68,6 +68,7 @@
 <input type = "hidden" name = "preno_dal" value = "<?php echo $preno_dal; ?>" />
 <input type = "hidden" name = "preno_al" value = "<?php echo $preno_al; ; ?>" />
 <input type = "hidden" name = "hotel_id" value = "<?php echo $hotel_id; ?>" />
+<input type = "hidden" name = "night" value = "<?php echo $night; ?>" />
 <!--<input type = "hidden" name = "preno_dal" value = "1" />
 <input type = "hidden" name = "preno_dal" value = "1" />-->
 
