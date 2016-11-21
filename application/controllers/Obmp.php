@@ -15,6 +15,10 @@ class Obmp extends CI_Controller {
         $this->load->model('obmp_review_model');
          $this->load->model('conti_model');
          $this->load->model('prezzi_disponibilita_model');
+         $this->load->model('tex_lingue_model');
+         
+         
+         
          
          
         $this->load->library('form_validation');
@@ -57,11 +61,12 @@ class Obmp extends CI_Controller {
 
 	public function index()
 	{
-		
-                
-                
-                
-                 $data['lg'] = $lg = $this->lg;
+
+$data['lg'] = $lg = $this->lg;
+// richimo i dati del db
+$data['tax_lg'] =   $tax_row =   $this->tex_lingue_model->tex_lg($lg);
+  
+        
 
         $today = date('Y-m-d');
         if ($this->input->get('hotel_id')) {
@@ -94,6 +99,9 @@ class Obmp extends CI_Controller {
         }
         
        
+        
+        
+        
         $data['preno_dal'] =  $preno_dal;
         $data['preno_al'] =  $preno_al;
          $data['Q1'] =  $Q1;
@@ -140,7 +148,8 @@ class Obmp extends CI_Controller {
                 
                 
                 
-                 $data['lg'] = $this->lg;
+                 $data['lg'] = $lg =  $this->lg;
+$data['tax_lg'] =   $tax_row =   $this->tex_lingue_model->tex_lg($lg);
 
         $today = date('Y-m-d');
         if ($this->input->get('hotel_id')) {
@@ -150,6 +159,26 @@ class Obmp extends CI_Controller {
         }
         $data['today'] = $today = date('Y-m-d');
         $data['hotel_id'] = $hotel_id;
+        
+        
+        $preno_dal = $today ;
+        $preno_al = $this->my_tools->somma_gg($today, 1);
+        $Q1 = 1 ;
+        
+        if($this->input->get_post('preno_dal') && $this->input->get_post('preno_al')){
+            
+        $preno_dal = $this->input->get_post('preno_dal');   
+        $preno_al   = $this->input->get_post('preno_al') ;
+   
+        $Q1 =  $this->input->get_post('Q1') ;
+        
+        }
+              $data['preno_dal'] =  $preno_dal;
+        $data['preno_al'] =  $preno_al;
+         $data['Q1'] =  $Q1;
+        
+        
+        
 
         $data['albergo'] = $this->hotel_model->hotel($hotel_id);
         
@@ -162,7 +191,7 @@ class Obmp extends CI_Controller {
        $dati =  $this->input->post(); 
        
        
-      print_r($dati);
+     // print_r($dati);
        
        
  $i = 1;
@@ -211,7 +240,8 @@ class Obmp extends CI_Controller {
                 
                 
                 
-                 $data['lg'] = $this->lg;
+                 $data['lg'] = $lg = $this->lg;
+                 $data['tax_lg'] =   $tax_row =   $this->tex_lingue_model->tex_lg($lg);
 
         $today = date('Y-m-d');
         if ($this->input->get('hotel_id')) {
@@ -221,6 +251,25 @@ class Obmp extends CI_Controller {
         }
         $data['today'] = $today = date('Y-m-d');
         $data['hotel_id'] = $hotel_id;
+        
+        
+        
+        $preno_dal = $today ;
+        $preno_al = $this->my_tools->somma_gg($today, 1);
+        $Q1 = 1 ;
+        
+        if($this->input->get_post('preno_dal') && $this->input->get_post('preno_al')){
+            
+        $preno_dal = $this->input->get_post('preno_dal');   
+        $preno_al   = $this->input->get_post('preno_al') ;
+   
+        $Q1 =  $this->input->get_post('Q1') ;
+        
+        }
+              $data['preno_dal'] =  $preno_dal;
+        $data['preno_al'] =  $preno_al;
+         $data['Q1'] =  $Q1;
+        
 
         $data['albergo'] = $this->hotel_model->hotel($hotel_id);
 
@@ -262,8 +311,9 @@ class Obmp extends CI_Controller {
 		
    
                 
-      $data['lg'] = $this->lg;
-
+      $data['lg'] = $lg = $this->lg;
+      $data['tax_lg'] =   $tax_row =   $this->tex_lingue_model->tex_lg($lg);
+      
         $today = date('Y-m-d');
         if ($this->input->get('hotel_id')) {
             $hotel_id = $this->input->get('hotel_id');
@@ -291,7 +341,8 @@ if($num_cm){
 		
    
                 
-      $data['lg'] = $this->lg;
+      $data['lg'] = $lg = $this->lg;
+      $data['tax_lg'] =   $tax_row =   $this->tex_lingue_model->tex_lg($lg);
 
         $today = date('Y-m-d');
         if ($this->input->get('hotel_id')) {

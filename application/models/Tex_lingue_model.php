@@ -19,6 +19,7 @@ class Tex_lingue_model extends CI_Model {
 	public function find()
             {
                 return $this->db->get( 'tex_lingue' )->result() ;
+                
             }
 
       /** 
@@ -103,7 +104,21 @@ class Tex_lingue_model extends CI_Model {
                 $this->db->delete('tex_lingue');
                 return $this->db->affected_rows();
             }
-	
+            
+            
+/**
+     * prendo le traduzioni del db
+     * @param type $lg
+     * @return type array
+     */
+    public function tex_lg($lg) {
+        $dati = $this->find();
+        foreach ($dati as $key => $value) {
+            $tax_lg[$value->etichetta_lg] = $value->{$lg};
+        }
+        return $tax_lg;
+    }
+
 }
 ?>
 

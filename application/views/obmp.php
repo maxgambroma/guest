@@ -60,10 +60,16 @@
        <?php
         $adttributes = array('class' => '', 'id' => '');	           
         echo form_open( base_url(). 'index.php/obmp/availability/?'. $_SERVER['QUERY_STRING'], $adttributes); 
-        ?>   
+        
+     
+?>   
         
  
-
+<input type = "hidden" name = "preno_dal" value = "<?php echo $preno_dal; ?>" />
+<input type = "hidden" name = "preno_al" value = "<?php echo $preno_al; ; ?>" />
+<input type = "hidden" name = "hotel_id" value = "<?php echo $hotel_id; ?>" />
+<!--<input type = "hidden" name = "preno_dal" value = "1" />
+<input type = "hidden" name = "preno_dal" value = "1" />-->
 
 
 
