@@ -8,7 +8,7 @@
         <?php
         // Change the css classes to suit your needs    
         $attributes = array('class' => '', 'id' => '');
-        echo form_open( base_url().'index.php/obmp/?' . $_SERVER['QUERY_STRING'], $attributes);
+        echo form_open( base_url().'index.php/obmp/index/'.$rs_clienti[0]->conto_id .'/'.$rs_clienti[0]->clienti_id .'/?'. $_SERVER['QUERY_STRING'], $attributes);
         ?>   
         <p>
             <?php echo lang('property', 'hotel_id'); ?>        <?php echo form_error('hotel_id'); ?>

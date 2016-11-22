@@ -74,16 +74,25 @@ class Prezzi_disponibilita_model extends CI_Model {
      * @param type $now
      * @return type
      */
+    
+    
+//            ANY_VALUE(conti.conto_id),
+//            ANY_VALUE(conti.foglio_id),
+//            ANY_VALUE(conti.preno_id),
+//            ANY_VALUE(agenda.preno_id),
+    
     public function rs_conti_preno($now, $today, $hotel_id) {
 
         $sql = "
             SELECT   COUNT(*) AS preno_arrivate,
-            ANY_VALUE(conti.conto_id),
-            ANY_VALUE(conti.foglio_id),
-            ANY_VALUE(conti.preno_id),
-            conti.in_conto,
-            ANY_VALUE(agenda.preno_id),
-            agenda.preno_dal
+
+            conti.conto_id,
+            conti.foglio_id,
+            conti.preno_id,
+            agenda.preno_id,
+            
+            agenda.preno_dal,
+            conti.in_conto
             FROM conti INNER JOIN agenda ON (conti.preno_id = agenda.preno_id) AND 
             (conti.in_conto = agenda.preno_dal) WHERE (conti.in_conto >= '$now') AND 
             (conti.conti_stato_camere <> '7') AND (conti.in_conto <= '$today') AND 
