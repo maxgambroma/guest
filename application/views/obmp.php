@@ -60,7 +60,7 @@
 
        <?php
         $adttributes = array('class' => '', 'id' => '');	           
-        echo form_open( base_url(). 'index.php/obmp/availability/index/'.$rs_clienti[0]->conto_id .'/'.$rs_clienti[0]->clienti_id .'/?'. $_SERVER['QUERY_STRING'], $adttributes); 
+        echo form_open( base_url(). 'index.php/obmp/availability/index/?'. $_SERVER['QUERY_STRING'], $adttributes); 
         
      
 ?>   
