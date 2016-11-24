@@ -23,10 +23,7 @@
                 <div id="cercatore1" style="display: none;"  >  
                     <fieldset> 
                         <div class="row">
-                            
-                            
-                            <div class="box_booking">
-                            
+                            <div class="box_booking">                       
                             <div class="small-12 large-4 columns box_booking"> 
                                Verifica Disponibilità
                                 <form action="<?php echo base_url(); ?>index.php/obmp/" method="post" id="form_prezzi" name="form_prezzi">

@@ -193,8 +193,8 @@ clienti.clienti_note,
         LEFT OUTER JOIN agenzie
 	 ON conti.preno_agenzia = agenzie.agenzia_id
         WHERE
-        refer_clienti.conto_id = $conto_id
-        AND refer_clienti.clienti_id = $clienti_id
+        refer_clienti.conto_id = '$conto_id'
+        AND refer_clienti.clienti_id = '$clienti_id'
         ");
         return $query->result();
     }

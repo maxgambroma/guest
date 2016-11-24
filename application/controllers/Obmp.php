@@ -136,7 +136,7 @@ class Obmp extends CI_Controller {
 
         $data['preno_dal'] = $preno_dal;
         $data['preno_al'] = $preno_al;
-        $data[' num'] = $Q1;
+        $data['num'] = $Q1;
         $data['night'] = $this->my_tools->data_diff($preno_al, $preno_dal);
         
         $conto_id = 0;

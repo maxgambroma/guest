@@ -20,7 +20,7 @@ class Clienti extends CI_Controller {
         $this->load->helper('url');
         $this->load->helper('security');
         $this->load->helper('language');
-
+        $this->load->library('session');
 // $idiom = $this->session->get_userdata('language');  
 
 
@@ -51,7 +51,7 @@ class Clienti extends CI_Controller {
      * lato hotel 
      * Elenco i clienti che non hanno firmato la privacy
      */
-    public function privacy() {
+    public function privacy(){
 
         $data['lg'] = $this->lg;
 
@@ -209,6 +209,12 @@ class Clienti extends CI_Controller {
         $data['rs_clienti'] = $cliente = $this->clienti_model->get_conto_cliente($conto_id, $clienti_id);
 
 
+        if($cliente){
+            $this->cliente_session($cliente);
+        }
+        
+        
+        
 
 // trovo i punti per i fidelizzati
         $data['punti'] = $this->clienti_model->clienti_punti($clienti_id);
@@ -237,6 +243,11 @@ if($conti_new){
         }
 
         $data['albergo'] = $this->hotel_model->hotel($hotel_id);
+        
+        
+        
+          print_r($_SESSION);
+        
 
 // scegli il templete
         $temi = 'tem_cb_clienti';
@@ -622,6 +633,38 @@ if($conti_new){
             }
         }
     }
+    
+    
+    
+    /**
+     * metto in sessione i dati del cliente
+     * @param type $cliente
+     */
+    
+    
+    protected function cliente_session($cliente){  
+        
+        if ($cliente) {
+            $newdata = array(
+//                'clienti_id' => $cliente[0]->clienti_id,
+//                'conto_id' => $cliente[0]->conto_id,
+//                'clienti_cogno' => $cliente[0]->clienti_cogno,
+//                'clienti_nome' => $cliente[0]->clienti_nome,
+//                'hotel_id' => $cliente[0]->hotel_id,
+                
+                     'clienti_id' => '15',
+                'conto_id' => '22',
+                'clienti_cogno' => 'Rossi',
+                'clienti_nome' => 'Max',
+                
+            );
+
+            $this->session->set_userdata($newdata);
+        }
+}
+
+    
+    
 
 }
 
