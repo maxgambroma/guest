@@ -169,7 +169,7 @@ FROM
 	 ON agenda.hotel_id = hotels.hotel_id
 WHERE
     agenda.preno_email = '$email' AND
-        agenda.preno_dal > '$now' 
+        agenda.preno_dal >= '$now' 
         $filtro
 
 ORDER BY

@@ -144,7 +144,6 @@ LIMIT $offset , $limit ");
         SELECT
         clienti.clienti_id,
         conti.conto_id,
-        clienti.hotel_id,
         clienti.clienti_nome,
         clienti.clienti_cogno,
         clienti.cliente_nato_a,
@@ -165,6 +164,7 @@ clienti.clienti_note,
         clienti.marketing,
         clienti.clienti_data_record,
         clienti.clienti_note,
+        conti.hotel_id,
         conti.foglio_id,
         conti.in_conto,
         conti.in_conto_time,
@@ -367,11 +367,61 @@ clienti.clienti_note,
     }
 
  
+     /**
+   * aurentica cliente Conto
+   * @param type $user
+   * @param type $pass
+   * @return type row
+   */        
+             
+function get_autentica($user, $pass)
+{
+$sql = "
+    SELECT
+	clienti.clienti_id,
+	conti.conto_id,
+	conti.hotel_id,
+	clienti.clienti_nome,
+	clienti.clienti_cogno,
+	clienti.clienti_email,
+	clienti.password,
+	clienti.privacy,
+	clienti.marketing,
+	clienti.clienti_note
+FROM
+	refer_clienti
+	INNER JOIN clienti
+	 ON refer_clienti.clienti_id = clienti.clienti_id
+	INNER JOIN conti
+	 ON refer_clienti.conto_id = conti.conto_id
+WHERE
+	clienti.clienti_email = '$user'
+	AND clienti.password = '$pass'
+ORDER BY
+	conti.conto_id DESC
+";
+
+$query = $this->db->query($sql);
+$return = $query->row();
+return $return;
+}
     
     
-    
-    
-    
+function get_by_email($user)
+{
+$sql = "SELECT *
+	
+FROM
+	clienti
+WHERE
+	clienti.clienti_email = '$user'
+	;
+
+$query = $this->db->query($sql);
+$return = $query->result()";
+return $return;
+}
+        
     
  
     

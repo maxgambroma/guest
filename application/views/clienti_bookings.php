@@ -299,22 +299,31 @@
                     </p>
                     </div>
                     </div>
+            
+            <div class="row">
+                <p> &#8203;</p>
+            </div>
                    
             <div class="row">
                
-                 <div class="small-12 large-4 columns">Punti </div>
-                  <div class="small-12 large-4 columns">
-                     <a href="<?php echo base_url(); ?>index.php/clienti/bookings_edit/<?php echo $row->conto_id; ?>/<?php  echo  $row->clienti_id; ?>/<?php  echo  $row->preno_id; ?>?lg=<?php echo $this->lg; ?>" class="button success small ">Amministra Preno </a>  
-                  </div>
-                   <div class="small-12 large-4 columns">
-                   <?php if (!isset($row->review_id)) { ?>
-                        <a href="<?php echo base_url(); ?>index.php/obmp_review/insert/<?php echo $row->conto_id; ?>/<?php  echo  $row->clienti_id; ?>?lg=<?php echo $this->lg; ?>  " class="button small round right">Scrivi Review</a>
-                      <?php } else { ?>
-                                                       <a href="<?php echo base_url(); ?>index.php/obmp_review/edit/<?php echo $row->conto_id; ?>/<?php  echo  $row->clienti_id; ?>?lg=<?php echo $this->lg; ?> " class="button small success round right">You Review </a>
-
-                      <?php } ?>
+                 <div class="small-12 large-12 columns">
+                     
+                     
+     
                        
                    
+<ul class="button-group radius right">
+<!--<li><a href="#" class="button">Punti</a></li>-->
+<li><a href="<?php echo base_url(); ?>index.php/clienti/bookings_edit/<?php echo $row->conto_id; ?>/<?php  echo  $row->clienti_id; ?>/<?php  echo  $row->preno_id; ?>?lg=<?php echo $this->lg; ?>" class="button secondary ">Vedi Preno</a></li>
+
+    <?php if (!isset($row->review_id)) { ?>
+<li><a href="<?php echo base_url(); ?>index.php/obmp_review/insert/<?php echo $row->conto_id; ?>/<?php  echo  $row->clienti_id; ?>?lg=<?php echo $this->lg; ?>" class="button">Scrivi Review</a></li>
+<?php } else { ?>
+<li><a href="<?php echo base_url(); ?>index.php/obmp_review/edit/<?php echo $row->conto_id; ?>/<?php  echo  $row->clienti_id; ?>?lg=<?php echo $this->lg; ?> " class="button success">Leggi Review</a></li>
+<?php } ?>
+</ul>                                      
+
+                                                       
                    
                    
                    </div>

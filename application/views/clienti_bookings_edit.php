@@ -333,8 +333,14 @@
                     <?php } ?>            
                     <br>
                     <p></p>
+                 
+                    <?php 
+                    
+                    // non posso modicare la prenotazioni passata
+                    if($row_new->preno_dal > $today ){ ?>
                     <a href="#" data-reveal-id="firstModal" class="radius button">Cancella</a>
                     <a href="#" data-reveal-id="secondModal" class="radius button">Modifica</a>
+                    <?php } ?>
                 </div>
             </div>
             

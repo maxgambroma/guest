@@ -104,5 +104,45 @@ class Obmp_clienti_model extends CI_Model {
                 return $this->db->affected_rows();
             }
 	
+            
+  /**
+   * aurentica cliente obmp
+   * @param type $user
+   * @param type $pass
+   * @return type row
+   */          
+function get_autentica($user, $pass)
+{
+$sql = "SELECT
+	*
+FROM
+	usr_web1_3.obmp_clienti
+WHERE
+	usr_web1_3.obmp_clienti.obm_cliente_email = '$user'
+	AND usr_web1_3.obmp_clienti.obm_cliente_pass = '$pass'";
+
+$query = $this->db->query($sql);
+$return = $query->row();
+return $return;
+}
+
+
+function get_by_email($user)
+{
+$sql = "SELECT
+	*
+FROM
+	usr_web1_3.obmp_clienti
+WHERE
+	usr_web1_3.obmp_clienti.obm_cliente_email = '$user'
+	";
+
+$query = $this->db->query($sql);
+$return = $query->row();
+return $return;
+}
+
+
+
 }
 ?>

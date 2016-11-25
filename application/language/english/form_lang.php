@@ -308,3 +308,7 @@ $lang['it'] = 'It';
 $lang['es'] = 'Es';
 $lang['fr'] = 'Fr';
 $lang['de'] = 'De';
+
+
+$lang['user'] = 'Email';
+$lang['pass'] = 'Password';

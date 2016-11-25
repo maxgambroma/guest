@@ -66,18 +66,22 @@ class Clienti extends MY_Controller {
         } else {
             $hotel_id = 1;
         }
-        $data['hotel_id'] = $hotel_id;
+     
         // data          
         $data['today'] = $today = date('Y-m-d');
         
         
         // controllo se il cliente è settato se proviene da link  
-        if ( isset($this->session->area) ) {
+     
 
-        $conto_id = $this->session->conto_id ;    
-        $clienti_id = $this->session->clienti_id ;      
+       $conto_id = $this->session->conto_id ;    
+       $clienti_id = $this->session->clienti_id ;   
+        
         // cliente in sessione
         $data['rs_clienti'] = $cliente = $this->clienti_model->get_conto_cliente($conto_id, $clienti_id);
+        
+//        print_r($cliente);
+        
         // trovo i punti per i fidelizzati
         $data['punti'] = $this->clienti_model->clienti_punti($clienti_id);
         // trovo i conti aperti
@@ -94,16 +98,11 @@ class Clienti extends MY_Controller {
         // trovo le nuove preno
         $data['preno'] = $preno = $this->agenda_model->get_booking_by_email($email);
 
-
-        if ($data['rs_clienti']) {
-        $hotel_id = $cliente[0]->hotel_id;
-        }
-
-        $data['albergo'] = $this->hotel_model->hotel($hotel_id);
+       
+      $data['hotel_id'] = $hotel_id = $cliente[0]->hotel_id;
+       $data['albergo'] = $cc = $this->hotel_model->hotel($hotel_id);
         
-        
-            
-        }
+
         
 
 // scegli il templete
@@ -192,10 +191,7 @@ class Clienti extends MY_Controller {
             $hotel_id = 1;
         }
         $data['today'] = $today = date('Y-m-d');
-        $data['hotel_id'] = $hotel_id;
-
-
-        
+    
 
 
         $conto_id = $this->session->conto_id ;    
@@ -218,7 +214,8 @@ class Clienti extends MY_Controller {
             $data['preno'] = $preno = $this->agenda_model->get_booking_by_email($email);
         }
 
-        $data['albergo'] = $this->hotel_model->hotel($hotel_id);
+       $data['hotel_id'] = $hotel_id = $cliente[0]->hotel_id;
+       $data['albergo'] = $this->hotel_model->hotel($hotel_id);
 
 // scegli il templete
         $temi = 'tem_cb_clienti';
@@ -250,7 +247,7 @@ class Clienti extends MY_Controller {
             $hotel_id = 1;
         }
         $data['today'] = $today = date('Y-m-d');
-        $data['hotel_id'] = $hotel_id;
+     
         
         
        $conto_id = $this->session->conto_id ;    
@@ -264,8 +261,9 @@ class Clienti extends MY_Controller {
 // trovo le caratteristiche della camare nelle lingue 
         $data['lg_tipologia'] = $this->agenda_model->tip_lg_preno($this->lg, $hotel_id);
         if ($data['rs_clienti']) {
-            $hotel_id = $cliente[0]->hotel_id;
-            $email = $cliente[0]->clienti_email;
+      
+          $data['hotel_id'] =   $hotel_id = $cliente[0]->hotel_id;
+           $email = $cliente[0]->clienti_email;
 //trovo i vecchi conti
             $data['conti_old'] = $conti_old = $this->clienti_model->conti_by_clienti($clienti_id);
 // trovo le nuove preno
@@ -306,7 +304,7 @@ class Clienti extends MY_Controller {
             $hotel_id = 1;
         }
         $data['today'] = $today = date('Y-m-d');
-        $data['hotel_id'] = $hotel_id;
+
 
         $conto_id = $this->session->conto_id ;    
         $clienti_id = $this->session->clienti_id ;  
@@ -314,7 +312,7 @@ class Clienti extends MY_Controller {
         $data['rs_clienti'] = $cliente = $this->clienti_model->get_conto_cliente($conto_id, $clienti_id);
 
         if ($data['rs_clienti']) {
-            $hotel_id = $cliente[0]->hotel_id;
+          $data['hotel_id']=  $hotel_id = $cliente[0]->hotel_id;
         }
         $data['albergo'] = $this->hotel_model->hotel($hotel_id);
         $data['reviews'] = $reviews = $this->obmp_review_model->review_cliente_id($clienti_id);
@@ -349,7 +347,7 @@ class Clienti extends MY_Controller {
             $hotel_id = 1;
         }
         $data['today'] = $today = date('Y-m-d');
-        $data['hotel_id'] = $hotel_id;
+     
 
      $conto_id = $this->session->conto_id ;    
         $clienti_id = $this->session->clienti_id ;  
@@ -358,7 +356,7 @@ class Clienti extends MY_Controller {
         $data['rs_clienti'] = $cliente = $this->clienti_model->get_conto_cliente($conto_id, $clienti_id);
 
         if ($data['rs_clienti']) {
-            $hotel_id = $cliente[0]->hotel_id;
+         $data['hotel_id']=  $hotel_id = $cliente[0]->hotel_id;
         }
 
         $data['albergo'] = $this->hotel_model->hotel($hotel_id);

@@ -149,15 +149,11 @@ if ($rs_clienti) {
 <ul class="pricing-table">
   <li class="title">ROOM N° <?php echo $conti[0]->numero_camera; ?></li>
   <li class="price"> Importo Camera <?php echo $conti_saldo['conto_camera']; ?></li>
-  
-  <li class="description"> IN <?php echo $conti[0]->in_conto; ?> OUT <?php echo $conti[0]->out_preno; ?></li>
-  
-  
-  <li class="bullet-item">Extra <?php echo $conti_saldo['totale_extra']; ?></li>
+  <li class="bullet-item"> IN <?php echo $conti[0]->in_conto; ?> OUT <?php echo $conti[0]->out_preno; ?></li>
+   <li class="bullet-item">Extra <?php echo $conti_saldo['totale_extra']; ?></li>
   <li class="bullet-item">Acconti <?php echo $conti_saldo['totale_acconti']; ?></li>
   <li class="bullet-item">Saldo Soggiorno <?php echo $conti_saldo['saldo_preno']; ?></li>
-
-   
+  
    <li class="cta-button"><a class="button" href="#">Buy Now</a></li>
 
 
@@ -198,10 +194,10 @@ if ($rs_clienti) {
                 <div class="row">
                     <div class="small-12 large-12 columns"> 
                         <p>
-                        <ul class="button-group radius ">
-<!--                            <li><a href="#" class="button">Cancella Prentoazione</a></li>-->
-                            <li><a href="<?php echo base_url(); ?>/index.php/clienti/bookings_edit/<?php echo $rs_clienti[0]->conto_id; ?>/<?php echo $rs_clienti[0]->clienti_id; ?>/<?php echo $row_new->preno_id; ?>?lg=<?php echo $this->lg; ?>" class="button">Vedi Prenotazione</a></li>
-                        </ul> 
+                                           
+                        
+                        <a href="<?php echo base_url(); ?>/index.php/clienti/bookings_edit/<?php echo $rs_clienti[0]->conto_id; ?>/<?php echo $rs_clienti[0]->clienti_id; ?>/<?php echo $row_new->preno_id; ?>?lg=<?php echo $this->lg; ?>" class="button right">Amminista Prenotazione</a>
+                        
                         </p>
                     </div>
                 </div>

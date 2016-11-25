@@ -10,7 +10,7 @@
                 <div class="large-12  columns">
                     <div class="barra_icone"> 
                         <div class="barra_icone">
-                            <div class="icon-bar  five-up">
+                            <div class="icon-bar  six-up">
                                 <a class="item" href="<?php echo base_url(); ?>index.php/clienti/index/<?php echo $this->session->conto_id; ?>/<?php echo $this->session->clienti_id; ?>?lg=<?php echo $this->lg; ?>" >
                                     <i class="fi-home"></i>
                                     <label class="show-for-medium-up" >Home</label>
@@ -31,6 +31,13 @@
                                     <i class="fi-widget"></i>
                                     <label class="show-for-medium-up">Privacy</label>
                                 </a>
+                                
+                                 <a class="item" href="<?php echo base_url(); ?>index.php/clienti/log_out/?<?php echo $_SERVER['QUERY_STRING'];?>">
+                                     <i class="fi-x"></i>
+                                    <label class="show-for-medium-up">Log Out</label>
+                                </a>
+                                
+                                
                             </div>
                         </div> 
                     </div>
@@ -50,9 +57,9 @@
 
     <div class="row">
         <div class="large-2 medium-3 small-4 columns">
-            <h1>  <a href="http://<?php echo $albergo['0']->hotel_web; ?>" ><img src="<?php echo base_url(); ?>asset/img/logo_<?php echo $albergo['0']->hotel_id; ?>.gif"/> </a></h1>
+            <a href="http://<?php echo $albergo['0']->hotel_web; ?>" ><img src="<?php echo base_url(); ?>asset/img/logo_<?php echo $albergo['0']->hotel_id; ?>.gif"   title="WWWW HOTEL"  /> </a> 
         </div>
-        <div class="large-9 medium-8 small-6  columns">
+        <div class="large-9 medium-9 small-8  columns">
             <div class="show-for-small-only"> 
                 <button href="<?php echo uri_string(); ?>" data-dropdown="drop1" aria-controls="drop1" aria-expanded="false" class="button small right dropdown"><img src="<?php echo base_url(); ?>asset/img/flags/<?php echo $lg; ?>.gif" alt="Hotel rome" border="0" /></button>
             </div>
@@ -73,20 +80,7 @@
             </ul>
             </p>            
         </div>
-        <div class="large-1 medium-1 small-2  columns"">
-                    <?php  if($this->session->area){ ?>
-          
-            <a href="<?php echo base_url(); ?>index.php/clienti/log_out/?<?php echo $_SERVER['QUERY_STRING'];?>" >
-                         
-                
-                
-                <span data-tooltip aria-haspopup="true" class="has-tip log_out " title="LOG OUT"><i class="fi-x"></i> </span>
-                
-                
-            </a>
-            <?php } ?>
-            
-        </div>
+     
     </div>
 
 
