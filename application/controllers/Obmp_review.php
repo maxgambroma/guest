@@ -22,6 +22,7 @@ class Obmp_review extends CI_Controller {
         $this->load->helper('form');
         $this->load->helper('url');
         $this->load->helper('language');
+              $this->load->library('session');
        // $idiom = $this->session->get_userdata('language');  
         $this->load->model('hotel_model');
        
