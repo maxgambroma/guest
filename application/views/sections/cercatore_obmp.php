@@ -59,12 +59,12 @@
                                             <label>Numero Camere   
                                                                <?php
                                             $options = array(
-                                                '0' => 'Please Select',
                                                 '1' => '1',
                                                 '2' => '2',
                                                 '3' => '3',
                                                 '4' => '4',
                                                 '5' => '5',
+                                                '30' => '30',
                                             );
                                             ?>
                                              <?php echo form_dropdown('Q1', $options,   (! set_value('Q1')) ?  $Q1 :  set_value('Q1')   )?>

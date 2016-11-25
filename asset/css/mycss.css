@@ -320,7 +320,7 @@ background-color:  #2cc36b;
 
 .av-summary{
     background-color: #e2e2e2;
-    padding: 1em;
+    padding: 2em;
        
 }
 
@@ -384,4 +384,24 @@ background-color:  #2cc36b;
 
 ContenitoreGiorno{
     background-color: #919191;
+}
+
+
+.log-in-form {
+  border: 1px solid #cacaca;
+  padding: 1rem;
+  border-radius: 3px; }
+
+
+
+.log_out {
+
+    color: #bfc1bf;
+    cursor: pointer;
+    font-size: 1.5rem;
+    font-weight: bold;
+    line-height: 1;
+    float: right;
+
+
 }

@@ -1,71 +1,33 @@
 <body>
+    <?php
+//se ho il cliente settato 
 
-    <!--    <nav class="top-bar" data-topbar role="navigation">
-    <ul class="title-area">
-    <li class="name">
-    <h1><a href="#">My   Site</a></h1>
-    </li>
-    Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone 
-    <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
-    </ul>
     
-    <section class="top-bar-section">
-    Right Nav Section 
-    <ul class="right">
-    
-    
-    
-    <li class="active"><a href="#">Right Button Active</a></li>
-    <li class="has-dropdown">
-    <a href="#">Right Button Dropdown</a>
-    <ul class="dropdown">
-    <li><a href="#">First link in dropdown</a></li>
-    <li class="active"><a href="#">Active link in dropdown</a></li>
-    </ul>
-    </li>
-    </ul>
-    
-    Left Nav Section 
-    <ul class="left">
-    <li><a href="#">Left Nav Button</a></li>
-    </ul>
-    </section>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    </nav>
-    -->
-
-    <?php if (isset($rs_clienti) && !empty($rs_clienti)) { ?>
+    if ($this->session->area >= 2) {
+        ?>
         <div class="barra_icone">
             <div class="row">
                 <div class="large-12  columns">
                     <div class="barra_icone"> 
                         <div class="barra_icone">
                             <div class="icon-bar  five-up">
-                                <a class="item" href="<?php echo base_url(); ?>index.php/clienti/index/<?php echo $rs_clienti[0]->conto_id; ?>/<?php echo $rs_clienti[0]->clienti_id; ?>?lg=<?php echo $this->lg; ?>" >
+                                <a class="item" href="<?php echo base_url(); ?>index.php/clienti/index/<?php echo $this->session->conto_id; ?>/<?php echo $this->session->clienti_id; ?>?lg=<?php echo $this->lg; ?>" >
                                     <i class="fi-home"></i>
                                     <label class="show-for-medium-up" >Home</label>
                                 </a>
-                                <a class="item"  href="<?php echo base_url(); ?>index.php/clienti/bookings/<?php echo $rs_clienti[0]->conto_id; ?>/<?php echo $rs_clienti[0]->clienti_id; ?>?lg=<?php echo $this->lg; ?>"  >
+                                <a class="item"  href="<?php echo base_url(); ?>index.php/clienti/bookings/<?php echo $this->session->conto_id; ?>/<?php echo $this->session->clienti_id; ?>?lg=<?php echo $this->lg; ?>"  >
                                     <i class="fi-key"></i>
                                     <label class="show-for-medium-up" >Bookings</label>
                                 </a>
-                                <a class="item" href="<?php echo base_url(); ?>index.php/clienti/review/<?php echo $rs_clienti[0]->conto_id; ?>/<?php echo $rs_clienti[0]->clienti_id; ?>?lg=<?php echo $this->lg; ?>" >
+                                <a class="item" href="<?php echo base_url(); ?>index.php/clienti/review/<?php echo $this->session->conto_id; ?>/<?php echo $this->session->clienti_id; ?>?lg=<?php echo $this->lg; ?>" >
                                     <i class="fi-comment"></i>
                                     <label class="show-for-medium-up">Review</label>
                                 </a>
-                                <a class="item" href="<?php echo base_url(); ?>index.php/clienti/impostazioni/<?php echo $rs_clienti[0]->conto_id; ?>/<?php echo $rs_clienti[0]->clienti_id; ?>?lg=<?php echo $this->lg; ?>">
+                                <a class="item" href="<?php echo base_url(); ?>index.php/clienti/impostazioni/<?php echo $this->session->conto_id; ?>/<?php echo $this->session->clienti_id; ?>?lg=<?php echo $this->lg; ?>">
                                     <i class="fi-wrench"></i>
                                     <label class="show-for-medium-up">Impostazioni</label>
                                 </a>
-                                <a class="item" href="<?php echo base_url(); ?>index.php/clienti/imp_privacy/<?php echo $rs_clienti[0]->conto_id; ?>/<?php echo $rs_clienti[0]->clienti_id; ?>?lg=<?php echo $this->lg; ?>">
+                                <a class="item" href="<?php echo base_url(); ?>index.php/clienti/imp_privacy/<?php echo $this->session->conto_id; ?>/<?php echo $this->session->clienti_id; ?>?lg=<?php echo $this->lg; ?>">
                                     <i class="fi-widget"></i>
                                     <label class="show-for-medium-up">Privacy</label>
                                 </a>
@@ -75,29 +37,28 @@
                 </div>
             </div>
         </div>
+        <div>
 
+            <div class="row">
+                <div class="large-12  columns">&nbsp; </div>
+            </div>
 
-    
-<div>
-    <div class="row">
-        <div class="large-12  columns">&nbsp; </div>
+        <?php }
+         
+    ?>   
     </div>
-    
-    
-     <?php } ?>   
-    
-</div>
-    
+
     <div class="row">
-        <div class="large-2 small-6 columns">
+        <div class="large-2 medium-3 small-4 columns">
             <h1>  <a href="http://<?php echo $albergo['0']->hotel_web; ?>" ><img src="<?php echo base_url(); ?>asset/img/logo_<?php echo $albergo['0']->hotel_id; ?>.gif"/> </a></h1>
         </div>
-        <div class="large-10 small-6  columns">
-            
-            
-
-            
-            <button href="<?php echo uri_string(); ?>" data-dropdown="drop1" aria-controls="drop1" aria-expanded="false" class="button right dropdown"><img src="<?php echo base_url(); ?>asset/img/flags/<?php echo $lg; ?>.gif" alt="Hotel rome" border="0" />   Language  </button>
+        <div class="large-9 medium-8 small-6  columns">
+            <div class="show-for-small-only"> 
+                <button href="<?php echo uri_string(); ?>" data-dropdown="drop1" aria-controls="drop1" aria-expanded="false" class="button small right dropdown"><img src="<?php echo base_url(); ?>asset/img/flags/<?php echo $lg; ?>.gif" alt="Hotel rome" border="0" /></button>
+            </div>
+            <div class="show-for-medium-up"> 
+                <button href="<?php echo uri_string(); ?>" data-dropdown="drop1" aria-controls="drop1" aria-expanded="false" class="button small right dropdown"><img src="<?php echo base_url(); ?>asset/img/flags/<?php echo $lg; ?>.gif" alt="Hotel rome" border="0" /> Language</button>
+            </div>
             <br>
             <ul id="drop1" data-dropdown-content class="f-dropdown" aria-hidden="true">
                 <li><a href="<?php echo base_url(); ?>index.php/<?php echo uri_string(); ?>?<?php echo $_SERVER['QUERY_STRING'] ?>&lg=en" ><img src="<?php echo base_url(); ?>asset/img/flags/en.gif"  border="0" /> English </a> </li>
@@ -111,6 +72,20 @@
                 -->
             </ul>
             </p>            
+        </div>
+        <div class="large-1 medium-1 small-2  columns"">
+                    <?php  if($this->session->area){ ?>
+          
+            <a href="<?php echo base_url(); ?>index.php/clienti/log_out/?<?php echo $_SERVER['QUERY_STRING'];?>" >
+                         
+                
+                
+                <span data-tooltip aria-haspopup="true" class="has-tip log_out " title="LOG OUT"><i class="fi-x"></i> </span>
+                
+                
+            </a>
+            <?php } ?>
+            
         </div>
     </div>
 

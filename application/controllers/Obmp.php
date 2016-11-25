@@ -21,6 +21,8 @@ class Obmp extends CI_Controller {
         $this->load->library('pagination');
         $this->load->library('email');
         $this->load->library('my_tools');
+        
+          $this->load->library('session');
 
         $this->load->helper('form');
         $this->load->helper('url');
@@ -136,7 +138,7 @@ class Obmp extends CI_Controller {
 
         $data['preno_dal'] = $preno_dal;
         $data['preno_al'] = $preno_al;
-        $data['num'] = $Q1;
+        $data['Q1'] = $Q1;
         $data['night'] = $this->my_tools->data_diff($preno_al, $preno_dal);
         
         $conto_id = 0;

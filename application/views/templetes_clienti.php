@@ -2,6 +2,14 @@
 /*
  * $data['temp'] = array('templete' => $temi, 'contenuto' => 'contenuto', 'bar1' => '', 'bar2' => '' );
 */
+
+if($this->session->area < 1){
+
+     redirect(base_url() . 'index.php/log_in', 'refresh');
+     
+}
+else{
+
 ?>
 <?php $this->load->view('sections/head_html_guest'); ?>
 <?php  $this->load->view('sections/head_guest'); ?>
@@ -58,3 +66,10 @@ if( $temp['templete'] == 'tem_full' )
 <?php $this->load->view('sections/footer_guest'); ?>  
 <?php $this->load->view('sections/footer_scripts'); ?>
 <?php // $this->output->enable_profiler(TRUE); ?>
+
+<?php 
+}
+
+print_r($_SESSION);
+
+?>

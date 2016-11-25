@@ -43,7 +43,7 @@ list
                 <h2></h2>
                 
                 <?php foreach ($rs_clienti as $val) { ?>
-                    <a href = '<?php echo base_url(); ?>index.php/clienti/edit_privacy/<?php echo $val->conto_id; ?>/<?php echo $val->clienti_id; ?>/?hotel_id=<?php echo $hotel_id; ?>&lg=<?php echo $this->input->get('lg'); ?>'>
+                    <a href = '<?php echo base_url(); ?>index.php/clienti_hotel/edit_privacy/<?php echo $val->conto_id; ?>/<?php echo $val->clienti_id; ?>/?hotel_id=<?php echo $hotel_id; ?>&lg=<?php echo $this->input->get('lg'); ?>'>
                         <div class='privacy_box'>
                             <h2><?php echo $val->numero_camera; ?></h2> 
                             
