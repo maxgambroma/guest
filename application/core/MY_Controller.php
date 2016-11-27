@@ -22,9 +22,36 @@ Class MY_Controller extends CI_Controller {
         $this->load->helper('language');
 
         $this->load->library('session');
+        
+        
+        
+        
+        if ($this->input->get('lg')) {
+            $this->lg = $lg = $this->input->get('lg');
+        } else {
+            $this->lg = $lg = 'en';
+        }
+
+        $lingue['en'] = 'english';
+        $lingue['jp'] = 'english';
+        $lingue['ru'] = 'english';
+        $lingue['se'] = 'english';
+        $lingue['fr'] = 'french';
+        $lingue['de'] = 'german';
+        $lingue['it'] = 'italian';
+        $lingue['es'] = 'spanish';
+
+
+        $this->idiom = $idiom = $lingue[$lg];
+//        $this->idiom = $idiom = $this->uri->segment(5, 'english');
+        $this->lang->load('form_validation_lang', $idiom);
+        $this->lang->load('form_lang', $idiom);
+        
+        
+        
 
 // controllo se il cliente è settato se proviene da link  
-        if ( isset($this->uri->segment(3, 1)) && isset($his->uri->segment(4, 1)) ) {
+        if ( $this->uri->segment(3, 1)!== null && $this->uri->segment(4, 1) !== null ) {
             $this->cliente_session();
         }
 

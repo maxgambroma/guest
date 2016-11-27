@@ -111,12 +111,12 @@ class Tex_lingue_model extends CI_Model {
      * @param type $lg
      * @return type array
      */
-    public function tex_lg($lg) {
+    public function tex_lg($lg='en') {
         $dati = $this->find();
         foreach ($dati as $key => $value) {
-            $tax_lg[$value->etichetta_lg] = $value->{$lg};
+            $data_lg[$value->etichetta_lg] = $value->{$lg};
         }
-        return $tax_lg;
+        return $data_lg;
     }
 
 }

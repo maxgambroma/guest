@@ -250,31 +250,52 @@
         <fieldset> 
             <legend> Booking id : <?php echo $row_new->preno_id; ?>  </legend>
             <div class="row ">
-                <div class="small-5 large-5 columns">
+                <div class="small-12 medium-4 large-5 columns"">
                     <img src="<?php echo base_url(); ?><?php echo $row_new->hotel_foto_piccola; ?>"/>
                 </div>
-                <div class="small-7 large-7 columns">
+                <div class="small-12 medium-8 large-7 columns"">
                     <h4>  <?php echo $row_new->hotel_tipologia; ?>  <?php echo $row_new->nome_hotel; ?></h4>
-                    <p>
-                    </p> 
-                    <p>
-                        IN: <?php echo $row_new->preno_dal; ?> <br>
-                        OUT: <?php echo $row_new->preno_al; ?> <br>
-                    </p>
+              
+                    
+                    
+                    <div class="event-date">
+                            <p class="event-title">IN</p>
+                            <p class="event-month"><?php echo date('M y', strtotime($row_new->preno_dal)); ?></p>
+                            <p class="event-day"><?php echo date('d', strtotime($row_new->preno_dal)); ?></p>
+                        </div>
+                        <div class="event-date">
+                            <p class="event-title">OUT</p>
+                            <p class="event-month"><?php echo date('M y', strtotime($row_new->preno_al)); ?></p>
+                            <p class="event-day"><?php echo date('d', strtotime($row_new->preno_al)); ?></p>
+                        </div>
+                        <p> 
+                            <?php if ($row_new->agenzia_nome) { ?>
+                                By <?php
+                                echo ($row_new->agenzia_nome ) . '<br>';
+                            }
+                            ?>
+                        </p>
+                    
+                    
+                    
+                    
                 </div>
-            </div>            
+             
+            </div>   
+                <hr>
             <div class="row">
                 <div class="small-12 large-12 columns">
                     <?php if ($row_new->q1) { ?> 
                         <div class="row ">
                             <div class="small-6 large-6 columns">
-                                <div class="numero_camara ">  <?php echo $row_new->q1; ?>  <img  align="right" title="<?php echo $lg_tipologia[$row_new->t1]->obmp_cm_lingue_nome; ?> " src="<?php echo base_url(); ?>/asset/img/tipologia_<?php echo $row_new->t1; ?>.jpg"/>  </div> 
+                                <div class="numero_camara ">  <?php echo $row_new->q1; ?>  <img  align="right" height="150" width="150" title="<?php echo $lg_tipologia[$row_new->t1]->obmp_cm_lingue_nome; ?> " src="<?php echo base_url(); ?>/asset/img/tipologia_<?php echo $row_new->t1; ?>.jpg"/>  </div> 
                             </div>
                             <div class="small-6 large-6 columns ">
                                 <h3><?php echo $lg_tipologia[$row_new->t1]->obmp_cm_lingue_nome; ?>  </h3>
-                                <?php echo $lg_tipologia[$row_new->t1]->obmp_cm_lingue_html1; ?> 
+                                <span class="desc_camare" >  <?php echo $lg_tipologia[$row_new->t1]->obmp_cm_lingue_html1; ?> </span>
                             </div> 
                         </div>   
+                    <hr>
                     <?php } ?> 
                     <?php if ($row_new->q2) { ?> 
                         <div class="row ">
@@ -283,9 +304,11 @@
                             </div>
                             <div class="small-6 large-6 columns ">              
                                 <h3><?php echo $lg_tipologia[$row_new->t2]->obmp_cm_lingue_nome; ?>  </h3>
-                                <?php echo $lg_tipologia[$row_new->t2]->obmp_cm_lingue_html1; ?> 
+                                <span class="desc_camare" >   <?php echo $lg_tipologia[$row_new->t2]->obmp_cm_lingue_html1; ?> </span>
                             </div> 
-                        </div>   
+                        </div>
+                                        <hr>
+
                     <?php } ?> 
                     <?php if ($row_new->q3) { ?> 
                         <div class="row ">
@@ -294,9 +317,11 @@
                             </div>
                             <div class="small-6 large-6 columns ">              
                                 <h3><?php echo $lg_tipologia[$row_new->t3]->obmp_cm_lingue_nome; ?>  </h3>
-                                <?php echo $lg_tipologia[$row_new->t3]->obmp_cm_lingue_html1; ?> 
+                                <span class="desc_camare" >   <?php echo $lg_tipologia[$row_new->t3]->obmp_cm_lingue_html1; ?> </span>
                             </div> 
-                        </div>   
+                        </div>  
+                                                            <hr>
+
                     <?php } ?> 
                     <?php if ($row_new->q4) { ?> 
                         <div class="row ">
@@ -305,9 +330,11 @@
                             </div>
                             <div class="small-6 large-6 columns ">              
                                 <h3><?php echo $lg_tipologia[$row_new->t4]->obmp_cm_lingue_nome; ?>  </h3>
-                                <?php echo $lg_tipologia[$row_new->t4]->obmp_cm_lingue_html1; ?> 
+                                <span class="desc_camare" >   <?php echo $lg_tipologia[$row_new->t4]->obmp_cm_lingue_html1; ?> </span>
                             </div> 
                         </div>   
+                                                                                <hr>
+
                     <?php } ?> 
                     <?php if ($row_new->q5) { ?> 
                         <div class="row ">
@@ -316,9 +343,11 @@
                             </div>
                             <div class="small-6 large-6 columns ">              
                                 <h3><?php echo $lg_tipologia[$row_new->t5]->obmp_cm_lingue_nome; ?>  </h3>
-                                <?php echo $lg_tipologia[$row_new->t5]->obmp_cm_lingue_html1; ?> 
+                                <span class="desc_camare" >     <?php echo $lg_tipologia[$row_new->t5]->obmp_cm_lingue_html1; ?> </span>
                             </div> 
                         </div>   
+                                                                                                    <hr>
+
                     <?php } ?>            
                     <?php if ($row_new->q6) { ?> 
                         <div class="row  ">
@@ -327,9 +356,11 @@
                             </div>
                             <div class="small-6 large-6 columns ">              
                                 <h3><?php echo $lg_tipologia[$row_new->t6]->obmp_cm_lingue_nome; ?>  </h3>
-                                <?php echo $lg_tipologia[$row_new->t6]->obmp_cm_lingue_html1; ?> 
+                                <span class="desc_camare" >    <?php echo $lg_tipologia[$row_new->t6]->obmp_cm_lingue_html1; ?> </span>
                             </div> 
                         </div>   
+                                                                                                                        <hr>
+
                     <?php } ?>            
                     <br>
                     <p></p>

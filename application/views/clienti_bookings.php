@@ -223,13 +223,25 @@
                         </div>
                         <div class="small-7 large-7  <?php if($row_new->preno_stato == 9){ ?>  box_cancellata <?php } ?> columns">
                             <h4>  <?php echo $row_new->hotel_tipologia; ?>  <?php echo $row_new->nome_hotel; ?></h4>
-                            <p>
-                                <?php if ($row_new->agenzia_nome) { ?>  By <?php echo ($row_new->agenzia_nome ) . '<br>';
-                        } ?>
-                                IN: <?php echo $row_new->preno_dal; ?> <br>
-                                OUT: <?php echo $row_new->preno_al; ?> <br>
-                               
-                            </p>
+           
+                    <div class="event-date">
+                            <p class="event-title">IN</p>
+                            <p class="event-month"><?php echo date('M y', strtotime($row_new->preno_dal)); ?></p>
+                            <p class="event-day"><?php echo date('d', strtotime($row_new->preno_dal)); ?></p>
+                        </div>
+                        <div class="event-date">
+                            <p class="event-title">OUT</p>
+                            <p class="event-month"><?php echo date('M y', strtotime($row_new->preno_al)); ?></p>
+                            <p class="event-day"><?php echo date('d', strtotime($row_new->preno_al)); ?></p>
+                        </div>
+                        <p> 
+                            <?php if ($row_new->agenzia_nome) { ?>
+                                By <?php
+                                echo ($row_new->agenzia_nome ) . '<br>';
+                            }
+                            ?>
+                        </p>
+                    
                         </div>
                     </div>
                     <div class="row">
@@ -290,13 +302,26 @@
                         ROOM: <?php echo $row->numero_camera; ?> 
                     </p> 
            
-                      
-                    <p>
-                        <?php if($row->agenzia_nome ){?>  By <?php echo ($row->agenzia_nome ) . '<br>'; } ?>
-                        
-                        IN: <?php echo $row->in_conto; ?> <br>
-                        OUT: <?php echo $row->out_conto; ?> <br>
-                    </p>
+                       
+                    <div class="event-date">
+                            <p class="event-title">IN</p>
+                            <p class="event-month"><?php echo date('M y', strtotime($row->preno_dal)); ?></p>
+                            <p class="event-day"><?php echo date('d', strtotime($row->preno_dal)); ?></p>
+                        </div>
+                        <div class="event-date">
+                            <p class="event-title">OUT</p>
+                            <p class="event-month"><?php echo date('M y', strtotime($row->preno_al)); ?></p>
+                            <p class="event-day"><?php echo date('d', strtotime($row->preno_al)); ?></p>
+                        </div>
+                        <p> 
+                            <?php if ($row->agenzia_nome) { ?>
+                                By <?php
+                                echo ($row->agenzia_nome ) . '<br>';
+                            }
+                            ?>
+                        </p>
+                    
+          
                     </div>
                     </div>
             
