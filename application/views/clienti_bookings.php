@@ -218,10 +218,10 @@
                 <fieldset>
                     <legend> Booking id : <?php echo $row_new->preno_id; ?></legend>
                     <div class="row">
-                        <div class="small-5 large-5 <?php if($row_new->preno_stato == 9){ ?>  box_cancellata <?php } ?>  columns">
+                        <div class="small-12 medium-5 large-5 <?php if($row_new->preno_stato == 9){ ?>  box_cancellata <?php } ?>  columns">
                             <img src="<?php echo base_url(); ?><?php echo $row_new->hotel_foto_piccola; ?>"/>
                         </div>
-                        <div class="small-7 large-7  <?php if($row_new->preno_stato == 9){ ?>  box_cancellata <?php } ?> columns">
+                        <div class="small-12 medium-7 large-7  <?php if($row_new->preno_stato == 9){ ?>  box_cancellata <?php } ?> columns">
                             <h4>  <?php echo $row_new->hotel_tipologia; ?>  <?php echo $row_new->nome_hotel; ?></h4>
            
                     <div class="event-date">
@@ -293,10 +293,10 @@
                
                     
                
-                <div class="small-5 large-5 columns">
+                <div class="small-12 medium-5 large-5">
                     <img src="<?php echo base_url(); ?><?php echo $row->hotel_foto_piccola; ?>"/>
                 </div>
-                <div class="small-7 large-7 columns">
+                <div class="small-12 medium-7 large-7">
                     <h4>  <?php echo $row->hotel_tipologia; ?>  <?php echo $row->nome_hotel; ?></h4>
                     <p>
                         ROOM: <?php echo $row->numero_camera; ?> 

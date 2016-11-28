@@ -85,7 +85,7 @@
 
                 <div class="row">
                         <!--    immagine-->
-                        <div class="small-12 large-4 columns">
+                        <div class="small-12  medium-12  large-4 columns">
                             <ul class="clearing-thumbs clearing-feature" data-clearing>
                                 <!--    img featured-->
                                 <li class="clearing-featured-img">
@@ -99,24 +99,25 @@
                                 </li>
                             </ul>          
                             <!--<img class="thumbnail" src="http://placehold.it/250x250" alt="Photo of Uranus.">-->
+                            <p></p>
                         </div>
                         <!--  corpo-->
-                        <div class="small-12 large-8 columns">
+                        <div class="small-12  medium-12   large-8 columns">
                             <!--    1 riga  titolo e sconto -->
                             <div class="row">
-                                <div class="small-5  large-8 columns">
+                                <div class="small-6  medium-6  large-8 columns">
                                     <p><?php echo $row_rooms->obmp_cm_lingue_nome ; ?></p>
                                 </div>
-                                <div class="small-7  large-4 columns ">
+                                <div class="small-6   medium-6 large-4 columns ">
                                     <span class="sconto"> SCONTO 30% </span>
                                 </div>
                             </div>
                              <!--    2 riga selezione  -->
                             <div class="row">
-                                <div class="small-4 large-6 columns">
+                                <div class="small-12  medium-12   large-6 columns">
                                     <p>  STARTING FROM   </p>  
                                 </div>
-                                <div class="small-4  large-3 columns">
+                                <div class="small-6  medium-6 large-3 columns">
                                     <!--                             camara-->
                                     <input type="hidden" name="cm_rooms_id[]" value="<?php  echo $row_rooms->obmp_cm_rooms_id ; ?>" id="cm_rooms_id_<?php echo $row_rooms->obmp_cm_rooms_id ; ?>"  />
                                     <!--                            prezzo-->
@@ -132,7 +133,7 @@
                                     </select>
                                     
                                 </div>
-                                <div class="small-4  large-3 columns">
+                                <div class="small-6 medium-6 large-3 columns">
                                     <!--  booking-->
                                     <div id="book_bot_<?php echo $row_rooms->obmp_cm_rooms_id ; ?>" > <span class="room-select" title="Seleziona la quantita "> Seleziona </span>  </div>
                                 </div>
