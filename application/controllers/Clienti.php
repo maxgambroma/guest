@@ -267,9 +267,14 @@ class Clienti extends MY_Controller {
 //trovo i vecchi conti
             $data['conti_old'] = $conti_old = $this->clienti_model->conti_by_clienti($clienti_id);
 // trovo le nuove preno
-            $data['preno'] = $preno = $this->agenda_model->booking_id_email($preno_id, $email);
+            $data['preno'] = $preno = $this->agenda_model->booking_id($preno_id);
         }
 
+        
+        
+       $data['review'] =  $this->obmp_review_model->review_preno_cliente($preno_id, $clienti_id );
+        
+        
         $data['albergo'] = $this->hotel_model->hotel($hotel_id);
 
 // scegli il templete

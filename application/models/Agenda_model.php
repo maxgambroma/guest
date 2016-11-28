@@ -203,6 +203,30 @@ WHERE
     }
     
     
+    
+       
+       function booking_id($preno_id) {
+        
+        $now = date('Y-m-d');
+        $query = $this->db->query("
+SELECT *
+	
+FROM
+	agenda
+	LEFT OUTER JOIN agenzie
+	 ON agenda.preno_agenzia = agenzie.agenzia_id
+         	INNER JOIN hotels
+	 ON agenda.hotel_id = hotels.hotel_id
+WHERE
+    agenda.preno_id = '$preno_id'
+ 
+        ");
+        return $query->result();
+    }
+    
+    
+    
+    
     /**
      * elenco tutte le camare presenti sul web nella lingua selezionate
      * @param type $lg

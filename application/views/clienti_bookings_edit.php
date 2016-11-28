@@ -255,34 +255,34 @@
                 </div>
                 <div class="small-12 medium-8 large-7 columns"">
                     <h4>  <?php echo $row_new->hotel_tipologia; ?>  <?php echo $row_new->nome_hotel; ?></h4>
-              
-                    
-                    
+
+
+
                     <div class="event-date">
-                            <p class="event-title">IN</p>
-                            <p class="event-month"><?php echo date('M y', strtotime($row_new->preno_dal)); ?></p>
-                            <p class="event-day"><?php echo date('d', strtotime($row_new->preno_dal)); ?></p>
-                        </div>
-                        <div class="event-date">
-                            <p class="event-title">OUT</p>
-                            <p class="event-month"><?php echo date('M y', strtotime($row_new->preno_al)); ?></p>
-                            <p class="event-day"><?php echo date('d', strtotime($row_new->preno_al)); ?></p>
-                        </div>
-                        <p> 
-                            <?php if ($row_new->agenzia_nome) { ?>
-                                By <?php
-                                echo ($row_new->agenzia_nome ) . '<br>';
-                            }
-                            ?>
-                        </p>
-                    
-                    
-                    
-                    
+                        <p class="event-title">IN</p>
+                        <p class="event-month"><?php echo date('M y', strtotime($row_new->preno_dal)); ?></p>
+                        <p class="event-day"><?php echo date('d', strtotime($row_new->preno_dal)); ?></p>
+                    </div>
+                    <div class="event-date">
+                        <p class="event-title">OUT</p>
+                        <p class="event-month"><?php echo date('M y', strtotime($row_new->preno_al)); ?></p>
+                        <p class="event-day"><?php echo date('d', strtotime($row_new->preno_al)); ?></p>
+                    </div>
+                    <p> 
+                        <?php if ($row_new->agenzia_nome) { ?>
+                            By <?php
+                            echo ($row_new->agenzia_nome ) . '<br>';
+                        }
+                        ?>
+                    </p>
+
+
+
+
                 </div>
-             
+
             </div>   
-                <hr>
+            <hr>
             <div class="row">
                 <div class="small-12 large-12 columns">
                     <?php if ($row_new->q1) { ?> 
@@ -295,7 +295,7 @@
                                 <span class="desc_camare" >  <?php echo $lg_tipologia[$row_new->t1]->obmp_cm_lingue_html1; ?> </span>
                             </div> 
                         </div>   
-                    <hr>
+                        <hr>
                     <?php } ?> 
                     <?php if ($row_new->q2) { ?> 
                         <div class="row ">
@@ -307,7 +307,7 @@
                                 <span class="desc_camare" >   <?php echo $lg_tipologia[$row_new->t2]->obmp_cm_lingue_html1; ?> </span>
                             </div> 
                         </div>
-                                        <hr>
+                        <hr>
 
                     <?php } ?> 
                     <?php if ($row_new->q3) { ?> 
@@ -320,7 +320,7 @@
                                 <span class="desc_camare" >   <?php echo $lg_tipologia[$row_new->t3]->obmp_cm_lingue_html1; ?> </span>
                             </div> 
                         </div>  
-                                                            <hr>
+                        <hr>
 
                     <?php } ?> 
                     <?php if ($row_new->q4) { ?> 
@@ -333,7 +333,7 @@
                                 <span class="desc_camare" >   <?php echo $lg_tipologia[$row_new->t4]->obmp_cm_lingue_html1; ?> </span>
                             </div> 
                         </div>   
-                                                                                <hr>
+                        <hr>
 
                     <?php } ?> 
                     <?php if ($row_new->q5) { ?> 
@@ -346,7 +346,7 @@
                                 <span class="desc_camare" >     <?php echo $lg_tipologia[$row_new->t5]->obmp_cm_lingue_html1; ?> </span>
                             </div> 
                         </div>   
-                                                                                                    <hr>
+                        <hr>
 
                     <?php } ?>            
                     <?php if ($row_new->q6) { ?> 
@@ -359,51 +359,72 @@
                                 <span class="desc_camare" >    <?php echo $lg_tipologia[$row_new->t6]->obmp_cm_lingue_html1; ?> </span>
                             </div> 
                         </div>   
-                                                                                                                        <hr>
+                        <hr>
 
                     <?php } ?>            
                     <br>
                     <p></p>
-                 
-                    <?php 
+
+                    <?php
+                    
+//                            print_r($review);
                     
                     // non posso modicare la prenotazioni passata
-                    if($row_new->preno_dal > $today ){ ?>
-                    <a href="#" data-reveal-id="firstModal" class="radius button">Cancella</a>
-                    <a href="#" data-reveal-id="secondModal" class="radius button">Modifica</a>
-                    <?php } ?>
+                    if ($row_new->preno_dal > $today) {
+                        ?>
+                        <a href="#" data-reveal-id="secondModal" class="radius button right">Modifica</a> &nbsp;
+                        <a href="#" data-reveal-id="firstModal" class="radius button alert right">Cancella</a> 
+                       
+                    <?php
+                    
+                    
+                
+                    
+                    } else {
+                        if (!$review->review_id > 0) {
+                            ?>                    
+                        <a href="<?php echo base_url(); ?>index.php/obmp_review/insert/<?php echo $review->conto_id ; ?>/<?php echo $this->session->clienti_id  ; ?>/?lg=en" class="button right">Scrivi Review</a>
+                        <?php } else { ?>
+                            <a href="<?php echo base_url(); ?>index.php/obmp_review/edit/<?php echo $review->conto_id ; ?>/<?php echo $this->session->clienti_id  ; ?>/?lg=en " class="button success right">Leggi Review</a>
+                        <?php }
+                    }
+                    ?>
+
+
+
+
                 </div>
             </div>
-            
+
             <!-- Reveal Modals begin -->
             <div id="secondModal" class="reveal-modal" data-reveal aria-labelledby="secondModalTitle" aria-hidden="true" role="dialog">
                 <h2 id="secondModalTitle">This is a modal.</h2>
                 <div class="row">
                     <div class="large-3 columns">
                         <p>
-                            <?php echo lang('check_in', 'Check-in'); ?> 
-                            <?php echo form_error('check_in'); ?>
+    <?php echo lang('check_in', 'Check-in'); ?> 
+    <?php echo form_error('check_in'); ?>
                             <input id="preno_dal" type="text" name="preno_dal" value="<?php echo $row_new->preno_dal; ?>"  />
                         </p>
                     </div>
                     <div class="large-3 columns">
-                        <?php echo lang('check_out', 'Check-out'); ?> 
-                        <?php echo form_error('check_out'); ?>
-                        <input id="preno_al" type="text" name="preno_al"   value="<?php echo  $row_new->preno_al; ?>"  />
+    <?php echo lang('check_out', 'Check-out'); ?> 
+    <?php echo form_error('check_out'); ?>
+                        <input id="preno_al" type="text" name="preno_al"   value="<?php echo $row_new->preno_al; ?>"  />
                     </div>
                     <div  class="large-3 columns"> 
-<!--                        <p> 
+    <!--                        <p> 
                             <a href="#"  id="aggiorna_preno"  class="button right">Default Button</a>
                         </p>-->
                     </div>
                 </div>
                 <div id="new_preno"></div>
-                
-                   <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+
+                <a class="close-reveal-modal" aria-label="Close">&#215;</a>
             </div>
-            
-            
-            
+
+
+
             <!-- Triggers the modals -->
             <!-- Cancella Preno -->
             <div id="firstModal" class="reveal-modal" data-reveal aria-labelledby="firstModalTitle" aria-hidden="true" role="dialog">
@@ -415,16 +436,16 @@
                     <?php
 // Change the css classes to suit your needs    
                     $attributes = array('class' => '', 'id' => '');
-                  echo form_open( base_url().'index.php/agenda/cax_preno', $attributes); 
-                  ?>
-               <p>
-                     Qual è il motivo principale della cancellazione?<br>
-                    La risposta è facoltativa, ma rispondendo ci aiuterai a fornirti un servizio sempre migliore <br>
-                    <input type="radio" name="motivo" value="1" id="motivo1" /> <label for="motivo1"> Ho trovato un posto migliore in cui soggiornare </label>  <br>
-                    <input type="radio" name="motivo" value="2" id="motivo2"  /> <label for="motivo1">Ho trovato un tariffa migliore in su un altro sito </label><br>
-                    <input type="radio" name="motivo" value="3" id="motivo3"  /> <label for="motivo1">Devo modificare i dettagli della mia prenotazione </label><br>
-                    <input type="radio" name="motivo" value="4" id="motivo4"  /> <label for="motivo1">Non devo più andare in questa destinazione</label><br>
-                    <input type="radio" name="motivo" value="5" id="motivo5"  /> <label for="motivo1">Motivi personali </label><br>
+                    echo form_open(base_url() . 'index.php/agenda/cax_preno', $attributes);
+                    ?>
+                    <p>
+                        Qual è il motivo principale della cancellazione?<br>
+                        La risposta è facoltativa, ma rispondendo ci aiuterai a fornirti un servizio sempre migliore <br>
+                        <input type="radio" name="motivo" value="1" id="motivo1" /> <label for="motivo1"> Ho trovato un posto migliore in cui soggiornare </label>  <br>
+                        <input type="radio" name="motivo" value="2" id="motivo2"  /> <label for="motivo1">Ho trovato un tariffa migliore in su un altro sito </label><br>
+                        <input type="radio" name="motivo" value="3" id="motivo3"  /> <label for="motivo1">Devo modificare i dettagli della mia prenotazione </label><br>
+                        <input type="radio" name="motivo" value="4" id="motivo4"  /> <label for="motivo1">Non devo più andare in questa destinazione</label><br>
+                        <input type="radio" name="motivo" value="5" id="motivo5"  /> <label for="motivo1">Motivi personali </label><br>
                     </p>
                     <label class="inline" for="preno_stato" >Si voglio cancellare questa Prenotazione
                         <div class="switch round">
@@ -432,20 +453,20 @@
                             <label for="preno_stato"></label>  
                         </div>
                     </label>
-                    
-<input id="agenda_utente_id" type="hidden" name="agenda_utente_id"  value="<?php echo (!set_value('agenda_utente_id')) ? $preno[0]->agenda_utente_id : set_value('agenda_utente_id'); ?>"  />    
-<input id="cancella_user" type="hidden" name="cancella_user"  value="1"  />
-<input id="conto_id" type="hidden" name="conto_id"  value="<?php echo $this->uri->segment(3, 1); ?>"  />
-<input id="clienti_id" type="hidden" name="clienti_id"  value="<?php echo $this->uri->segment(4, 1); ?>"  />
-<input id="preno_id" type="hidden" name="preno_id"  value="<?php echo $row_new->preno_id ?>"  />
-                    
-                    
-                    
-                    
+
+                    <input id="agenda_utente_id" type="hidden" name="agenda_utente_id"  value="<?php echo (!set_value('agenda_utente_id')) ? $preno[0]->agenda_utente_id : set_value('agenda_utente_id'); ?>"  />    
+                    <input id="cancella_user" type="hidden" name="cancella_user"  value="1"  />
+                    <input id="conto_id" type="hidden" name="conto_id"  value="<?php echo $this->uri->segment(3, 1); ?>"  />
+                    <input id="clienti_id" type="hidden" name="clienti_id"  value="<?php echo $this->uri->segment(4, 1); ?>"  />
+                    <input id="preno_id" type="hidden" name="preno_id"  value="<?php echo $row_new->preno_id ?>"  />
+
+
+
+
                     <p>
-                        <?php echo form_submit('submit', 'Cancella', 'class="button"'); ?>
+                    <?php echo form_submit('submit', 'Cancella', 'class="button"'); ?>
                     </p>
-                    <?php echo form_close(); ?>
+    <?php echo form_close(); ?>
                 </fieldset>  
                 <p></p>
                 <a class="close-reveal-modal" aria-label="Close">&#215;</a>
@@ -473,13 +494,13 @@
             dateFormat: 'yy-mm-dd',
             onSelect: function (selectedDate) {
                 $("#preno_al").datepicker("option", "minDate", selectedDate);
-             // trovo i nuovi valori    
-             var preno_dal = $('#preno_dal').val();
-            var preno_al = $('#preno_al').val();
-            $("div#new_preno").load("<?php echo base_url(); ?>index.php/agenda/cambia_date?preno_dal=" + preno_dal + "&preno_al=" + preno_al + "&preno_id=<?php echo $row_new->preno_id ?>&hotel_id=<?php echo $row_new->hotel_id ?>&conto_id=<?php echo $rs_clienti[0]->conto_id; ?>&clienti_id=<?php echo $rs_clienti[0]->clienti_id; ?>&lg=<?php echo $lg; ?>");
+                // trovo i nuovi valori    
+                var preno_dal = $('#preno_dal').val();
+                var preno_al = $('#preno_al').val();
+                $("div#new_preno").load("<?php echo base_url(); ?>index.php/agenda/cambia_date?preno_dal=" + preno_dal + "&preno_al=" + preno_al + "&preno_id=<?php echo $row_new->preno_id ?>&hotel_id=<?php echo $row_new->hotel_id ?>&conto_id=<?php echo $rs_clienti[0]->conto_id; ?>&clienti_id=<?php echo $rs_clienti[0]->clienti_id; ?>&lg=<?php echo $lg; ?>");
 
-                
-                
+
+
             }
         });
 // Al
@@ -509,7 +530,7 @@
 </script> 
 
 
-<script> 
+<script>
     $(function () {
 // aggiorna il div 
         $("#aggiorna_preno").click(function () {

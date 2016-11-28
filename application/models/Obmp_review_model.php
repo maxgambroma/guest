@@ -325,9 +325,9 @@ class Obmp_review_model extends CI_Model {
 //        $sql = "
 //        SELECT
 //        FROM
-//        usr_web1_3.obmp_review
-//        INNER JOIN usr_web1_3.refer_clienti
-//        ON usr_web1_3.obmp_review.conto_id = usr_web1_3.refer_clienti.conto_id
+//        obmp_review
+//        INNER JOIN refer_clienti
+//        ON obmp_review.conto_id = refer_clienti.conto_id
 //        WHERE
 //       
 //        ";
@@ -396,13 +396,61 @@ class Obmp_review_model extends CI_Model {
          INNER JOIN `refer_clienti` ON (obmp_review.conto_id = `refer_clienti`.conto_id)
          INNER JOIN `clienti` ON (`refer_clienti`.clienti_id = `clienti`.clienti_id)
  WHERE 
- usr_web1_3.refer_clienti.clienti_id = $clienti_id
+ refer_clienti.clienti_id = $clienti_id
         ";
 
         $query = $this->db->query($sql);
         $return = $query->result();
         return $return;
     }
+    
+    
+    
+    
+    function review_preno_cliente($preno_id, $clienti_id ) {
+
+        
+    $sql="
+        SELECT
+   	conti.conto_id,
+	agenda.preno_id,
+	agenda.hotel_id,
+	conti.foglio_id,
+	conti.in_conto,
+	conti.in_conto_time,
+	conti.out_preno,
+	conti.out_conto,
+	refer_clienti.clienti_id,
+        agenda.preno_id,
+	agenda.hotel_id,
+	obmp_review.review_id,
+	obmp_review.camera_numero,
+	obmp_review.stato,
+	obmp_review.nome,
+	obmp_review.user_type
+        FROM
+        agenda
+        LEFT OUTER JOIN conti
+        ON agenda.preno_id = conti.preno_id
+        
+        LEFT OUTER JOIN refer_clienti
+        ON conti.conto_id = refer_clienti.conto_id
+        
+        LEFT OUTER JOIN obmp_review
+        ON conti.conto_id = obmp_review.conto_id
+        
+        WHERE
+        agenda.preno_id = '$preno_id'
+        AND (refer_clienti.clienti_id = '$clienti_id'
+        OR refer_clienti.clienti_id = NULL)
+    " ;
+
+
+        $query = $this->db->query($sql);
+        $return = $query->row();
+        return $return;
+}
+    
     
     
     

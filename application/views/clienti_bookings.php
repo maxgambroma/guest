@@ -264,23 +264,10 @@
 </div>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 <div class="old_preno">
     <fieldset>
         <legend> Old Preno</legend>
         
-
 
 
 
@@ -293,10 +280,10 @@
                
                     
                
-                <div class="small-12 medium-5 large-5">
+                <div class="small-12 medium-5 large-5 columns">
                     <img src="<?php echo base_url(); ?><?php echo $row->hotel_foto_piccola; ?>"/>
                 </div>
-                <div class="small-12 medium-7 large-7">
+                <div class="small-12 medium-7 large-7 columns">
                     <h4>  <?php echo $row->hotel_tipologia; ?>  <?php echo $row->nome_hotel; ?></h4>
                     <p>
                         ROOM: <?php echo $row->numero_camera; ?> 
