@@ -12,7 +12,8 @@ if ($rs_clienti) {
     <div class="panel">
         <p>
             Ciao <?php echo $rs_clienti[0]->clienti_nome; ?>, <br>
-            Prenota il tuo prossimo viaggio direttamente qui e avrai i seguenti Vantaggi
+            <?php echo $lg_tex['vantaggi_breve']; ?>
+            
         </p>
 
         <span id="vantaggi_apri" class="apri_pannello"> <i class="fi-plus"></i>   </span>
@@ -28,30 +29,39 @@ if ($rs_clienti) {
                     </tr>
                 </thead>
                 <tbody>
+                    
+                   
+                    
                     <tr>
-                        <td>Tariffe inferiore del 5% rispetto a Booking e Expedia  </td>
+                        <td>  <?php echo $lg_tex['vantaggi_inferiore']; ?></td>
+                        <td><i class="fi-check"></i></td>
+                    </tr>
+                    
+                        <tr>
+                        <td>  <?php echo $lg_tex['vantaggi_fedelta']; ?></td>
+                        <td><i class="fi-check"></i></td>
+                    </tr>
+                    
+                    <tr>
+                        <td><?php echo $lg_tex['vantaggi_early']; ?></td>
                         <td><i class="fi-check"></i></td>
                     </tr>
                     <tr>
-                        <td>Early check-in a partire dalle 10:00*</td>
+                        <td><?php echo $lg_tex['vantaggi_late']; ?></td>
                         <td><i class="fi-check"></i></td>
                     </tr>
                     <tr>
-                        <td>Late Check-out fino alle 13,00*</td>
+                        <td><?php echo $lg_tex['vantaggi_upgrade']; ?></td>
                         <td><i class="fi-check"></i></td>
                     </tr>
                     <tr>
-                        <td> Upgrade a Camera di categoria Superiore* </td>
-                        <td><i class="fi-check"></i></td>
-                    </tr>
-                    <tr>
-                        <td>1 Bottiglia d'Acqua Minerale </td>
+                        <td><?php echo $lg_tex['vantaggi_bottiglia']; ?></td>
                         <td><i class="fi-check"></i></td>
                     </tr>
                 </tbody>
             </table>
             <p>
-                (*) Questo servizio è soggetto a disponibilità
+                 <?php echo $lg_tex['vantaggi_dispo']; ?>
                 <span id="vantaggi_chiudi" class="chiudi_pannello"> <i class="fi-x-circle"></i>   </span>
             </p>
             <p>&nbsp;</p>
@@ -65,13 +75,15 @@ if ($rs_clienti) {
     <?php if (isset($punti)) { ?>
         <div class="panel callout radius">
             <p>
-            <h2> <?php echo lang('punti_tex') ?>: <?php echo $punti; ?></h2>
+            <h2><?php echo $lg_tex['punti_tot']; ?> : <?php echo $punti; ?></h2>
             <p>
                 <span id="punti_apri" class="apri_pannello"> <i class="fi-plus"></i>   </span>
             <p>&nbsp;</p>
 
             <div id="punti" style="display: none;" >
-                Ogni volta che soggiorni * nei nostri alberghi ricevi 1 punto per ogni 10 Euro speso per  il soggiorno
+                
+                <?php echo $lg_tex['punti_soggiorno']; ?>
+                
                 <table width="100%">
                     <thead>
                         <tr>
@@ -114,11 +126,10 @@ if ($rs_clienti) {
                         </tr>
                     </tbody>
                 </table>
-                (*) vengono  calcolato solo i soggiorni  prenotati on-line sul booking dell’hotel e hanno scadenze annuale
-                <br>
-                (**)Il Coupon è spendibile in ogni nostro hotel
-
-                <span id="punti_chiudi" class="chiudi_pannello"> <i class="fi-x-circle"></i> </span>
+                <?php echo $lg_tex['punti_calcolo']; ?>
+    <br>
+                <?php echo $lg_tex['punti_dove_spendi']; ?>
+                    <span id="punti_chiudi" class="chiudi_pannello"> <i class="fi-x-circle"></i> </span>
 
 
                 </p>
@@ -128,15 +139,7 @@ if ($rs_clienti) {
         </div>
         <?php
     }
-} else {
-    ?>
-    <div class="panel callout radius">
-        <p>
-            Cliente non riconosciuto
-        </p>
-    </div>
-    <?php
-}
+} 
 ?>
 
 
@@ -160,11 +163,11 @@ C
 
 <ul class="pricing-table">
 <li class="title">ROOM N° <?php echo $conti[0]->numero_camera; ?></li>
-<li class="price"> Importo Camera <?php echo $conti_saldo['conto_camera']; ?></li>
-<li class="bullet-item"> IN <?php echo $conti[0]->in_conto; ?> OUT <?php echo $conti[0]->out_preno; ?></li>
-<li class="bullet-item">Extra <?php echo $conti_saldo['totale_extra']; ?></li>
-<li class="bullet-item">Acconti <?php echo $conti_saldo['totale_acconti']; ?></li>
-<li class="bullet-item">Saldo Soggiorno <?php echo $conti_saldo['saldo_preno']; ?></li>
+<li class="price"> <?php echo $lg_tex['imp_camera']; ?> <?php echo $conti_saldo['conto_camera']; ?></li>
+<li class="bullet-item"> <?php echo $lg_tex['check-in']; ?> <?php echo $conti[0]->in_conto; ?> <?php echo $lg_tex['check-out'] ?> <?php echo $conti[0]->out_preno; ?></li>
+<li class="bullet-item"><?php echo $lg_tex['extra']; ?> <?php echo $conti_saldo['totale_extra']; ?></li>
+<li class="bullet-item"><?php echo $lg_tex['acconti']; ?> <?php echo $conti_saldo['totale_acconti']; ?></li>
+<li class="bullet-item"><?php echo $lg_tex['saldo']; ?>  <?php echo $conti_saldo['saldo_preno']; ?></li>
 <li class="cta-button"><a class="button" href="#">Buy Now</a></li>
 </ul>
 

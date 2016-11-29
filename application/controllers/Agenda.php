@@ -546,9 +546,12 @@ class Agenda extends CI_Controller {
     function cax_preno() {
 
         $this->form_validation->set_rules('preno_id', 'lang:preno_id', 'trim|required');
-        $this->form_validation->set_rules('cancella_user', 'lang:cancella_user', 'trim|required');
+        // metto il cliente
+        $this->form_validation->set_rules('clienti_id', 'lang:cancella_user', 'trim|required');
         $this->form_validation->set_rules('preno_stato', 'lang:preno_stato', 'trim|required');
         $this->form_validation->set_rules('agenda_utente_id', 'lang:agenda_utente_id', 'trim');
+         $this->form_validation->set_rules('motivo', 'lang:motivo', 'trim');
+        
         $this->form_validation->set_error_delimiters('<span class="error">', '</span><br /> ');
 
         if ($this->form_validation->run() == FALSE && set_value('preno_stato') != 9) { // validation hasn't been passed
@@ -557,10 +560,25 @@ class Agenda extends CI_Controller {
 // build array for the model
             $form_data = array(
 // 'preno_id' => set_value('preno_id'),
-                'cancella_user' => set_value('cancella_user'),
+                // è il cliente che cancwella
+                'cancella_user' => set_value('clienti_id'),
                 'preno_stato' => set_value('preno_stato'),
-                'agenda_utente_id' => set_value('agenda_utente_id')
+                // metto il cliente id
+               // 'agenda_utente_id' => set_value('agenda_utente_id'),
+                // metto il motivo
+                'cancella_pass' => set_value('motivo')
             );
+            
+            
+            
+            
+            
+            
+            
+
+            
+            
+            
 
 // run insert model to write data to db
             $preno_id = set_value('preno_id');

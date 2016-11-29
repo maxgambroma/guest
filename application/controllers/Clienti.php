@@ -12,6 +12,10 @@ class Clienti extends MY_Controller {
         $this->load->model('tipologia_camera_model');
         $this->load->model('obmp_review_model');
         $this->load->model('conti_model');
+        
+        
+        $this->load->model('tex_lingue_model');
+        
         $this->load->library('form_validation');
         $this->load->library('table');
         $this->load->library('pagination');
@@ -58,8 +62,8 @@ class Clienti extends MY_Controller {
 
         
         // lingua
-        $data['lg'] = $this->lg;
-
+        $data['lg'] = $lg= $this->lg;
+        $data['lg_tex'] =  $this->tex_lingue_model->tex_lg($lg);
         // hotel   
         if ($this->input->get('hotel_id')) {
             $hotel_id = $this->input->get('hotel_id');
@@ -182,7 +186,9 @@ class Clienti extends MY_Controller {
      */
     function bookings() {
         
-        $data['lg'] = $this->lg;
+     // lingua
+        $data['lg'] = $lg= $this->lg;
+        $data['lg_tex'] =  $this->tex_lingue_model->tex_lg($lg);
         
       
         if ($this->input->get('hotel_id')) {
@@ -239,7 +245,12 @@ class Clienti extends MY_Controller {
      */
     function bookings_edit() {
 
-        $data['lg'] = $this->lg;
+        
+          // lingua
+        $data['lg'] = $lg= $this->lg;
+        $data['lg_tex'] =  $this->tex_lingue_model->tex_lg($lg);
+        
+        
         $today = date('Y-m-d');
         if ($this->input->get('hotel_id')) {
             $hotel_id = $this->input->get('hotel_id');
@@ -301,7 +312,11 @@ class Clienti extends MY_Controller {
      */
     function review() {
 
-        $data['lg'] = $this->lg;
+  // lingua
+        $data['lg'] = $lg= $this->lg;
+        $data['lg_tex'] =  $this->tex_lingue_model->tex_lg($lg);
+        
+        
         $today = date('Y-m-d');
         if ($this->input->get('hotel_id')) {
             $hotel_id = $this->input->get('hotel_id');
@@ -326,7 +341,7 @@ class Clienti extends MY_Controller {
 // scegli il templete
         $temi = 'tem_cb_clienti';
 // carica la vista del contenuto
-        $vista = 'review_clienti';
+        $vista = 'clienti_review';
 // gestore templete
         $data['temp'] = array
             ('templete' => $temi,
@@ -343,7 +358,9 @@ class Clienti extends MY_Controller {
      *  
      */
     function impostazioni() {
-        $data['lg'] = $this->lg;
+  // lingua
+        $data['lg'] = $lg= $this->lg;
+        $data['lg_tex'] =  $this->tex_lingue_model->tex_lg($lg);
 
         $today = date('Y-m-d');
         if ($this->input->get('hotel_id')) {
@@ -431,7 +448,11 @@ class Clienti extends MY_Controller {
      *  per gestire il marketing
      */
     function imp_privacy() {
-        $data['lg'] = $this->lg;
+ 
+          // lingua
+        $data['lg'] = $lg= $this->lg;
+        $data['lg_tex'] =  $this->tex_lingue_model->tex_lg($lg);
+        
 
         $today = date('Y-m-d');
         if ($this->input->get('hotel_id')) {

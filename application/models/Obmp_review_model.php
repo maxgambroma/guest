@@ -396,7 +396,10 @@ class Obmp_review_model extends CI_Model {
          INNER JOIN `refer_clienti` ON (obmp_review.conto_id = `refer_clienti`.conto_id)
          INNER JOIN `clienti` ON (`refer_clienti`.clienti_id = `clienti`.clienti_id)
  WHERE 
- refer_clienti.clienti_id = $clienti_id
+ refer_clienti.clienti_id = '$clienti_id'
+     ORDER BY
+	obmp_review.review_id DESC
+     
         ";
 
         $query = $this->db->query($sql);

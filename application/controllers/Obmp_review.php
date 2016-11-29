@@ -332,7 +332,7 @@ class Obmp_review extends CI_Controller {
                 
             
         // scegli il templete
-        $temi = 'tem_clienti';
+        $temi = 'tem_cb_clienti';
         // carica la vista del contenuto
         $vista = 'obmp_review_edit';
         // gestore templete

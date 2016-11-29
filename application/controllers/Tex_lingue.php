@@ -101,20 +101,20 @@ class Tex_lingue extends CI_Controller {
                 
                 $data['rs_tex_lingue'] =   $this->tex_lingue_model->find_limit($limit , $offset);
                
-		// scegli il templete
-		$temi = 'tem_full';
-		// carica la vista del contenuto
-		$vista = 'tex_lingue_list'; 
-		// gestore templete
-                $data['temp'] = array
-                ('templete' => $temi, 
-                'contenuto' => $vista, 
-                'bar_1' => 'bar_1',
-                'bar_2' => 'bar_2',
-                'box_top' => 'box_top' );
-                $this->load->view('templetes_guest', $data);		
+//		// scegli il templete
+//		$temi = 'tem_full';
+//		// carica la vista del contenuto
+//		$vista = 'tex_lingue_list'; 
+//		// gestore templete
+//                $data['temp'] = array
+//                ('templete' => $temi, 
+//                'contenuto' => $vista, 
+//                'bar_1' => 'bar_1',
+//                'bar_2' => 'bar_2',
+//                'box_top' => 'box_top' );
+//                $this->load->view('templetes_guest', $data);		
 
-                 //$this->load->view('tex_lingue_list.php');    
+                 $this->load->view('tex_lingue_list.php', $data);    
                 
 	}
 
@@ -153,21 +153,21 @@ class Tex_lingue extends CI_Controller {
 		if ($this->form_validation->run() == FALSE) // validation hasn't been passed
 		{
 			
-		// scegli il templete
-		$temi = 'tem_full';
-		// carica la vista del contenuto
-		$vista = 'tex_lingue_add';
-		// gestore templete
+//		// scegli il templete
+//		$temi = 'tem_full';
+//		// carica la vista del contenuto
+//		$vista = 'tex_lingue_add';
+//		// gestore templete
+//
+//		$data['temp'] = array
+//                ('templete' => $temi, 
+//                'contenuto' => $vista, 
+//                'bar_1' => 'bar_1',
+//                'bar_2' => 'bar_2',
+//                'box_top' => 'box_top' );
+//                $this->load->view('templetes_guest', $data);		
 
-		$data['temp'] = array
-                ('templete' => $temi, 
-                'contenuto' => $vista, 
-                'bar_1' => 'bar_1',
-                'bar_2' => 'bar_2',
-                'box_top' => 'box_top' );
-                $this->load->view('templetes_guest', $data);		
-
-               //$this->load->view('tex_lingue_add');
+               $this->load->view('tex_lingue_add', $data );
 
 		}
 		else // passed validation proceed to post success logic
@@ -243,21 +243,21 @@ class Tex_lingue extends CI_Controller {
                 $tex_lingue_id = $this->input->get('tex_lingue_id') ; 
                 $data['rs_tex_lingue'] =   $this->tex_lingue_model->find_by_id($tex_lingue_id);
 
-		// scegli il templete
-		$temi = 'tem_full';
-		// carica la vista del contenuto
-		$vista = 'tex_lingue_edit';
-		// gestore templete
-                
-                $data['temp'] = array
-                ('templete' => $temi, 
-                'contenuto' => $vista, 
-                'bar_1' => 'bar_1',
-                'bar_2' => 'bar_2',
-                'box_top' => 'box_top' );
-                $this->load->view('templetes_guest', $data);
+//		// scegli il templete
+//		$temi = 'tem_full';
+//		// carica la vista del contenuto
+//		$vista = 'tex_lingue_edit';
+//		// gestore templete
+//                
+//                $data['temp'] = array
+//                ('templete' => $temi, 
+//                'contenuto' => $vista, 
+//                'bar_1' => 'bar_1',
+//                'bar_2' => 'bar_2',
+//                'box_top' => 'box_top' );
+//                $this->load->view('templetes_guest', $data);
 
-		//$this->load->view('tex_lingue_edit');
+		$this->load->view('tex_lingue_edit', $data);
 			
 		}
 		else // passed validation proceed to post success logic
