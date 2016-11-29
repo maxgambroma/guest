@@ -151,7 +151,7 @@
 
             <!-- Reveal Modals begin -->
             <div id="secondModal" class="reveal-modal" data-reveal aria-labelledby="secondModalTitle" aria-hidden="true" role="dialog">
-                <h2 id="secondModalTitle">This is a modal.</h2>
+                <h2 id="secondModalTitle"><?php echo $lg_tex['mod_periodo']; ?></h2>
                 <div class="row">
                     <div class="large-3 columns">
                         <p>

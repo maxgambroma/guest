@@ -17,23 +17,23 @@ echo form_open( base_url().'index.php/agenda/edit_data_preno', $attributes);
 ?>     
 <fieldset>
     <legend>Cambia le date </legend>
-    Stai per modificare le date della tua prenotazione
+    <?php echo $lg_tex['cambia_data_tex']; ?>
     <div class="row">
         <div class="small-12 large-12 columns">
             <table >
                 <thead>
                     <tr>
                         <th></th>
-                        <th>Arrivo</th>
-                        <th>Partenza</th>
-                        <th>Prezzo</th>
-                        <th>Notti</th>
-                        <th>Note</th>
+                        <th><?php echo $lg_tex['check-in']; ?></th>
+                        <th><?php echo $lg_tex['check-out']; ?></th>
+                        <th><?php echo $lg_tex['totale_price']; ?></th>
+                        <th><?php echo $lg_tex['night']; ?></th>
+                        <th><?php echo $lg_tex['note']; ?></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Dati iniziali</td>
+                        <td><?php echo $lg_tex['date_iniziali']; ?></td>
                         <td><?php echo $preno->preno_dal; ?></td>
                         <td><?php echo $preno->preno_al; ?></td>
                         <td><?php echo $preno->preno_importo; ?></td>
@@ -41,7 +41,7 @@ echo form_open( base_url().'index.php/agenda/edit_data_preno', $attributes);
                         <td></td>
                     </tr>
                     <tr>
-                        <td>Nuove date</td>
+                        <td><?php echo $lg_tex['nuove_date']; ?></td>
                         <td><?php echo $preno_new['preno_dal']; ?> </td>
                         <td><?php echo $preno_new['preno_al']; ?> </td>
                         <td> <?php echo $importo; ?> </td>
@@ -55,7 +55,7 @@ echo form_open( base_url().'index.php/agenda/edit_data_preno', $attributes);
     <div class="row">
         <div class="small-12 large-12 columns">
             <ul class="button-group">
-                <?php if (max($disponibilita) == 0) { ?>   <li><input class="button success " type="submit" value="aggiorna" name="go" /></li>  <?php
+                <?php if (max($disponibilita) == 0) { ?>   <li><input class="button success " type="submit" value="<?php echo $preno_new['aggiorna']; ?>" name="go" /></li>  <?php
                 } else {
                     echo 'Non e possibile modificare con queste date cambia periodo';
                 }
