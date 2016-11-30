@@ -72,6 +72,8 @@ class Obmp extends CI_Controller {
         $data['today'] = $today = date('Y-m-d');
         $data['hotel_id'] = $hotel_id;
         $data['albergo'] = $this->hotel_model->hotel($hotel_id);
+        
+
 
         $preno_dal = $today;
         $preno_al = $this->my_tools->somma_gg($today, 1);
@@ -92,10 +94,44 @@ class Obmp extends CI_Controller {
         $clienti_id = $this->uri->segment(4, 1);
         $data['rs_clienti'] = $this->clienti_model->get_conto_cliente($conto_id, $clienti_id);
 
+        
+        
+        
+        // controlo levento 
+        $ref_event = $this->get_event();
+        
+        $ref_agency = $this->get_agenzia();
+        $ref_cookie = $this->get_cookie();
+        $ref_site = $this->get_site();
+        $google_kw = $this->get_google_key();
+        
+
+$param = array(
+// 'log_obmp_id' => $this->input->get_post('log_obmp_id'),
+            'preno_dal' => $preno_dal,
+            'preno_al' => $preno_al,
+            'Q1' => $Q1,
+            'T1' => $T1,
+            'hotel_id' => $this->input->get_post('hotel_id'),
+            'ref_site' => $ref_site,
+            'ref_agency' => $ref_agency,
+            'ref_event' => $ref_event,
+            'ref_session' => '',
+            'ref_cookie' => $ref_cookie,
+            'mygooglekeyword' => $google_kw,
+        );
+        
+        
         $stato = 1; // camera attive
         $data['camere_obmp'] = $this->prezzi_disponibilita_model->camere_obmp($hotel_id, $tipologia_id = NULL, $agenzia_id = 279, $lg, $stato);
         $data['prezzi'] = $this->prezzi_disponibilita_model->prezzo_web($hotel_id, $preno_dal, $preno_al, $includi_prezzi = 1, $ref_event);
 
+        
+        
+        
+            
+        
+        
 // scegli il templete
         $temi = 'tem_cb_obmp';
 // carica la vista del contenuto
@@ -522,46 +558,7 @@ class Obmp extends CI_Controller {
     }
     
     
-    /**
-     * 
-     */
-
-    function ins_obmp_ref_obmp_booking() {
-
-        $this->form_validation->set_rules('ref_obm_data', 'lang:ref_obm_data', 'trim');
-        $this->form_validation->set_rules('preno_id', 'lang:preno_id', 'required|trim|is_numeric');
-        $this->form_validation->set_rules('obm_cliente_id', 'lang:obm_cliente_id', 'trim|is_numeric');
-        $this->form_validation->set_rules('hotel_id', 'lang:hotel_id', 'required|trim|is_numeric');
-        $this->form_validation->set_rules('ref_site', 'lang:ref_site', 'trim|xss_clean');
-        $this->form_validation->set_rules('ref_agency', 'lang:ref_agency', 'trim|xss_clean|is_numeric');
-        $this->form_validation->set_rules('ref_event', 'lang:ref_event', 'trim|xss_clean|is_numeric');
-        $this->form_validation->set_rules('ref_session', 'lang:ref_session', 'trim|xss_clean');
-        $this->form_validation->set_rules('ref_cookie', 'lang:ref_cookie', 'trim|xss_clean');
-
-        $this->form_validation->set_error_delimiters('<span class="error">', '</span> <br />');
-
-        if ($this->form_validation->run() == FALSE) { // validation hasn't been passed
-        } else { // passed validation proceed to post success logic
-// build array for the model
-            $form_data = array(
-                'ref_obm_data' => set_value('ref_obm_data'),
-                'preno_id' => set_value('preno_id'),
-                'obm_cliente_id' => set_value('obm_cliente_id'),
-                'hotel_id' => set_value('hotel_id'),
-                'ref_site' => set_value('ref_site'),
-                'ref_agency' => set_value('ref_agency'),
-                'ref_event' => set_value('ref_event'),
-                'ref_session' => set_value('ref_session'),
-                'ref_cookie' => set_value('ref_cookie')
-            );
-
-// run insert model to write data to db
-
-            if ($this->ref_obmp_booking_model->insert($form_data) == TRUE) { // the information has therefore been successfully saved in the db
-                redirect('ref_obmp_booking/?' . $_SERVER['QUERY_STRING']);   // or whatever logic needs to occur
-            }
-        }
-    }
+   
 
     /** se ho un evento lo setto 
      * 
@@ -673,7 +670,7 @@ class Obmp extends CI_Controller {
      */
     
     
-  private  function get_log_obmp() {
+  private  function get_cookie() {
 // $ref_agency = $agenzia_id = 279 ;
 
 
@@ -700,7 +697,7 @@ class Obmp extends CI_Controller {
      * @param type $param
      */
             
-    private function get_google_key($param) {
+    private function get_google_key() {
 //   setto il cookie per le parole chiave provenienti da google 
         $mygooglekeyword = NULL;
         if (!isset($_COOKIE['mygooglekeyword']) && empty($_COOKIE['mygooglekeyword'])) {
