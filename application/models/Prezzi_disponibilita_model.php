@@ -800,7 +800,7 @@ class Prezzi_disponibilita_model extends CI_Model {
      * @param type $preno_al
      * @param int $includi_prezzi
      */
-    public function prezzo_web($hotel_id, $preno_dal, $preno_al, $includi_prezzi = 0) {
+    public function prezzo_web($hotel_id, $preno_dal, $preno_al, $includi_prezzi = 0, $ref_event = NULL) {
 
 // protezioni per le date passate
         if ($preno_dal < date('Y-m-d')) {
@@ -816,7 +816,7 @@ class Prezzi_disponibilita_model extends CI_Model {
         while ($oggi < $preno_al) {
 
             $today = $oggi;
-            $giorno = $this->prezzo_hotel($hotel_id, $today, $includi_prezzi = 1, $ref_event = NULL);
+            $giorno = $this->prezzo_hotel($hotel_id, $today, $includi_prezzi = 1, $ref_event);
 
 // array KW prezzi tipologia giorno 
             foreach ($giorno['prezzo_giorno'] as $key => $value) {
