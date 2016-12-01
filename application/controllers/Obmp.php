@@ -59,16 +59,32 @@ class Obmp extends CI_Controller {
     public function index() {
 
         $data['lg'] = $lg = $this->lg;
-// richimo i dati del db
+         // richimo campi lingue del db
         $data['tax_lg'] = $tax_row = $this->tex_lingue_model->tex_lg($lg);
 
         $today = date('Y-m-d');
-        if ($this->input->get('hotel_id')) {
-            $hotel_id = $this->input->get('hotel_id');
+        
+        
+        // hotel di defaul
+        if ($this->input->get_post('hotel_id')) {
+            $hotel_id = $this->input->get_post('hotel_id');
         } else {
             $hotel_id = 1;
         }
 
+        
+        
+        
+        // tipologia di defaul Matrimoniale
+        if ($this->input->get_post('T1')) {
+            $T1 = $this->input->get_post('t1');
+        } else {
+            $T1 = 3;
+        }
+
+            
+        
+        
         $data['today'] = $today = date('Y-m-d');
         $data['hotel_id'] = $hotel_id;
         $data['albergo'] = $this->hotel_model->hotel($hotel_id);
@@ -95,32 +111,16 @@ class Obmp extends CI_Controller {
         $data['rs_clienti'] = $this->clienti_model->get_conto_cliente($conto_id, $clienti_id);
 
         
+        // inserisco i date della richiesta nella statistica
+        $stat =  $this->stat_rechiesta($hotel_id,$preno_dal,$preno_al,$Q1,$T1) ; 
+  
+        
+        $ref_event = $stat['ref_event'];
         
         
-        // controlo levento 
-        $ref_event = $this->get_event();
+        print_r($stat);
         
-        $ref_agency = $this->get_agenzia();
-        $ref_cookie = $this->get_cookie();
-        $ref_site = $this->get_site();
-        $google_kw = $this->get_google_key();
-        
-
-$param = array(
-// 'log_obmp_id' => $this->input->get_post('log_obmp_id'),
-            'preno_dal' => $preno_dal,
-            'preno_al' => $preno_al,
-            'Q1' => $Q1,
-            'T1' => $T1,
-            'hotel_id' => $this->input->get_post('hotel_id'),
-            'ref_site' => $ref_site,
-            'ref_agency' => $ref_agency,
-            'ref_event' => $ref_event,
-            'ref_session' => '',
-            'ref_cookie' => $ref_cookie,
-            'mygooglekeyword' => $google_kw,
-        );
-        
+        print_r($this->input->cookie());
         
         $stato = 1; // camera attive
         $data['camere_obmp'] = $this->prezzi_disponibilita_model->camere_obmp($hotel_id, $tipologia_id = NULL, $agenzia_id = 279, $lg, $stato);
@@ -563,20 +563,23 @@ $param = array(
     /** se ho un evento lo setto 
      * 
      */
-  private  function get_event() {
+  private  function get_event($hotel_id) {
         $ref_event = 0;
+        $agenzia_id = 279;
         $evento_ris = array('evento_stato' => 0, 'table_evento' => '', 'agenzia_id' => $agenzia_id);
 /// nel caso ci sia un evento da GET|| POST si setta il cookie
-        if ($this->input->get_post('ref_event') !== NULL OR $this->input->cookie('ref_event') !== NULL) {
-            if (!empty($_POST['ref_event'])) {
-                $cookie_valore = $_POST['ref_event'];
-            }
-            if (!empty($_GET['ref_event'])) {
-                $cookie_valore = $_GET['ref_event'];
-            }
-            $evento_ris = $this->f_evento($hotel_id, $cookie_valore);
+        
+        if ($this->input->get_post('ref_event') !== NULL ) {
+                       
+            
+            $cookie_valore = $this->input->get_post('ref_event') ; 
+                      
+        
+            $evento_row = $this->obmp_ref_event_model->controlla_evento($hotel_id, $ref_event);
+
+
 //print_r($evento_ris); 
-            if ($evento_ris['evento_stato'] >= 1) {
+            if ($evento_row['evento_stato'] >= 1) {
                 $cookie_nome = "ref_event";
                 $cookie_scadenza = time() + 60 * 60 * 24 * 30 * 2; //  2 Mesi  (60*60*20*30) 
                 $cookie_dominio = "";
@@ -584,6 +587,16 @@ $param = array(
                 $ref_event = $cookie_valore;
             }
         }
+        
+        
+       if($this->input->get_post('ref_event') == NULL && $this->input->cookie('ref_event') !== NULL) 
+       {
+           
+          $ref_event =  $this->input->cookie('ref_event') ;
+       }
+       
+       return $ref_event;
+        
     }
 
     
@@ -595,6 +608,7 @@ $param = array(
 
         $ref_site = 0;
         if ($this->input->get_post('ref_site') !== NULL) {
+            
             if (!isset($_COOKIE['ref_site'])) {
 //se esiste un sito di affiliazione si setta in cookie dell sito di provenienza 
                 $cookie_nome = "ref_site";
@@ -617,6 +631,10 @@ $param = array(
                 $ref_site = $_COOKIE['ref_site'];
             }
         }
+        
+        
+        return $ref_site;
+        
     }
 
     
@@ -644,7 +662,7 @@ $param = array(
                 $cookie_dominio = "";
                 setcookie($cookie_nome, $cookie_valore, $cookie_scadenza, "/");
                 
-                $ref_agency = $agenzia_id = $this->input->get_post('agenzia_id');
+                 $ref_agency = $agenzia_id = $this->input->get_post('agenzia_id');
                 
             }
 //fine // ref_event facoltativo 
@@ -685,10 +703,15 @@ $param = array(
             $cookie_scadenza = time() + 60 * 60 * 24 * 30 * 12 * 10; // 10 anni(60*60*20*30) 
             $cookie_dominio = "";
             setcookie($cookie_nome, $cookie_valore, $cookie_scadenza, "/");
-                     
+              return $ref_cookie ;         
         } 
+ else {
+     
+            return NULL;
+ }
         
-        return $ref_cookie ; 
+               
+       
     }
 
     
@@ -835,5 +858,53 @@ $param = array(
     }
 
 }
+
+
+
+
+
+function stat_rechiesta($hotel_id,$preno_dal,$preno_al,$Q1,$T1) {
+          // controlo l'evento 
+        $ref_event = $this->get_event($hotel_id) ;
+        $ref_agency = $this->get_agenzia();
+        $ref_cookie = $this->get_cookie();
+        $ref_site = $this->get_site();
+        $google_kw = $this->get_google_key();
+        
+
+$param = array(
+// 'log_obmp_id' => $this->input->get_post('log_obmp_id'),
+            'preno_dal' => $preno_dal,
+            'preno_al' => $preno_al,
+            'Q1' => $Q1,
+            'T1' => $T1,
+            'hotel_id' => $this->input->get_post('hotel_id'),
+            'ref_site' => $ref_site,
+            'ref_agency' => $ref_agency,
+            'ref_event' => $ref_event,
+            'ref_session' => '',
+            'ref_cookie' => $ref_cookie,
+            'mygooglekeyword' => $google_kw,
+        );
+
+
+
+$id =  $this->insert_log_obmp($param);
+
+$dati = array (
+'ref_event'  => $ref_event,
+'ref_agency' => $ref_agency,
+'ref_cookie' => $ref_cookie,
+'ref_site'  => $ref_site,
+'google_kw'  => $google_kw,
+'id'  => $id,
+) ;
+
+return $dati ;
+}
+
+
+
+
 
 }
