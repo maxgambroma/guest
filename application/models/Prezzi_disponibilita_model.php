@@ -252,7 +252,7 @@ class Prezzi_disponibilita_model extends CI_Model {
      * @param type $ref_event
      * @return type
      */
-    public function prezzo_eventi($T1, $hotel_id, $today, $ref_event) {
+    public function prezzo_eventi($tipologia_id, $hotel_id,  $ref_event, $today) {
 
         $sql = "
          SELECT
@@ -266,7 +266,7 @@ class Prezzi_disponibilita_model extends CI_Model {
         FROM
         obmp_ref_event
         INNER JOIN listino_obmp ON (obmp_ref_event.listino_nome_id = listino_obmp.listino_nome_id)
-        WHERE   (listino_obmp.tipologia_id = '$T1') AND
+        WHERE   (listino_obmp.tipologia_id = '$tipologia_id') AND
         (listino_obmp.hotel_id = '$hotel_id') AND
         (obmp_ref_event.ref_event_id = '$ref_event')
             ";
@@ -656,12 +656,16 @@ class Prezzi_disponibilita_model extends CI_Model {
 // se è un evento metto il prezzo 
 
                 if (!empty($ref_event) && isset($ref_event)) {
-                    $evento = $this->prezzo_eventi($T1, $hotel_id, $today, $ref_event);
+                    
+                    $evento = $this->prezzo_eventi($tipologia_id, $hotel_id,  $ref_event, $today);
+                    
                     if ($evento) {
-                        $evento = $this->prezzo_eventi($T1, $hotel_id, $today, $ref_event);
-                    } else {
                         $totale_prezzo[$tipologia_id] = $evento->listino_prezzo;
-                    }
+                    } 
+                    
+//                    else {
+//                        $totale_prezzo[$tipologia_id] = 200;
+//                    }
                 }
 
 
@@ -1151,7 +1155,6 @@ $tab[9] = 0; // MT
     
          
          
-
         return $data_gg;
     }
 
@@ -1180,7 +1183,7 @@ $tab[9] = 0; // MT
      * @param type $preno_dal
      * @return type
      */
-    public function data_diff($preno_al, $preno_dal) {
+    protected function data_diff($preno_al, $preno_dal) {
 
         if ($preno_al >= $preno_dal) {
             $differenza_date = strtotime($preno_al) - strtotime($preno_dal);

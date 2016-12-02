@@ -16,6 +16,7 @@ class Obmp extends CI_Controller {
         $this->load->model('prezzi_disponibilita_model');
         $this->load->model('tex_lingue_model');
         $this->load->model('log_obmp_model');
+        $this->load->model('log_obmp_full_model');
         $this->load->model('obmp_ref_event_model');     
         
         $this->load->library('form_validation');
@@ -566,30 +567,36 @@ class Obmp extends CI_Controller {
   private  function get_event($hotel_id) {
         $ref_event = 0;
         $agenzia_id = 279;
-        $evento_ris = array('evento_stato' => 0, 'table_evento' => '', 'agenzia_id' => $agenzia_id);
+        
+//    $evento_ris = array('evento_stato' => 0, 'table_evento' => '', 'agenzia_id' => $agenzia_id);
 /// nel caso ci sia un evento da GET|| POST si setta il cookie
         
         if ($this->input->get_post('ref_event') !== NULL ) {
                        
             
-            $cookie_valore = $this->input->get_post('ref_event') ; 
+          $cookie_valore =   $ref_event = $this->input->get_post('ref_event') ; 
                       
         
             $evento_row = $this->obmp_ref_event_model->controlla_evento($hotel_id, $ref_event);
 
 
 //print_r($evento_ris); 
-            if ($evento_row['evento_stato'] >= 1) {
+            if ($evento_row) {
+                
                 $cookie_nome = "ref_event";
                 $cookie_scadenza = time() + 60 * 60 * 24 * 30 * 2; //  2 Mesi  (60*60*20*30) 
                 $cookie_dominio = "";
                 setcookie($cookie_nome, $cookie_valore, $cookie_scadenza, "/");
-                $ref_event = $cookie_valore;
+               
             }
+            
+            
+ else {  $ref_event = NULL ; }
+            
         }
         
         
-       if($this->input->get_post('ref_event') == NULL && $this->input->cookie('ref_event') !== NULL) 
+       if($this->input->get_post('ref_event') === NULL && $this->input->cookie('ref_event') !== NULL) 
        {
            
           $ref_event =  $this->input->cookie('ref_event') ;
@@ -863,7 +870,62 @@ class Obmp extends CI_Controller {
 
 
 
-function stat_rechiesta($hotel_id,$preno_dal,$preno_al,$Q1,$T1) {
+
+   /**
+     *  imserico le richiestrte deldb
+     * @param type $param
+     * @return int
+     */
+    
+    private function insert_log_full_obmp($param, $errore) {
+                 if($param) // passed validation proceed to post success logic
+		{
+		 	// build array for the model
+			
+			$form_data = array(
+			 'log_obmp_id' => set_value('log_obmp_id'),
+			 'preno_dal' => set_value('preno_dal'),
+			 'preno_al' => set_value('preno_al'),
+			 'Q1' => set_value('Q1'),
+			 'T1' => set_value('T1'),
+			 'hotel_id' => set_value('hotel_id'),
+			 'ref_site' => set_value('ref_site'),
+			 'ref_agency' => set_value('ref_agency'),
+			 'ref_event' => set_value('ref_event'),
+			 'ref_session' => set_value('ref_session'),
+			 'ref_cookie' => set_value('ref_cookie'),
+			 'mygooglekeyword' => set_value('mygooglekeyword'),
+			
+						);
+					
+			// run insert model to write data to db
+		
+		$log_id =$this->log_obmp_model->insert($form_data) ;
+           
+            if($log_id > 1)          
+            {
+                return $log_id ;
+                
+                
+               
+                
+                
+                
+                
+                
+            }
+ else {  return  0 ;}
+    }
+
+}
+
+
+
+
+
+
+
+function stat_rechiesta_full($log_obmp_id, $hotel_id,$preno_dal,$preno_al,$Q1,$T1) {
           // controlo l'evento 
         $ref_event = $this->get_event($hotel_id) ;
         $ref_agency = $this->get_agenzia();
@@ -873,7 +935,7 @@ function stat_rechiesta($hotel_id,$preno_dal,$preno_al,$Q1,$T1) {
         
 
 $param = array(
-// 'log_obmp_id' => $this->input->get_post('log_obmp_id'),
+ 'log_obmp_id' => $this->input->get_post('log_obmp_id'),
             'preno_dal' => $preno_dal,
             'preno_al' => $preno_al,
             'Q1' => $Q1,
@@ -889,7 +951,7 @@ $param = array(
 
 
 
-$id =  $this->insert_log_obmp($param);
+$id =  $this->insert_log_fullobmp($param);
 
 $dati = array (
 'ref_event'  => $ref_event,
