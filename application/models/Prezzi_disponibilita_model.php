@@ -266,9 +266,12 @@ class Prezzi_disponibilita_model extends CI_Model {
         FROM
         obmp_ref_event
         INNER JOIN listino_obmp ON (obmp_ref_event.listino_nome_id = listino_obmp.listino_nome_id)
-        WHERE   (listino_obmp.tipologia_id = '$tipologia_id') AND
-        (listino_obmp.hotel_id = '$hotel_id') AND
-        (obmp_ref_event.ref_event_id = '$ref_event')
+        WHERE   
+        (listino_obmp.tipologia_id = '$tipologia_id')
+	AND (listino_obmp.hotel_id = '$hotel_id')
+	AND (obmp_ref_event.ref_event_id = '$ref_event')
+	AND obmp_ref_event.event_dal <= '$today'
+	AND obmp_ref_event.event_al > '$today'
             ";
 
         $query = $this->db->query($sql);
@@ -332,9 +335,6 @@ class Prezzi_disponibilita_model extends CI_Model {
         } else {
             $filtro_b = '';
         }
-
-
-
 
 
         $filtro = $filtro_a . $filtro_b;
@@ -909,6 +909,9 @@ class Prezzi_disponibilita_model extends CI_Model {
         return $array_totale_risultati;
     }
 
+    
+    
+   
     
     
     /**

@@ -1,5 +1,5 @@
- <?php // print_r($prezzi) ;
- 
+ <?php   print_r($prezzi) ;
+ print_r($camere_obmp);
  
  $url_img = 'http://www.ciaohotel.com/html/obmpmax/obmpmax/'; 
  
@@ -81,7 +81,10 @@
   foreach ($camere_obmp as $key => $row_rooms) {
                     
             ?>
-            <fieldset>
+        
+
+<div id="room_id_<?php echo $row_rooms->rooms_id ?>"> 
+<fieldset>
 
                 <div class="row">
                         <!--    immagine-->
@@ -200,71 +203,42 @@
                                 <p></p>
                                 
                                 
-          <?php //  print_r($WebPrice[$chiave]) ;  ?>
+                                <table class="_bresponsive" id="tabel_" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Date</th>
+                                                <th class="hide-for-small-only">Availability </th>
+                                                <th class="hide-for-small-only">Price per night </th>
+                                                <th>Total Daily Price</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            
+                                            <?php foreach ($adttributes as $key => $value) {
+                                             
+                                           ?>
+                                            
+                                            <tr><td>Tue December 6, 2016</td><td class="hide-for-small-only">OK Availability</td><td class="hide-for-small-only">90.00</td><td>90.00 Euro </td></tr>              <tr>
+                                                <td>Night: 1</td>
+                                                <td class="hide-for-small-only">Average rate</td>
+                                                <td class="hide-for-small-only">90.00</td>
+                                                <td class="tex_arencione">Totale Price <br>
+                                                    Euro 90.00 </td>
+                                            </tr>
+                                            
+                                            <?php  } ?>
+                                            
+                                            <tr>
+                                                <td></td>
+                                                <td class="hide-for-small-only">Regular Price</td>
+                                                <td class="hide-for-small-only">155.00</td>
+                                                <td class="ui-accordion-icons">                  <span class="tex_verde">Save OFF<br>
+                                                        Euro 65.00</span> </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
           
-	 <table width="100%" class="_bresponsive" id="tabel_<?php echo $chiave; ?>_<?php echo $Vchiave; ?>" >
-            <thead>
-              <tr>
-                <th><?php echo $tax_lg['date'][$lg]; ?></th>
-                <th class="hide-for-small-only" ><?php echo $tax_lg['availability'][$lg]; ?></th>
-                <th class="hide-for-small-only" ><?php echo $tax_lg['price_per_night'][$lg]; ?> </th>
-                <th><?php echo $tax_lg['total_daly_price'][$lg]; ?></th>
-              </tr>
-            </thead>
-            <tbody>
-              <?php
-    // dettaglio preggi dei giorni 
-    foreach ($WebPrice[$chiave][$Vchiave] as $KW => $VAL)
-    {
-        if ($VAL['disponibilita'] >= $Q1)
-        {
-            $disp_gg = "OK Availability";
-            $colore = "";
-        }
-        else
-        {
-            // foccio vedere le camere disponibili 
-            if ($VAL['disponibilita'] > 0)
-            {
-                $disp_gg = $VAL['disponibilita'] . " Rooms Only ";
-                $colore = 'bgcolor="#FF9999"';
-            }
-            // nascondo overbooking 
-            if ($VAL['disponibilita'] <= 0)
-            {
-                $disp_gg = " NO Availability";
-            }
-        $colore = 'bgcolor="#FF9999"';
-        }
-        echo
-        "<tr>"
-        . "<td $colore >" . date("D F j, Y", strtotime($KW)) . "</td>"
-        . "<td  class=\"hide-for-small-only\"    $colore >" . $disp_gg . "</td>"
-        . "<td class=\"hide-for-small-only\"   $colore >" . number_format($VAL['price'], 2, '.', ',') . "</td>"
-        . "<td $colore >" . number_format($VAL['price'] * $Q1, 2, '.', ',') . " Euro </td>"
-        . "</tr>";
-    }
-    ?>
-              <tr>
-                <td><?php echo $tax_lg['night'][$lg]; ?>: <?php echo $giorni_vedi; ?></td>
-                <td class="hide-for-small-only" ><?php echo $tax_lg['average_rate'][$lg]; ?></td>
-                <td class="hide-for-small-only" ><?php echo number_format(( $prezzo_camere[$Vchiave]), 2, '.', ','); ?></td>
-                <td class="tex_arencione" ><?php echo $tax_lg['totale_price'][$lg]; ?> <br>
-                  Euro <?php echo $prezzo_totale[$Vchiave]; ?> </td>
-              </tr>
-              <tr >
-                <td></td>
-                <td class="hide-for-small-only" ><?php echo $tax_lg['regular_price'][$lg]; ?></td>
-                <td class="hide-for-small-only"  ><?php $prezzo_rack = f_prezzo_rack($hotel_id, $chiave);
-    echo number_format(($prezzo_rack), 2, '.', ',');
-    ; ?></td>
-                <td class="ui-accordion-icons"><?php $save_price = ( ( $prezzo_rack - $prezzo_camere[$Vchiave] ) * $giorni_vedi * $Q1 ); ?>
-                  <span class="tex_verde"><?php echo $tax_lg['save_off'][$lg]; ?><br>
-                  Euro <?php echo number_format(($save_price), 2, '.', ','); ?></span> </td>
-              </tr>
-            </tbody>
-          </table>
-                                
+	      
                    
                                 <p></p>
 
@@ -323,7 +297,7 @@
 
             
             
-            
+            </div>
             
         <?php } ?>
 

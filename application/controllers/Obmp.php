@@ -111,26 +111,32 @@ class Obmp extends CI_Controller {
         $clienti_id = $this->uri->segment(4, 1);
         $data['rs_clienti'] = $this->clienti_model->get_conto_cliente($conto_id, $clienti_id);
 
+        $errore = 0;
+        
+        
+        
+        
         
         // inserisco i date della richiesta nella statistica
-        $stat =  $this->stat_rechiesta($hotel_id,$preno_dal,$preno_al,$Q1,$T1) ; 
+        $stat = $this->stat_rechiesta($hotel_id,$preno_dal,$preno_al,$Q1,$T1, $errore ) ; 
   
         
         $ref_event = $stat['ref_event'];
         
         
-        print_r($stat);
-        
-        print_r($this->input->cookie());
+//        print_r($stat);
+//        print_r($this->input->cookie());
         
         $stato = 1; // camera attive
-        $data['camere_obmp'] = $this->prezzi_disponibilita_model->camere_obmp($hotel_id, $tipologia_id = NULL, $agenzia_id = 279, $lg, $stato);
+        
+        
+        
+        $data['camere_obmp'] = $this->prezzi_disponibilita_model->camere_obmp($hotel_id, $tipologia_id = NULL, $agenzia_id = 279, $lg , $stato ); 
         $data['prezzi'] = $this->prezzi_disponibilita_model->prezzo_web($hotel_id, $preno_dal, $preno_al, $includi_prezzi = 1, $ref_event);
 
-        
-        
-        
-            
+      $evento_html =   $this->evento_html($hotel_id, $ref_event);  
+    $data['table_evento'] = $evento_html['table_evento'];
+      
         
         
 // scegli il templete
@@ -572,26 +578,32 @@ class Obmp extends CI_Controller {
 /// nel caso ci sia un evento da GET|| POST si setta il cookie
         
         if ($this->input->get_post('ref_event') !== NULL ) {
-                       
-            
-          $cookie_valore =   $ref_event = $this->input->get_post('ref_event') ; 
-                      
-        
-            $evento_row = $this->obmp_ref_event_model->controlla_evento($hotel_id, $ref_event);
+         
+          $ref_event =   $ref_event = $this->input->get_post('ref_event') ; 
+          $evento_row = $this->obmp_ref_event_model->controlla_evento($hotel_id, $ref_event);
 
 
 //print_r($evento_ris); 
             if ($evento_row) {
                 
-                $cookie_nome = "ref_event";
-                $cookie_scadenza = time() + 60 * 60 * 24 * 30 * 2; //  2 Mesi  (60*60*20*30) 
-                $cookie_dominio = "";
-                setcookie($cookie_nome, $cookie_valore, $cookie_scadenza, "/");
+            $cookie_valore= $evento_row->ref_event_id ;
+
+            $cookie_nome = "ref_event";
+            $cookie_scadenza = time() + 60 * 60 * 24 * 30 * 2; //  2 Mesi  (60*60*20*30) 
+            $cookie_dominio = "";
+            setcookie($cookie_nome, $cookie_valore, $cookie_scadenza, "/");
+
+            // setto l'agenzia   
+            $agenzia_id =  $cookie_valore = $evento_row->agenzia_id ;
+            $cookie_nome = "agenzia_id"; 
+            $cookie_scadenza = time() + 60 * 60 * 24 * 30 * 2; // un anno 
+            $cookie_dominio = "";
+            setcookie($cookie_nome, $cookie_valore, $cookie_scadenza, "/");
                
             }
             
             
- else {  $ref_event = NULL ; }
+ else {  $ref_event = 0 ; }
             
         }
         
@@ -630,10 +642,10 @@ class Obmp extends CI_Controller {
                 setcookie($cookie_nome, $cookie_valore, $cookie_scadenza, "/");
             }
 //fine // rref_site facoltativo 
-            if ($this->input->get_post('ref_site')) {
+         
                 $ref_site = $this->input->get_post('ref_site');
-            }
-        } else {
+            
+                } else {
             if (isset($_COOKIE['ref_site'])) {
                 $ref_site = $_COOKIE['ref_site'];
             }
@@ -655,13 +667,14 @@ class Obmp extends CI_Controller {
      
     
   private  function get_agenzia() {
-        
+      
+      
   //se esiste un sito di affiliazione si setta in cookie dell sito di provenienza     
       if ( $this->input->get_post('agenzia_id')) {
             if ( !$this->input->cookie('agenzia_id') ) {
 
                 $cookie_nome = "agenzia_id";
-                if ($this->input->get_post('agenzia_id')) {
+                if ($this->input->get_post('agenzia_id')!== null ) {
                     $cookie_valore = $this->input->get_post('agenzia_id');
                 }
                 
@@ -669,7 +682,7 @@ class Obmp extends CI_Controller {
                 $cookie_dominio = "";
                 setcookie($cookie_nome, $cookie_valore, $cookie_scadenza, "/");
                 
-                 $ref_agency = $agenzia_id = $this->input->get_post('agenzia_id');
+                 $agenzia_id = $this->input->get_post('agenzia_id');
                 
             }
 //fine // ref_event facoltativo 
@@ -677,14 +690,19 @@ class Obmp extends CI_Controller {
   
         } else {
             if (isset($_COOKIE['agenzia_id'])) {
-                $ref_agency = $agenzia_id = $_COOKIE['agenzia_id'];
+                $agenzia_id = $_COOKIE['agenzia_id'];
             }
         }
         if ( !$this->input->cookie('agenzia_id') && !$this->input->get_post('agenzia_id')  ) {
-            $ref_agency = $agenzia_id = 279;
+           $agenzia_id =  $cookie_valore = 279;
+             
+             $cookie_nome = "agenzia_id"; 
+              $cookie_scadenza = time() + 60 * 60 * 24 * 30 * 12;
+                $cookie_dominio = "";
+                setcookie($cookie_nome, $cookie_valore, $cookie_scadenza, "/");
         }
         
-        return $ref_agency ;  
+        return $agenzia_id ;  
         
     }
 
@@ -714,7 +732,7 @@ class Obmp extends CI_Controller {
         } 
  else {
      
-            return NULL;
+            return $ref_cookie = $this->input->cookie('ref_cookie');
  }
         
                
@@ -772,27 +790,29 @@ class Obmp extends CI_Controller {
     
    private function evento_html($hotel_id, $ref_event) {
 
-  
-       
-       $row =  $this->obmp_ref_event_model->controlla_evento($hotel_id, $ref_event);
-       
-       
+       $row =  $this->obmp_ref_event_model->controlla_evento($hotel_id, $ref_event) ; 
        
 
-        if ( $row->ref_event_id !== NULL ) {
+        if ( $row) {
 
             $agenzia_id = $row->agenzia_id;
 
-            $table_evento = "<div class=\"evento\">You Welcome Participants of Meeting<br> <table width=\"100%\" border=\"0\">
+           $table_evento = "<div class=\"evento\">You Welcome Participants of Meeting<br> <table width=\"100%\" border=\"0\">
 <tr>
 <td bgcolor=\"#FF99CC\"><strong>" . $row->ref_event_nome .
                     " -" . $row->listino_nome_id . "-" . $row->ref_site_id . "- " . $row->ref_event_id . "</strong></td>
 </tr>
 </table> </div> ";
+           
+         $evento = array('evento_stato' => $row->ref_event_id, 'table_evento' => $table_evento, 'agenzia_id' => $agenzia_id);
+           
+           
         } else {
-            $table_evento = "";
+            $evento = array('evento_stato' => '', 'table_evento' => '', 'agenzia_id' => '279');
         }
-        return $evento = array('evento_stato' => $row->ref_event_id, 'table_evento' => $table_evento, 'agenzia_id' => $agenzia_id);
+        
+        
+        return $evento;
     }
 
     
@@ -826,106 +846,18 @@ class Obmp extends CI_Controller {
     
     
     
-    /**
-     *  imserico le richiestrte deldb
-     * @param type $param
-     * @return int
-     */
-    
-    private function insert_log_obmp($param) {
-                 if($param) // passed validation proceed to post success logic
-		{
-		 	// build array for the model
-			
-			$form_data = array(
-			 'log_obmp_id' => set_value('log_obmp_id'),
-			 'preno_dal' => set_value('preno_dal'),
-			 'preno_al' => set_value('preno_al'),
-			 'Q1' => set_value('Q1'),
-			 'T1' => set_value('T1'),
-			 'hotel_id' => set_value('hotel_id'),
-			 'ref_site' => set_value('ref_site'),
-			 'ref_agency' => set_value('ref_agency'),
-			 'ref_event' => set_value('ref_event'),
-			 'ref_session' => set_value('ref_session'),
-			 'ref_cookie' => set_value('ref_cookie'),
-			 'mygooglekeyword' => set_value('mygooglekeyword'),
-			
-						);
-					
-			// run insert model to write data to db
-		
-		$log_id =$this->log_obmp_model->insert($form_data) ;
-           
-            if($log_id > 1)          
-            {
-                return $log_id ;
-            }
- else {  return  0 ;}
-    }
-
-}
-
-
 
 
 
 
    /**
-     *  imserico le richiestrte deldb
+     *  imserico le richiestrte del db
      * @param type $param
      * @return int
      */
-    
-    private function insert_log_full_obmp($param, $errore) {
-                 if($param) // passed validation proceed to post success logic
-		{
-		 	// build array for the model
-			
-			$form_data = array(
-			 'log_obmp_id' => set_value('log_obmp_id'),
-			 'preno_dal' => set_value('preno_dal'),
-			 'preno_al' => set_value('preno_al'),
-			 'Q1' => set_value('Q1'),
-			 'T1' => set_value('T1'),
-			 'hotel_id' => set_value('hotel_id'),
-			 'ref_site' => set_value('ref_site'),
-			 'ref_agency' => set_value('ref_agency'),
-			 'ref_event' => set_value('ref_event'),
-			 'ref_session' => set_value('ref_session'),
-			 'ref_cookie' => set_value('ref_cookie'),
-			 'mygooglekeyword' => set_value('mygooglekeyword'),
-			
-						);
-					
-			// run insert model to write data to db
-		
-		$log_id =$this->log_obmp_model->insert($form_data) ;
-           
-            if($log_id > 1)          
-            {
-                return $log_id ;
-                
-                
-               
-                
-                
-                
-                
-                
-            }
- else {  return  0 ;}
-    }
+   
 
-}
-
-
-
-
-
-
-
-function stat_rechiesta_full($log_obmp_id, $hotel_id,$preno_dal,$preno_al,$Q1,$T1) {
+function stat_rechiesta($hotel_id,$preno_dal,$preno_al,$Q1,$T1,$errore_booking ) {
           // controlo l'evento 
         $ref_event = $this->get_event($hotel_id) ;
         $ref_agency = $this->get_agenzia();
@@ -933,40 +865,72 @@ function stat_rechiesta_full($log_obmp_id, $hotel_id,$preno_dal,$preno_al,$Q1,$T
         $ref_site = $this->get_site();
         $google_kw = $this->get_google_key();
         
+        $ref_session = $this->input->ip_address();
+        
+        
+        $today = date("Y-m-d");
 
 $param = array(
- 'log_obmp_id' => $this->input->get_post('log_obmp_id'),
+ // 'log_obmp_id' => $this->input->get_post('log_obmp_id'),
             'preno_dal' => $preno_dal,
             'preno_al' => $preno_al,
             'Q1' => $Q1,
             'T1' => $T1,
-            'hotel_id' => $this->input->get_post('hotel_id'),
+            'hotel_id' => $hotel_id,
             'ref_site' => $ref_site,
             'ref_agency' => $ref_agency,
             'ref_event' => $ref_event,
-            'ref_session' => '',
+            'ref_session' => $ref_session,     // ip address
             'ref_cookie' => $ref_cookie,
             'mygooglekeyword' => $google_kw,
         );
 
+// inserico le richiesta nel db
+ $param['log_obmp_id'] =  $log_id = $this->log_obmp_model->insert($param) ;
+ 
 
+
+
+
+if( $errore_booking > 0){
+
+    // ho un errore di disponibilita o prezzo e le inserrisco 
+    
+$param = array(
+           'log_obmp_id_full' => $log_id,
+            'preno_dal' => $preno_dal,
+            'preno_al' => $preno_al,
+            'Q1' => $Q1,
+            'T1' => $T1,
+            'hotel_id' => $hotel_id,
+            'ref_site' => $ref_site,
+            'ref_agency' => $ref_agency,
+            'ref_event' => $ref_event,
+            'ref_session' =>  $ref_session,             // ip address
+            'ref_cookie' => $ref_cookie,
+            'mygooglekeyword' => $google_kw,
+            'today' => $today
+    
+        );
 
 $id =  $this->insert_log_fullobmp($param);
 
-$dati = array (
-'ref_event'  => $ref_event,
-'ref_agency' => $ref_agency,
-'ref_cookie' => $ref_cookie,
-'ref_site'  => $ref_site,
-'google_kw'  => $google_kw,
-'id'  => $id,
-) ;
+}
 
-return $dati ;
+
+return $param;
+
+
 }
 
 
 
 
 
-}
+     
+        
+    }
+
+
+
+
