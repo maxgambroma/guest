@@ -113,17 +113,13 @@ class Obmp extends CI_Controller {
 
         $errore = 0;
         
-        
-        
-        
-        
         // inserisco i date della richiesta nella statistica
-        $stat = $this->stat_rechiesta($hotel_id,$preno_dal,$preno_al,$Q1,$T1, $errore ) ; 
+        $stat = $this->stat_rechiesta($hotel_id,$preno_dal,$preno_al, $Q1, $T1,   $errore ) ; 
   
         
         $ref_event = $stat['ref_event'];
         
-        
+           
 //        print_r($stat);
 //        print_r($this->input->cookie());
         
@@ -570,96 +566,61 @@ class Obmp extends CI_Controller {
     /** se ho un evento lo setto 
      * 
      */
-  private  function get_event($hotel_id) {
+    private function get_event($hotel_id) {
         $ref_event = 0;
         $agenzia_id = 279;
-        
-//    $evento_ris = array('evento_stato' => 0, 'table_evento' => '', 'agenzia_id' => $agenzia_id);
-/// nel caso ci sia un evento da GET|| POST si setta il cookie
-        
-        if ($this->input->get_post('ref_event') !== NULL ) {
-         
-          $ref_event =   $ref_event = $this->input->get_post('ref_event') ; 
-          $evento_row = $this->obmp_ref_event_model->controlla_evento($hotel_id, $ref_event);
-
-
-//print_r($evento_ris); 
+        //    $evento_ris = array('evento_stato' => 0, 'table_evento' => '', 'agenzia_id' => $agenzia_id);
+        /// nel caso ci sia un evento da GET|| POST si setta il cookie
+        if ($this->input->get_post('ref_event') !== NULL) {
+            $ref_event = $this->input->get_post('ref_event');
+            $evento_row = $this->obmp_ref_event_model->controlla_evento($hotel_id, $ref_event);
+            //print_r($evento_ris); 
             if ($evento_row) {
-                
-            $cookie_valore= $evento_row->ref_event_id ;
-
-            $cookie_nome = "ref_event";
-            $cookie_scadenza = time() + 60 * 60 * 24 * 30 * 2; //  2 Mesi  (60*60*20*30) 
-            $cookie_dominio = "";
-            setcookie($cookie_nome, $cookie_valore, $cookie_scadenza, "/");
-
-            // setto l'agenzia   
-            $agenzia_id =  $cookie_valore = $evento_row->agenzia_id ;
-            $cookie_nome = "agenzia_id"; 
-            $cookie_scadenza = time() + 60 * 60 * 24 * 30 * 2; // un anno 
-            $cookie_dominio = "";
-            setcookie($cookie_nome, $cookie_valore, $cookie_scadenza, "/");
-               
+                $cookie_valore = $evento_row->ref_event_id;
+                $cookie_nome = "ref_event";
+                $cookie_scadenza = time() + 60 * 60 * 24 * 30 * 2; //  2 Mesi  (60*60*20*30) 
+                $cookie_dominio = "";
+                setcookie($cookie_nome, $cookie_valore, $cookie_scadenza, "/");
+                // setto l'agenzia   
+                $agenzia_id = $cookie_valore = $evento_row->agenzia_id;
+                $cookie_nome = "agenzia_id";
+                $cookie_scadenza = time() + 60 * 60 * 24 * 30 * 2; // un Mesi 
+                $cookie_dominio = "";
+                setcookie($cookie_nome, $cookie_valore, $cookie_scadenza, "/");
+            } else {
+                $ref_event = 0;
             }
-            
-            
- else {  $ref_event = 0 ; }
-            
         }
-        
-        
-       if($this->input->get_post('ref_event') === NULL && $this->input->cookie('ref_event') !== NULL) 
-       {
-           
-          $ref_event =  $this->input->cookie('ref_event') ;
-       }
-       
-       return $ref_event;
-        
+        if ($this->input->get_post('ref_event') === NULL && $this->input->cookie('ref_event') !== NULL) {
+            $ref_event = $this->input->cookie('ref_event');
+        }
+        return $ref_event;
     }
 
-    
-    
     /**
      * se un affiliazione 
      */
-  private  function get_site() {
+    private function get_site() {
 
         $ref_site = 0;
         if ($this->input->get_post('ref_site') !== NULL) {
-            
-            if (!isset($_COOKIE['ref_site'])) {
-//se esiste un sito di affiliazione si setta in cookie dell sito di provenienza 
+            if (!$this->input->cookie('ref_site')) {
+                //se esiste un sito di affiliazione si setta in cookie dell sito di provenienza 
+                $cookie_valore = $this->input->get_post('ref_site');
                 $cookie_nome = "ref_site";
-                if (!empty($_GET['ref_site'])) {
-                    $cookie_valore = $_GET['ref_site'];
-                }
-                if (!empty($_POST['ref_site'])) {
-                    $cookie_valore = $_POST['ref_site'];
-                }
                 $cookie_scadenza = time() + 60 * 60 * 24 * 30 * 12;
                 $cookie_dominio = "";
                 setcookie($cookie_nome, $cookie_valore, $cookie_scadenza, "/");
-            }
-//fine // rref_site facoltativo 
-         
                 $ref_site = $this->input->get_post('ref_site');
-            
-                } else {
-            if (isset($_COOKIE['ref_site'])) {
-                $ref_site = $_COOKIE['ref_site'];
             }
+        } else {
+            $ref_site = $this->input->cookie('ref_site');
         }
-        
-        
         return $ref_site;
-        
     }
+    
+    
 
-    
-    
-    
-    
     /**
      * setto l'agenzia di riferimento 
      * @return int
@@ -689,10 +650,12 @@ class Obmp extends CI_Controller {
 
   
         } else {
-            if (isset($_COOKIE['agenzia_id'])) {
-                $agenzia_id = $_COOKIE['agenzia_id'];
+            if ( $this->input->cookie('agenzia_id') ) {
+                $agenzia_id = $this->input->cookie('agenzia_id') ;
             }
         }
+        
+        
         if ( !$this->input->cookie('agenzia_id') && !$this->input->get_post('agenzia_id')  ) {
            $agenzia_id =  $cookie_valore = 279;
              
@@ -859,14 +822,14 @@ class Obmp extends CI_Controller {
 
 function stat_rechiesta($hotel_id,$preno_dal,$preno_al,$Q1,$T1,$errore_booking ) {
           // controlo l'evento 
-        $ref_event = $this->get_event($hotel_id) ;
-        $ref_agency = $this->get_agenzia();
-        $ref_cookie = $this->get_cookie();
+         $ref_cookie = $this->get_cookie(); // utente  
+       
+        $ref_event = $this->get_event($hotel_id) ;  // evento
+       
         $ref_site = $this->get_site();
         $google_kw = $this->get_google_key();
-        
         $ref_session = $this->input->ip_address();
-        
+        $ref_agency = $this->get_agenzia();
         
         $today = date("Y-m-d");
 
