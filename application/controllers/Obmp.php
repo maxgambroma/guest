@@ -205,7 +205,22 @@ class Obmp extends CI_Controller {
         $data['rs_clienti'] = $this->clienti_model->get_conto_cliente($conto_id, $clienti_id);
 
         $data['albergo'] = $this->hotel_model->hotel($hotel_id);
-        $data['camere_obmp'] = $this->prezzi_disponibilita_model->camere_obmp($hotel_id);
+        
+        $data['camere_obmp'] = $room_obmp = $this->prezzi_disponibilita_model->camere_obmp($hotel_id);
+        
+        
+         $dati = $this->input->post();
+        
+//        Creo una array per camare id 
+        foreach ($room_obmp as $key => $value) {
+                        
+            $room[$value->obmp_cm_rooms_id] =  $value ;
+            
+        }
+        
+        $data['room'] = $room ;
+        
+     
         
         
         $errore = 0 ;
@@ -216,7 +231,10 @@ class Obmp extends CI_Controller {
       $data['table_evento'] = $evento_html['table_evento'];
         
 //    $data['rs_clienti'] = $this->clienti_model->get_privacy($today, $hotel_id);
-        $dati = $this->input->post();
+ 
+        
+        print_r($dati);
+        
 
         $t1 = 0;
         $q1 = 0;

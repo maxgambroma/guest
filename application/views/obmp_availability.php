@@ -4,6 +4,37 @@
 <div class="small-12    large-12  columns">
 <form  data-abide  action="<?php echo ''; ?>" method="post"   name="booking" id="booking">
 
+    <fieldset>
+        <?php
+        
+        // prendo i dati del post
+        $camera = $this->input->post('cm_rooms_id');
+        // controllo le tipologie selezionate
+        foreach ($this->input->post('num') as $key => $value) {
+            // se selezionate 
+            if ($value != 0) {
+                
+                // ho i dettagli della camare
+                $ris = $room[$camera[$key]];
+                print_r($ris);
+                ?>       
+                <div class="row">
+                    <div class="large-1" >
+                    </div>             
+                    <div class="large-11" >
+                        <?php ?> 
+                    </div>             
+                </div>
+            <?php
+            }
+        }
+        ?>         
+    </fieldset>   
+    
+    
+    
+    
+    
     <fieldset> 
 <legend><?php echo $lg_tex['guest_details']; ?></legend>
 <h5> <?php echo $lg_tex['your_privacy_is_guaranteed']; ?></h5>
