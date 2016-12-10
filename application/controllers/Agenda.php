@@ -9,6 +9,8 @@ class Agenda extends CI_Controller {
                 $this->load->model('agenda_model');
                 $this->load->model('prezzi_disponibilita_model');
                 
+                 $this->load->model('tex_lingue_model');
+                
 		$this->load->library('form_validation');
 		$this->load->library('table');
                 $this->load->library('pagination');
@@ -17,8 +19,30 @@ class Agenda extends CI_Controller {
 		$this->load->helper('security');
                 $this->load->helper('language'); 
                 //$idiom = $this->session->get_userdata('language');             
-                $idiom = 'english';
-                $this->lang->load('form_lang', $idiom);
+      
+                
+                 if ($this->input->get('lg')) {
+            $this->lg = $lg = $this->input->get('lg');
+        } else {
+            $this->lg = $lg = 'en';
+        }
+
+        $lingue['en'] = 'english';
+        $lingue['jp'] = 'english';
+        $lingue['ru'] = 'english';
+        $lingue['se'] = 'english';
+        $lingue['fr'] = 'french';
+        $lingue['de'] = 'german';
+        $lingue['it'] = 'italian';
+        $lingue['es'] = 'spanish';
+
+
+        $this->idiom = $idiom = $lingue[$lg];
+//        $this->idiom = $idiom = $this->uri->segment(5, 'english');
+        $this->lang->load('form_validation_lang', $idiom);
+        $this->lang->load('form_lang', $idiom);
+                
+                
                 
 	}	
 	
@@ -366,6 +390,13 @@ class Agenda extends CI_Controller {
 
 
 	function cambia_date() {
+         
+            
+        $data['lg'] = $lg = $this->lg;
+        $data['lg_tex'] =  $this->tex_lingue_model->tex_lg($lg);
+    
+            
+            
         $hotel_id = $this->input->get('hotel_id');
         $preno_id = $this->input->get('preno_id');
         $preno_dal = $this->input->get('preno_dal');
@@ -491,6 +522,12 @@ class Agenda extends CI_Controller {
     
     
     function edit_data_preno() {
+        
+        
+         $data['lg'] = $lg = $this->lg;
+        $data['lg_tex'] =  $this->tex_lingue_model->tex_lg($lg);
+
+        
 
         $this->form_validation->set_rules('disponibilita', 'lang:disponibilita', 'trim|required');
         $this->form_validation->set_rules('preno_id', 'lang:preno_id', 'trim|required');
@@ -544,6 +581,11 @@ class Agenda extends CI_Controller {
      * lato cliente
      */
     function cax_preno() {
+        
+         $data['lg'] = $lg = $this->lg;
+        $data['lg_tex'] =  $this->tex_lingue_model->tex_lg($lg);
+
+        
 
         $this->form_validation->set_rules('preno_id', 'lang:preno_id', 'trim|required');
         // metto il cliente

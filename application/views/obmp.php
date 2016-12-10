@@ -228,26 +228,35 @@ $p_sconto =   number_format(($p_sconto ), 0, '.', ',');
                                         </thead>
                                         <tbody>
                                             
-                                            <?php foreach ($adttributes as $key => $value) {
+                                            <?php foreach ($prezzi['prezzo_giorno'][$row_rooms->obmp_cm_rooms_tipologia_id] as $key => $row_prezzi) {
                                              
                                            ?>
                                             
-                                            <tr><td>Tue December 6, 2016</td><td class="hide-for-small-only">OK Availability</td><td class="hide-for-small-only">90.00</td><td>90.00 Euro </td></tr>              <tr>
-                                                <td>Night: 1</td>
-                                                <td class="hide-for-small-only">Average rate</td>
-                                                <td class="hide-for-small-only">90.00</td>
-                                                <td class="tex_arencione">Totale Price <br>
-                                                    Euro 90.00 </td>
+                                            <tr><td><?php echo $key ; ?></td>
+                                                <td class="hide-for-small-only"><?php echo $prezzi['nesting'][$row_rooms->obmp_cm_rooms_tipologia_id][$key] ; ?>   OK Availability</td>
+                                                <td class="hide-for-small-only"><?php echo $row_prezzi ; ?> </td>
+                                                <td>  90.00 Euro </td>
                                             </tr>
                                             
-                                            <?php  } ?>
+                                            
+                                             <?php  } ?>
+                                            
+                                            <tr>
+                                                <td>Night: <?php echo  $prezzi['notti']; ?> </td>
+                                                <td class="hide-for-small-only">Average rate</td>
+                                                <td class="hide-for-small-only"><?php echo $prezzi['avg_prezzo'][$row_rooms->obmp_cm_rooms_tipologia_id] ; ?> </td>
+                                                <td class="tex_arencione">Totale Price <br>
+                                                    Euro <?php //echo $row_prezzi[''] ; ?>  90.00 </td>
+                                            </tr>
+                                            
+                                           
                                             
                                             <tr>
                                                 <td></td>
                                                 <td class="hide-for-small-only">Regular Price</td>
-                                                <td class="hide-for-small-only">155.00</td>
+                                                <td class="hide-for-small-only"><?php echo $prezzi['rack_prezzo'][$row_rooms->obmp_cm_rooms_tipologia_id] ; ?> </td>
                                                 <td class="ui-accordion-icons">                  <span class="tex_verde">Save OFF<br>
-                                                        Euro 65.00</span> </td>
+                                                        Euro <?php // echo $row_prezzi[''] ; ?>  65.00</span> </td>
                                             </tr>
                                         </tbody>
                                     </table>

@@ -55,7 +55,10 @@ echo form_open( base_url().'index.php/agenda/edit_data_preno', $attributes);
     <div class="row">
         <div class="small-12 large-12 columns">
             <ul class="button-group">
-                <?php if (max($disponibilita) == 0) { ?>   <li><input class="button success " type="submit" value="<?php echo $preno_new['aggiorna']; ?>" name="go" /></li>  <?php
+                <?php if (max($disponibilita) == 0) { ?>
+                <li>
+                    <input class="button success " type="submit" value="<?php  echo   $lg_tex['aggiorna']; ?>" name="go" />
+                </li>  <?php
                 } else {
                     echo 'Non e possibile modificare con queste date cambia periodo';
                 }

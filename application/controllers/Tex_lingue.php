@@ -222,11 +222,11 @@ class Tex_lingue extends CI_Controller {
             
                 $this->form_validation->set_rules('tex_lingue_id', 'lang:tex_lingue_id', 'trim');			
 		$this->form_validation->set_rules('etichetta_lg', 'lang:etichetta_lg', 'required|trim');			
-		$this->form_validation->set_rules('en', 'lang:en', 'required|trim|xss_clean');			
-		$this->form_validation->set_rules('it', 'lang:it', 'required|trim|xss_clean');			
-		$this->form_validation->set_rules('es', 'lang:es', 'trim|xss_clean');			
-		$this->form_validation->set_rules('fr', 'lang:fr', 'trim|xss_clean');			
-		$this->form_validation->set_rules('de', 'lang:de', 'trim|xss_clean');
+		$this->form_validation->set_rules('en', 'lang:en', 'required|trim');			
+		$this->form_validation->set_rules('it', 'lang:it', 'required|trim');			
+		$this->form_validation->set_rules('es', 'lang:es', 'trim');			
+		$this->form_validation->set_rules('fr', 'lang:fr', 'trim');			
+		$this->form_validation->set_rules('de', 'lang:de', 'trim');
 			
 		$this->form_validation->set_error_delimiters('<span class="error">', '</span><br /> ');
 	

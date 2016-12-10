@@ -61,7 +61,7 @@ class Obmp extends CI_Controller {
 
         $data['lg'] = $lg = $this->lg;
          // richimo campi lingue del db
-        $data['tax_lg'] = $tax_row = $this->tex_lingue_model->tex_lg($lg);
+          $data['lg_tex'] =  $this->tex_lingue_model->tex_lg($lg);
 
         $today = date('Y-m-d');
         
@@ -157,7 +157,9 @@ class Obmp extends CI_Controller {
     public function availability() {
 
         $data['lg'] = $lg = $this->lg;
-        $data['tax_lg'] = $tax_row = $this->tex_lingue_model->tex_lg($lg);
+       $data['lg_tex'] =  $this->tex_lingue_model->tex_lg($lg);
+        
+        
         $today = date('Y-m-d');
         
      // hotel di defaul
@@ -206,7 +208,7 @@ class Obmp extends CI_Controller {
         $data['camere_obmp'] = $this->prezzi_disponibilita_model->camere_obmp($hotel_id);
         
         
-      $errore = 0 ;
+        $errore = 0 ;
         
       $data['stat'] =  $stat = $this->stat_rechiesta($hotel_id,$preno_dal,$preno_al,$Q1,$T1, $errore ) ; 
       $ref_event = $stat['ref_event'];
@@ -449,7 +451,7 @@ class Obmp extends CI_Controller {
     public function confirmation() {
 
         $data['lg'] = $lg = $this->lg;
-        $data['tax_lg'] = $tax_row = $this->tex_lingue_model->tex_lg($lg);
+        $data['lg_tex'] =  $this->tex_lingue_model->tex_lg($lg);
 
  
             // hotel di defaul

@@ -317,6 +317,8 @@ class Clienti extends MY_Controller {
         $data['lg_tex'] =  $this->tex_lingue_model->tex_lg($lg);
         
         
+        
+        
         $today = date('Y-m-d');
         if ($this->input->get('hotel_id')) {
             $hotel_id = $this->input->get('hotel_id');
