@@ -12,7 +12,7 @@
             currentText: "Today",
             changeMonth: true,
             changeYear: true,
-            numberOfMonths: 2,
+            numberOfMonths: 1,
             firstDay: 1,
             minDate: new Date(),
             dateFormat: 'yy-mm-dd',
@@ -27,7 +27,7 @@
             showButtonPanel: true,
             changeMonth: true,
             changeYear: true,
-            numberOfMonths: 2,
+            numberOfMonths: 1,
             firstDay: 1,
             minDate: new Date(),
             dateFormat: 'yy-mm-dd'

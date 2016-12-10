@@ -303,6 +303,24 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cfe7fa', end
 }
 
 
+.calendario_jquery{
+     z-index: 20;
+} 
+
+
+.element.style {
+        z-index: 10;
+}
+
+
+
+.hasDatepicker {
+    background-image: url("../../asset/img/calendar_icon.jpg");
+    background-position: right center;
+    background-repeat: no-repeat;
+    z-index: 20;
+}
+
 .box_sconto{
     
 background-color:  #2cc36b;

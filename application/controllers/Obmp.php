@@ -118,10 +118,8 @@ class Obmp extends CI_Controller {
         
         
         // inserisco i date della richiesta nella statistica
-      $data['stat'] =  $stat = $this->stat_rechiesta($hotel_id,$preno_dal,$preno_al,$Q1,$T1, $errore ) ; 
-  
-        
-        $ref_event = $stat['ref_event'];
+      $data['stat'] =  $stat = $this->stat_rechiesta($hotel_id,$preno_dal,$preno_al,$Q1,$T1, $errore, 1 ) ; 
+      $ref_event = $stat['ref_event'];
         
         
 //        print_r($stat);
@@ -161,11 +159,25 @@ class Obmp extends CI_Controller {
         $data['lg'] = $lg = $this->lg;
         $data['tax_lg'] = $tax_row = $this->tex_lingue_model->tex_lg($lg);
         $today = date('Y-m-d');
-        if ($this->input->get('hotel_id')) {
-            $hotel_id = $this->input->get('hotel_id');
+        
+     // hotel di defaul
+        if ($this->input->get_post('hotel_id')) {
+            $hotel_id = $this->input->get_post('hotel_id');
         } else {
             $hotel_id = 1;
         }
+
+        
+                // tipologia di defaul Matrimoniale
+        if ($this->input->get_post('T1')) {
+            $T1 = $this->input->get_post('T1');
+        } else {
+            $T1 = 3;
+        }
+        
+        
+        
+        
         $data['today'] = $today = date('Y-m-d');
         $data['hotel_id'] = $hotel_id;
 
@@ -192,6 +204,15 @@ class Obmp extends CI_Controller {
 
         $data['albergo'] = $this->hotel_model->hotel($hotel_id);
         $data['camere_obmp'] = $this->prezzi_disponibilita_model->camere_obmp($hotel_id);
+        
+        
+      $errore = 0 ;
+        
+      $data['stat'] =  $stat = $this->stat_rechiesta($hotel_id,$preno_dal,$preno_al,$Q1,$T1, $errore ) ; 
+      $ref_event = $stat['ref_event'];
+      $evento_html =   $this->evento_html($hotel_id, $ref_event);  
+      $data['table_evento'] = $evento_html['table_evento'];
+        
 //    $data['rs_clienti'] = $this->clienti_model->get_privacy($today, $hotel_id);
         $dati = $this->input->post();
 
@@ -430,12 +451,14 @@ class Obmp extends CI_Controller {
         $data['lg'] = $lg = $this->lg;
         $data['tax_lg'] = $tax_row = $this->tex_lingue_model->tex_lg($lg);
 
-        $today = date('Y-m-d');
-        if ($this->input->get('hotel_id')) {
-            $hotel_id = $this->input->get('hotel_id');
+ 
+            // hotel di defaul
+        if ($this->input->get_post('hotel_id')) {
+            $hotel_id = $this->input->get_post('hotel_id');
         } else {
             $hotel_id = 1;
         }
+        
         $data['today'] = $today = date('Y-m-d');
         $data['hotel_id'] = $hotel_id;
 
@@ -461,6 +484,15 @@ class Obmp extends CI_Controller {
 
         $data['albergo'] = $this->hotel_model->hotel($hotel_id);
         $data['camere_obmp'] = $this->prezzi_disponibilita_model->camere_obmp($hotel_id);
+        
+               
+       $data['stat'] =  $stat = $this->stat_rechiesta($hotel_id,$preno_dal,$preno_al,$Q1,$T1, $errore ) ; 
+      $ref_event = $stat['ref_event'];
+      $evento_html =   $this->evento_html($hotel_id, $ref_event);  
+      $data['table_evento'] = $evento_html['table_evento'];
+        
+        
+        
 //    $data['rs_clienti'] = $this->clienti_model->get_privacy($today, $hotel_id);
 // scegli il templete
         $temi = 'tem_cb_obmp';
@@ -840,7 +872,7 @@ class Obmp extends CI_Controller {
      */
    
 
-function stat_rechiesta($hotel_id,$preno_dal,$preno_al,$Q1,$T1,$errore_booking ) {
+function stat_rechiesta($hotel_id,$preno_dal,$preno_al,$Q1,$T1,$errore_booking , $ins = NULL ) {
           // controlo l'evento 
         $ref_event = $this->get_event($hotel_id) ;
         $ref_agency = $this->get_agenzia();
@@ -868,13 +900,15 @@ $param = array(
             'mygooglekeyword' => $google_kw,
         );
 
+
+
+if($ins !== NULL){
+
+
+
 // inserico le richiesta nel db
  $param['log_obmp_id'] =  $log_id = $this->log_obmp_model->insert($param) ;
  
-
-
-
-
 if( $errore_booking > 0){
 
     // ho un errore di disponibilita o prezzo e le inserrisco 
@@ -899,7 +933,7 @@ $param = array(
 $id =  $this->insert_log_fullobmp($param);
 
 }
-
+}
 
 return $param;
 
