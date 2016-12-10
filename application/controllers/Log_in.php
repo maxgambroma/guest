@@ -58,7 +58,7 @@ $data = NULL;
 
 $this->form_validation->set_rules('user', 'lang:user', 'required|trim|xss_clean|valid_email');			
 $this->form_validation->set_rules('pass', 'lang:pass', 'required|trim|xss_clean');
-$this->form_validation->set_error_delimiters('<small class="error">', '</small>');
+$this->form_validation->set_error_delimiters('<span class="error">', '</span> <br />');
 
 
 

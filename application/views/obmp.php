@@ -1,5 +1,5 @@
- <?php   print_r($prezzi) ;
- print_r($camere_obmp);
+ <?php  // print_r($prezzi) ;
+ //print_r($camere_obmp);
  
  $url_img = 'http://www.ciaohotel.com/html/obmpmax/obmpmax/'; 
  
@@ -55,7 +55,11 @@
  
   ?>
        
+<!--
 
+<?php  print_r($prezzi) ;?>
+
+-->
 
 
        <?php
@@ -79,11 +83,21 @@
         
 
   foreach ($camere_obmp as $key => $row_rooms) {
-                    
+            
+      
+      
+
+$p_var_somma = 0;
+$p_var_perc = 1;
+$p_sconto =    1- ( $prezzi['avg_prezzo'][$row_rooms->obmp_cm_rooms_tipologia_id]/ $prezzi['rack_prezzo'][$row_rooms->obmp_cm_rooms_tipologia_id]  ) *100; 
+$p_sconto =   number_format(($p_sconto ), 0, '.', ',');
+      
+      
+      
             ?>
         
 
-<div id="room_id_<?php echo $row_rooms->rooms_id ?>"> 
+<div id="room_id_<?php echo $row_rooms->obmp_cm_rooms_id ?>"> 
 <fieldset>
 
                 <div class="row">
@@ -112,7 +126,7 @@
                                     <p><?php echo $row_rooms->obmp_cm_lingue_nome ; ?></p>
                                 </div>
                                 <div class="small-6   medium-6 large-4 columns ">
-                                    <span class="sconto"> SCONTO 30% </span>
+                                    <span class="sconto"> SCONTO <?php echo $p_sconto ;?> % </span>
                                 </div>
                             </div>
                              <!--    2 riga selezione  -->

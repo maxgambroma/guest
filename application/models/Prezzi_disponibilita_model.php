@@ -286,6 +286,39 @@ class Prezzi_disponibilita_model extends CI_Model {
      * @param type $tipologia_id
      * @return type
      */
+    
+    
+    
+    
+    
+   /**
+    * detemina il prezzo rack dell'hotel
+    * @param type $hotel_id
+    * @param type $tipologia_id
+    * @return type
+    */ 
+    
+
+public function prezzo_rack($hotel_id) {
+
+$sql ="
+SELECT *
+FROM listino_nome_obmp
+INNER JOIN listino_obmp ON (listino_nome_obmp.listino_nome_id = listino_obmp.listino_nome_id)
+WHERE (listino_nome_obmp.listino_nome = 'rack') AND
+(listino_nome_obmp.hotel_id = '$hotel_id') 
+"; 
+
+$query = $this->db->query($sql);
+$return = $query->result();
+return $return;
+}
+
+    
+    
+    
+    
+    
     public function rs_tableau($tipologia_id, $now, $today, $hotel_id) {
 
         $sql = "
@@ -806,6 +839,8 @@ class Prezzi_disponibilita_model extends CI_Model {
      */
     public function prezzo_web($hotel_id, $preno_dal, $preno_al, $includi_prezzi = 0, $ref_event = NULL) {
 
+        
+        
 // protezioni per le date passate
         if ($preno_dal < date('Y-m-d')) {
             $preno_dal = date('Y-m-d');
@@ -878,11 +913,25 @@ class Prezzi_disponibilita_model extends CI_Model {
             $avg_prezzo[$key] = round(array_sum($value) / count($value), 2);
         }
 
+ // tariffa rack
+
+        
+$rack  =  $this->prezzo_rack($hotel_id) ;
+foreach ($rack as $value) {
+
+
+
+$rack_prezzo[$value->tipologia_id] = $value->listino_prezzo;
+
+}
+
+
         $array_totale_risultati = array(
 // area prezzi
             'prezzo_giorno' => $prezzo_giorno,
             'sum_prezzo' => $sum_prezzo,
             'avg_prezzo' => $avg_prezzo,
+            'rack_prezzo' =>  $rack_prezzo,
             'min_nesting' => $min_nesting,
             'tableau_dett' => $tableau_dett,
             'nesting' => $nesting,
@@ -910,6 +959,242 @@ class Prezzi_disponibilita_model extends CI_Model {
     }
 
     
+    
+    
+    function functionName($prezzo, $camere) {
+
+     foreach ($camere as $key => $room) {
+         
+//
+//     obmp_cm_rooms_id,
+//     obmp_cm_rooms_tipologia_id
+//     obmp_cm_rooms_room_var_prezzo
+                 
+                 
+                 
+         foreach ($prezzo['prezzo_giorno'][$room['obmp_cm_rooms_id']] as $gg => $price) {
+             
+              $prezzo_giorno[$room['obmp_cm_rooms_id']][$room['obmp_cm_rooms_tipologia_id']][$gg] = $price *  $room->obmp_cm_rooms_room_var_prezzo;     
+             
+         } 
+                 
+          
+                 
+     }
+             
+             
+             
+//         Array
+//(
+//    [prezzo_giorno] => Array
+//        (
+//            [7] => Array
+//                (
+//                    [2016-12-07] => 85
+//                )
+//
+//            [1] => Array
+//                (
+//                    [2016-12-07] => 85
+//                )
+//
+//            [2] => Array
+//                (
+//                    [2016-12-07] => 105
+//                )
+//
+//            [3] => Array
+//                (
+//                    [2016-12-07] => 105
+//                )
+//
+//            [4] => Array
+//                (
+//                    [2016-12-07] => 135
+//                )
+//
+//            [5] => Array
+//                (
+//                    [2016-12-07] => 150
+//                )
+//
+//            [8] => Array
+//                (
+//                    [2016-12-07] => 160
+//                )
+//
+//        )
+//
+//    [sum_prezzo] => Array
+//        (
+//            [0] => 0
+//            [7] => 85
+//            [1] => 85
+//            [2] => 105
+//            [3] => 105
+//            [4] => 135
+//            [5] => 150
+//            [8] => 160
+//        )
+//
+//    [avg_prezzo] => Array
+//        (
+//            [0] => 0
+//            [7] => 85
+//            [1] => 85
+//            [2] => 105
+//            [3] => 105
+//            [4] => 135
+//            [5] => 150
+//            [8] => 160
+//        )
+//
+//    [min_nesting] => Array
+//        (
+//            [7] => 6
+//            [1] => 6
+//            [2] => 6
+//            [3] => 6
+//            [4] => 3
+//            [5] => 2
+//            [8] => 0
+//        )
+//
+//    [tableau_dett] => Array
+//        (
+//            [0] => Array
+//                (
+//                    [2016-12-07] => 0
+//                )
+//
+//            [7] => Array
+//                (
+//                    [2016-12-07] => 16
+//                )
+//
+//            [1] => Array
+//                (
+//                    [2016-12-07] => 4
+//                )
+//
+//            [2] => Array
+//                (
+//                    [2016-12-07] => 0
+//                )
+//
+//            [3] => Array
+//                (
+//                    [2016-12-07] => 2
+//                )
+//
+//            [4] => Array
+//                (
+//                    [2016-12-07] => 0
+//                )
+//
+//            [5] => Array
+//                (
+//                    [2016-12-07] => 0
+//                )
+//
+//            [8] => Array
+//                (
+//                    [2016-12-07] => 0
+//                )
+//
+//        )
+//
+//    [nesting] => Array
+//        (
+//            [7] => Array
+//                (
+//                    [2016-12-07] => 6
+//                )
+//
+//            [1] => Array
+//                (
+//                    [2016-12-07] => 6
+//                )
+//
+//            [2] => Array
+//                (
+//                    [2016-12-07] => 6
+//                )
+//
+//            [3] => Array
+//                (
+//                    [2016-12-07] => 6
+//                )
+//
+//            [4] => Array
+//                (
+//                    [2016-12-07] => 3
+//                )
+//
+//            [5] => Array
+//                (
+//                    [2016-12-07] => 2
+//                )
+//
+//            [8] => Array
+//                (
+//                    [2016-12-07] => 0
+//                )
+//
+//        )
+//
+//    [nome_tipologia] => Array
+//        (
+//            [7] => Doppia Uso
+//            [1] => Singola
+//            [2] => Doppia
+//            [3] => Matrimoniale
+//            [4] => Tripla
+//            [5] => Quadrupla
+//            [8] => Quintupla
+//        )
+//
+//    [errore_booking] => Array
+//        (
+//            [2016-12-07] => 0
+//        )
+//
+//    [tot_cam_in_arrivo] => Array
+//        (
+//            [2016-12-07] => 4
+//        )
+//
+//    [tot_cam_presenti] => Array
+//        (
+//            [2016-12-07] => 15
+//        )
+//
+//    [tot_cam_giorno] => Array
+//        (
+//            [2016-12-07] => 19
+//        )
+//
+//    [tot_cam_libere] => Array
+//        (
+//            [2016-12-07] => 75
+//        )
+//
+//    [hotel_numero_camere] => 94
+//    [tot_occ_percetuale_hotel] => Array
+//        (
+//            [2016-12-07] => 0.2021
+//        )
+//
+//    [diff_gg_preno] => 0
+//    [hotel_tarif_cambia_gg] => -1
+//    [hotel_disp_modo] => 1
+//    [preno_dal] => 2016-12-07
+//    [preno_al] => 2016-12-08
+//    [notti] => 1
+//)
+//        
+        
+    }
     
    
     

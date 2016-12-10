@@ -26,6 +26,9 @@
 <?php }
   else{  ?>
   
+    
+    <?php echo $evento['table_evento']; ?>
+    
       <div class="large-12  columns">
         <p><?php $this->load->view($temp['contenuto']); ?></p>
     </div>

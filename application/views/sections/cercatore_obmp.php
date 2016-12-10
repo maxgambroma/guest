@@ -26,7 +26,7 @@
                             <div class="box_booking">                       
                             <div class="small-12 large-4 columns box_booking"> 
                                Verifica Disponibilità
-                                <form action="<?php echo base_url(); ?>index.php/obmp/" method="post" id="form_prezzi" name="form_prezzi">
+                                <form action="<?php echo base_url().'index.php/obmp/index/?'. $_SERVER['QUERY_STRING']; ?> method="post" id="form_prezzi" name="form_prezzi">
                                     <div class="row">
                                         <div class="   large-12 columns">
                                             <label>Arrivo  
@@ -92,11 +92,11 @@
                                             </label>
                                         </div>
                                     </div>
-                                    <input name="hotel_id" id="hotel_id" value="2" type="hidden">
-                                    <input name="ref_site" id="ref_site" value="408" type="hidden">
-                                    <input name="ref_event" id="ref_event" value="340" type="hidden">
-                                    <input name="agenzia_id" id="agenzia_id" value="279" type="hidden">
-                                    <input name="lg" id="hiddenField" value="it" type="hidden">
+                                    <input name="hotel_id" id="hotel_id" value="<?php echo $stat['hotel_id'];  ?>" type="hidden">
+                                    <input name="ref_site" id="ref_site" value="<?php echo $stat['ref_site'];  ?>" type="hidden">
+                                    <input name="ref_event" id="ref_event" value="<?php echo $stat['ref_event'];  ?>" type="hidden">
+                                    <input name="agenzia_id" id="agenzia_id" value="<?php echo $stat['ref_agency'];  ?>" type="hidden">
+                                    <input name="lg" id="lg" value="<?php echo $this->lg;  ?>" type="hidden">
                                 </form>
                             </div>
                             
