@@ -15,24 +15,17 @@ class Obmp extends CI_Controller {
         $this->load->model('prezzi_disponibilita_model');
         $this->load->model('tex_lingue_model');
         $this->load->model('obmp_ref_event_model');
-           
-  
         $this->load->model('obmp_review_model');
-        
         $this->load->model('log_obmp_model');
         $this->load->model('log_obmp_full_model');
-       $this->load->model('ref_obmp_booking_model');     
+        $this->load->model('ref_obmp_booking_model');     
         $this->load->model('obmp_clienti_model');   
-        
-        
-        
         $this->load->library('form_validation');
         $this->load->library('table');
         $this->load->library('pagination');
         $this->load->library('email');
         $this->load->library('my_tools');
         $this->load->library('session');
-
         $this->load->helper('cookie');
         $this->load->helper('form');
         $this->load->helper('url');
@@ -132,8 +125,8 @@ class Obmp extends CI_Controller {
 
     /**
      * compilo il form per la conferma
-     */
-public function availability() {
+*/
+    public function availability() {
 
         $data['lg'] = $lg = $this->lg;
         $data['lg_tex'] = $this->tex_lingue_model->tex_lg($lg);
@@ -175,13 +168,12 @@ public function availability() {
         $clienti_id = $this->uri->segment(4, 1);
         $data['rs_clienti'] = $this->clienti_model->get_conto_cliente($conto_id, $clienti_id);
 
-        // mercato 
+// mercato 
         if ($this->input->cookie('mercato')) {
-          $mercato = $this->input->cookie('mercato');
+            $mercato = $this->input->cookie('mercato');
         } else {
             $mercato = 1;
         }
-
 
         $data['albergo'] = $this->hotel_model->hotel($hotel_id);
         $data['camere_obmp'] = $room_obmp = $this->prezzi_disponibilita_model->camere_obmp($hotel_id);
@@ -190,121 +182,86 @@ public function availability() {
         foreach ($room_obmp as $key => $value) {
             $room[$value->obmp_cm_rooms_id] = $value;
         }
-        
+
 //        print_r($room);
-        
-        
+
         $data['room'] = $room;
         $errore = 0;
         $data['stat'] = $stat = $this->stat_rechiesta($hotel_id, $preno_dal, $preno_al, $Q1, $T1, $errore);
-       
-        print_r($stat); 
-        
-        
+
+//print_r($stat); 
+
         $ref_event = $stat['ref_event'];
         $evento_html = $this->evento_html($hotel_id, $ref_event);
         $data['table_evento'] = $evento_html['table_evento'];
 //    $data['rs_clienti'] = $this->clienti_model->get_privacy($today, $hotel_id);
 //print_r($dati);
-
-        
-$t[1] = 0; 
-$q[1] = 0; 
-$p[1] = 0; 
-
-$t[2] = 0; 
-$q[2] = 0; 
-$p[2] = 0;  
-
-$t[3] = 0; 
-$q[3] = 0; 
-$p[3] = 0; 
-
-$t[4] = 0; 
-$q[4] = 0; 
-$p[4] = 0;  
-
-$t[5] = 0; 
-$q[5] = 0; 
-$p[5] = 0; 
-
-$t[6] = 0; 
-$q[6] = 0; 
-$p[6] = 0;  
-
-
- 
- // sovrascrivo le variabili 
-    $i = 1;
-            foreach ($dati['num'] as $key => $value) {
-                if ($value != 0) {
-                    if ($i < 7) {
-                        $t[$i] = $room[$dati['cm_rooms_id'][$key]]->obmp_cm_rooms_tipologia_id;
-                        $q[$i] = $dati['num'][$key];
-                        $p[$i] = $dati['price'][$key];
-                        $i++;
-                    }
+        $t[1] = 0;         $q[1] = 0;         $p[1] = 0;
+        $t[2] = 0;         $q[2] = 0;         $p[2] = 0;
+        $t[3] = 0;         $q[3] = 0;         $p[3] = 0;
+        $t[4] = 0;         $q[4] = 0;         $p[4] = 0;
+        $t[5] = 0;         $q[5] = 0;         $p[5] = 0;
+        $t[6] = 0;         $q[6] = 0;         $p[6] = 0;
+// sovrascrivo le variabili 
+        $i = 1;
+        foreach ($dati['num'] as $key => $value) {
+            if ($value != 0) {
+                if ($i < 7) {
+                    $t[$i] = $room[$dati['cm_rooms_id'][$key]]->obmp_cm_rooms_tipologia_id;
+                    $q[$i] = $dati['num'][$key];
+                    $p[$i] = $dati['price'][$key];
+                    $i++;
                 }
             }
-            
-// passo le variabili al fom            
-$data['t']=  $t ;      
-$data['q']=  $q ;  
-$data['p']=  $p ; 
+        }
 
-            
-   // calcolo importo          
-   $importo = $q[1] * $p[1] + $q[2] * $p[2] + $q[3] * $p[3] + $q[4] * $p[4] + $q[5] * $p[5] + $q[6] * $p[6];
- 
- 
+// passo le variabili al fom            
+        $data['t'] = $t;
+        $data['q'] = $q;
+        $data['p'] = $p;
+// calcolo importo          
+        $importo = $q[1] * $p[1] + $q[2] * $p[2] + $q[3] * $p[3] + $q[4] * $p[4] + $q[5] * $p[5] + $q[6] * $p[6];
+
 // Sovrascrivo
 // per trovare i valori delle camare prenotate 
 
         $this->form_validation->set_rules('preno_arr_ore', 'lang:preno_arr_ore', 'trim');
-        
-        $this->form_validation->set_rules('t1', 't1', 'trim|xss_clean');			
-        $this->form_validation->set_rules('q1', 'q1', 'trim|xss_clean');			
-        $this->form_validation->set_rules('p1', 'p1', 'trim|xss_clean');			
-        $this->form_validation->set_rules('t2', 't2', 'trim|xss_clean');			
-        $this->form_validation->set_rules('q2', 'q2', 'trim|xss_clean');			
-        $this->form_validation->set_rules('p2', 'p2', 'trim|xss_clean');			
-        $this->form_validation->set_rules('t3', 't3', 'trim|xss_clean');			
-        $this->form_validation->set_rules('q3', 'q3', 'trim|xss_clean');			
-        $this->form_validation->set_rules('p3', 'p3', 'trim|xss_clean');			
-        $this->form_validation->set_rules('t4', 't4', 'trim|xss_clean');			
-        $this->form_validation->set_rules('q4', 'q4', 'trim|xss_clean');			
-        $this->form_validation->set_rules('p4', 'p4', 'trim|xss_clean');			
-        $this->form_validation->set_rules('t5', 't5', 'trim|xss_clean');			
-        $this->form_validation->set_rules('q5', 'q5', 'trim|xss_clean');			
-        $this->form_validation->set_rules('p5', 'p5', 'trim|xss_clean');			
-        $this->form_validation->set_rules('t6', 't6', 'trim|xss_clean');			
-        $this->form_validation->set_rules('q6', 'q6', 'trim|xss_clean');			
-        $this->form_validation->set_rules('p6', 'p6', 'trim|xss_clean');	
-              
-       
+        $this->form_validation->set_rules('t1', 't1', 'trim|xss_clean');
+        $this->form_validation->set_rules('q1', 'q1', 'trim|xss_clean');
+        $this->form_validation->set_rules('p1', 'p1', 'trim|xss_clean');
+        $this->form_validation->set_rules('t2', 't2', 'trim|xss_clean');
+        $this->form_validation->set_rules('q2', 'q2', 'trim|xss_clean');
+        $this->form_validation->set_rules('p2', 'p2', 'trim|xss_clean');
+        $this->form_validation->set_rules('t3', 't3', 'trim|xss_clean');
+        $this->form_validation->set_rules('q3', 'q3', 'trim|xss_clean');
+        $this->form_validation->set_rules('p3', 'p3', 'trim|xss_clean');
+        $this->form_validation->set_rules('t4', 't4', 'trim|xss_clean');
+        $this->form_validation->set_rules('q4', 'q4', 'trim|xss_clean');
+        $this->form_validation->set_rules('p4', 'p4', 'trim|xss_clean');
+        $this->form_validation->set_rules('t5', 't5', 'trim|xss_clean');
+        $this->form_validation->set_rules('q5', 'q5', 'trim|xss_clean');
+        $this->form_validation->set_rules('p5', 'p5', 'trim|xss_clean');
+        $this->form_validation->set_rules('t6', 't6', 'trim|xss_clean');
+        $this->form_validation->set_rules('q6', 'q6', 'trim|xss_clean');
+        $this->form_validation->set_rules('p6', 'p6', 'trim|xss_clean');
         $this->form_validation->set_rules('preno_nome', 'lang:preno_nome', 'required|trim|xss_clean');
         $this->form_validation->set_rules('preno_cogno', 'lang:preno_cogno', 'required|trim|xss_clean');
-        
         $this->form_validation->set_rules('preno_cc_tip', 'lang:preno_cc_tip', 'required|trim|xss_clean');
         $this->form_validation->set_rules('preno_cc_n', 'lang:preno_cc_n', 'required|trim|xss_clean');
         $this->form_validation->set_rules('preno_cc_scad', 'lang:preno_cc_scad', 'required|trim|xss_clean');
         $this->form_validation->set_rules('preno_email', 'lang:preno_email', 'required|trim|xss_clean|valid_email');
         $this->form_validation->set_rules('preno_note', 'lang:preno_note', 'trim|xss_clean');
-        
-        $this->form_validation->set_rules('preno_city', 'lang:obm_cliente_city', 'trim|xss_clean');			
+        $this->form_validation->set_rules('preno_city', 'lang:obm_cliente_city', 'trim|xss_clean');
         $this->form_validation->set_rules('preno_country', 'lang:obm_cliente_country', 'trim|xss_clean');
-        $this->form_validation->set_rules('newsletter', 'lang:obm_cliente_newsletter', 'trim|xss_clean');	
-    
+        $this->form_validation->set_rules('newsletter', 'lang:obm_cliente_newsletter', 'trim|xss_clean');
         $this->form_validation->set_error_delimiters('<span class="error">', '</span> <br />');
-        
-//        print_r($this->form_validation);
-        
+        //        print_r($this->form_validation);
         if ($this->form_validation->run() == FALSE) { // validation hasn't been passed
-// scegli il templete
+            // scegli il templete
             $temi = 'tem_cb_obmp';
-// carica la vista del contenuto
+            // carica la vista del contenuto
             $vista = 'obmp_availability';
-// gestore templete
+            // gestore templete
             $data['temp'] = array
                 ('templete' => $temi,
                 'contenuto' => $vista,
@@ -313,14 +270,12 @@ $data['p']=  $p ;
                 'box_top' => 'box_top');
             $this->load->view('templetes_obmp', $data);
         } else { // passed validation proceed to post success logic
-// build array for the model
-         
-
-          // ricavo il telefono
+                // build array for the model
+                // ricavo il telefono
             $preno_tel = set_value('tel_stato') . " " . set_value('tel_prefisso') . " " . set_value('tel_nemero');
 
             $form_data = array(
-// 'preno_id' => set_value('preno_id'),
+                // 'preno_id' => set_value('preno_id'),
                 'hotel_id' => $hotel_id,
                 'preno_in_data' => date("Y-m-d H:i:s"),
                 'preno_importo' => $importo,
@@ -330,7 +285,6 @@ $data['p']=  $p ;
                 'preno_n_notti' => $night,
                 'preno_arr_ore' => set_value('preno_arr_ore'),
                 'preno_trattamento' => 'BB',
-     
                 't1' => set_value('t1'),
                 'q1' => set_value('q1'),
                 'p1' => set_value('p1'),
@@ -349,8 +303,6 @@ $data['p']=  $p ;
                 't6' => set_value('t6'),
                 'q6' => set_value('q6'),
                 'p6' => set_value('p6'),
-                
-                
                 'preno_nome' => set_value('preno_nome'),
                 'preno_cogno' => set_value('preno_cogno'),
                 'preno_agenzia' => $stat['ref_agency'],
@@ -363,38 +315,29 @@ $data['p']=  $p ;
                 'preno_note' => set_value('preno_note'),
                 'preno_doc_form' => 1,
                 'preno_pag_modalita' => 1,
-                'preno_stato' => 1 ,
+                'preno_stato' => 1,
                 'agenda_utente_id' => '999'
             );
 
- 
-// run insert model to write data to db
+               // run insert model to write data to db
             $preno_id = $this->agenda_model->insert($form_data);
 
-            if (!$preno_id)
-            { echo 'errore agebda';}
-            
-            
-            
+            if (!$preno_id) {
+                echo 'errore agebda';
+            }
             if ($preno_id) {
-// controllo che il cliente non sia gia registrato 
-                
-               
+                // controllo che il cliente non sia gia registrato 
                 $obm_cliente = $this->obmp_clienti_model->get_by_email(set_value('preno_email'));
-                
-     
-                
-//lo registro 
+                //lo registro 
                 if (!$obm_cliente) {
-// condizione di non cliente 
-// INIZIO iserisci il cliente nuovo per l'email 
-// INIZIO si crea la password di accesso al gentianale   
+                // condizione di non cliente 
+                // INIZIO iserisci il cliente nuovo per l'email 
+                // INIZIO si crea la password di accesso al gentianale   
                     $cogn = set_value('preno_cogno');
                     $obm_cliente_pass = rand(10000, 99999) . "-" . substr("$cogn", 0, 5) . "-" . rand(1000, 9999);
-// FINE si crea la password di accesso al gentianale
-
+                    // FINE si crea la password di accesso al gentianale
                     $form_obmp_clienti = array(
-// 'obm_cliente_id' => set_value('obm_cliente_id'),
+                     // 'obm_cliente_id' => set_value('obm_cliente_id'),
                         'obm_cliente_first_name' => set_value('preno_nome'),
                         'obm_cliente_last_name' => set_value('preno_cogno'),
                         'obm_cliente_email' => set_value('preno_email'),
@@ -405,28 +348,24 @@ $data['p']=  $p ;
                         'obm_cliente_pass' => $obm_cliente_pass,
                         'obm_cliente_data_insert' => date("Y-m-d H:i:s"),
                         'obm_cliente_cc_type' => set_value('obm_cliente_cc_type'),
-                        'obm_cliente_cc_number' => substr(set_value('preno_cc_n'), 0, -5), 
+                        'obm_cliente_cc_number' => substr(set_value('preno_cc_n'), 0, -5),
                         'obm_cliente_holder' => set_value('preno_cc_holder'),
                         'obm_cliente_cc_expire' => set_value('preno_cc_scad')
                     );
 
-//Sovrasceivo il 
+                    //Sovrasceivo il 
                     $obm_cliente_id = $this->obmp_clienti_model->insert($form_obmp_clienti);
-                    
-                    
-                          if (!$obm_cliente_id )
-            { echo 'errore clienti_model';}
-                    
+
+                    if (!$obm_cliente_id) {
+                        echo 'errore clienti_model';
+                    }
                 }
-// è gi acliente 
- else {
-     
-   $obm_cliente_id = $obm_cliente->obm_cliente_id ;
- }
-                
- 
+                // è gia cliente 
+                else {
+                    $obm_cliente_id = $obm_cliente->obm_cliente_id;
+                }
                 $form_obmp_booking = array(
-                  //  'ref_obm_data' => date("Y-m-d H:i:s"),
+                //  'ref_obm_data' => date("Y-m-d H:i:s"),
                     'preno_id' => $preno_id,
                     'obm_cliente_id' => $obm_cliente_id,
                     'hotel_id' => $hotel_id,
@@ -436,17 +375,13 @@ $data['p']=  $p ;
                     'ref_session' => $stat['ref_session'],
                     'ref_cookie' => $stat['ref_cookie']
                 );
-                
-                
-                print_r($form_obmp_booking) ;
-                
-                
-                if ($this->ref_obmp_booking_model->insert($form_obmp_booking) == TRUE) { 
-// the information has therefore been successfully saved in the db
-                    redirect( $dase_url . 'index.php/obmp/confirmation/?preno_id=' . $preno_id . '&obm_cliente_id=' . $obm_cliente_id . '&' . $_SERVER['QUERY_STRING']);   // or whatever logic needs to occur
-               
-                    } else {
-                    echo 'errore obmp_booking' ;
+            //print_r($form_obmp_booking) ;
+
+                if ($this->ref_obmp_booking_model->insert($form_obmp_booking) == TRUE) {
+                    // the information has therefore been successfully saved in the db
+                    redirect( $dase_url . '/obmp/confirmation/?preno_id=' . $preno_id . '&obm_cliente_id=' . $obm_cliente_id . '&' . $_SERVER['QUERY_STRING']);   // or whatever logic needs to occur
+                } else {
+                    echo 'errore obmp_booking';
                 }
             }
         }
@@ -501,7 +436,7 @@ $data['p']=  $p ;
         $data['camere_obmp'] = $room_obmp = $this->prezzi_disponibilita_model->camere_obmp($hotel_id);
         
         foreach ($room_obmp as $key => $value) {
-            $room[$value->tipologia_id] = $value;
+            $room[$value->obmp_cm_rooms_tipologia_id] = $value;
         }
         
     $data['rooms'] = $room ;

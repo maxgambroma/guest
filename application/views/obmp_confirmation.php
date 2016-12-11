@@ -10,7 +10,7 @@
     <div class="row">
       <div class="small-12  medium-6 large-6 columns">
         <p> <?php echo $lg_tex['your_reservation'] ; ?>:<br>
-          <strong><?php echo $preno->q1; ?> <?php echo @$tariffa_selezione['lingue_nome'];?>, <?php echo $preno->preno_n_notti; ?> <?php echo $lg_tex['night'] ; ?> </strong> <br>
+          <strong><?php echo $preno->q1; ?> <?php // echo @$tariffa_selezione['lingue_nome'];?>, <?php echo $preno->preno_n_notti; ?> <?php echo $lg_tex['night'] ; ?> </strong> <br>
           <?php echo $lg_tex['check-in'] ; ?>: <strong><?php echo date("D F j, Y", strtotime($preno->preno_dal)) ; ?> </strong> <br>
           <?php echo $lg_tex['check-out'] ; ?>: <strong> <?php echo date("D F j, Y", strtotime($preno->preno_al)) ; ?> </strong><br>
           <br>
@@ -32,10 +32,10 @@
 
     <div class="row">
       <div class="ssmall-12  medium-6 large-6 columns">
-        <p> <?php echo $tariffa_selezione['html1'] ; ?></p>
+        <p> <?php // echo $tariffa_selezione['html1'] ; ?></p>
       </div>
       <div class=" small-12  medium-6 large-6 columns">
-        <p> <strong> <?php echo $preno->hotel_tipologia; ?> <?php echo $preno->nome_hotel; ?>: </strong> <br>
+        <p> <strong> <?php echo $albergo->hotel_tipologia; ?> <?php echo $albergo->nome_hotel; ?>: </strong> <br>
           <?php echo $preno->hotel_via; ?> <br />
           <?php echo $preno->hotel_citta; ?>, <?php echo $preno->hotel_stato; ?> <?php echo $preno->hotel_cap; ?><br />
           <strong><?php echo $lg_tex['phone_number'] ; ?>:</strong> <?php echo $preno->hotel_tel; ?><br />
