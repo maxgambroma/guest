@@ -1,7 +1,101 @@
 <body>
+    
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+ga('create', '<?php echo $albergo->analytics ?>', 'auto', {allowLinker: true});
+ga('require', 'linker');
+ga('linker:autoLink', ['ciaohotel.com', 'hotellaurentia.it', 'hotellaurentia.com', 'hotellapergola.it', 'hotellapergola.com', 'ateneorome.com', 'carlomagnohotel.com'], true, true));
+
+<?php if( $gruppo =='conferma') {?>
+
+ga('ecommerce:addTransaction', {
+'id': '<?php echo $preno->preno_id; ?>',// Transaction ID. Required.
+'affiliation': '<?php echo $preno->ref_site; ?>', // Affiliation or store name.
+'revenue': '<?php echo $preno->preno_importo; ?>', // Grand Total.
+'shipping': '0', // Shipping.
+'tax': '0' // Tax.
+});
+
+
+
+<?php if($preno->q1 != 0 ){ ?>
+ga('ecommerce:addItem', {
+'id': '<?php echo $preno->preno_id; ?>', // Transaction ID. Required.
+'name': '<?php echo $rooms[$preno->t1]->nome_tipologia; ?>', // Product name. Required.
+'sku': '<?php echo $preno->t1; ?>',  // SKU/code.
+'category': 'Rooms', // Category or variation.
+'price': '<?php echo $preno->p1; ?>', // Unit price.
+'quantity': '<?php echo $preno->q1 * $preno->preno_n_notti; ?>' // Quantity.
+});
+
+<?php } if($preno->q2  != 0 ){ ?>
+ga('ecommerce:addItem', {
+'id': '<?php echo $preno->preno_id; ?>', // Transaction ID. Required.
+'name': '<?php echo $rooms[$preno->t2]->nome_tipologia; ?>', // Product name. Required.
+'sku': '<?php echo $preno->t2; ?>',  // SKU/code.
+'category': 'Rooms', // Category or variation.
+'price': '<?php echo $preno->p2; ?>', // Unit price.
+'quantity': '<?php echo $preno->q2 * $preno->preno_n_notti; ?>' // Quantity.
+});
+
+<?php } if($preno->q3  != 0 ){ ?>
+ga('ecommerce:addItem', {
+'id': '<?php echo $preno->preno_id; ?>', // Transaction ID. Required.
+'name': '<?php echo $rooms[$preno->t3]->nome_tipologia ?>', // Product name. Required.
+'sku': '<?php echo $preno->t3; ?>',  // SKU/code.
+'category': 'Rooms', // Category or variation.
+'price': '<?php echo $preno->p3; ?>', // Unit price.
+'quantity': '<?php echo $preno->q3 * $preno->preno_n_notti; ?>' // Quantity.
+});
+
+<?php } if($preno->q4  != 0 ){ ?>
+
+ga('ecommerce:addItem', {
+'id': '<?php echo $preno->preno_id; ?>', // Transaction ID. Required.
+'name': '<?php echo $rooms[$preno->t4]->nome_tipologia ?>', // Product name. Required.
+'sku': '<?php echo $preno->t4; ?>',  // SKU/code.
+'category': 'Rooms', // Category or variation.
+'price': '<?php echo $preno->p4; ?>', // Unit price.
+'quantity': '<?php echo $preno->q4 * $preno->preno_n_notti; ?>' // Quantity.
+});
+
+<?php } if($preno->q5  != 0 ){ ?>
+
+ga('ecommerce:addItem', {
+'id': '<?php echo $preno->preno_id; ?>', // Transaction ID. Required.
+'name': '<?php echo $rooms[$preno->t5]->nome_tipologia; ?>', // Product name. Required.
+'sku': '<?php echo $preno->t5; ?>',  // SKU/code.
+'category': 'Rooms', // Category or variation.
+'price': '<?php echo $preno->p5; ?>', // Unit price.
+'quantity': '<?php echo $preno->q5 * $preno->preno_n_notti; ?>' // Quantity.
+});
+
+<?php } if($preno->q6 != 0 ){ ?>
+
+ga('ecommerce:addItem', {
+'id': '<?php echo $preno->preno_id; ?>', // Transaction ID. Required.
+'name': '<?php echo $rooms[$preno->t6]->nome_tipologia ?>', // Product name. Required.
+'sku': '<?php echo $preno->t6; ?>',  // SKU/code.
+'category': 'Rooms', // Category or variation.
+'price': '<?php echo $preno->p6; ?>', // Unit price.
+'quantity': '<?php echo $preno->q6 * $preno->preno_n_notti; ?>' // Quantity.
+});
+<?php } ?>
+
+ga('ecommerce:send');
+<?php }?>
+    
+ga('send', 'pageview');
+
+</script>    
+
+    
     <?php
 //se ho il cliente settato 
-
     
     if ($this->session->area >= 2) {
         ?>

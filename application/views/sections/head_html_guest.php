@@ -26,7 +26,5 @@
         <!--tinymce-->
         <script src="<?php echo base_url(); ?>/asset/tinymce/js/tinymce/tinymce.min.js" ></script>
         <!--  tinymce-->
-    
-    
 
   </head>
