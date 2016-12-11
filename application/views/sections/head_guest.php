@@ -6,11 +6,11 @@
 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-ga('create', '<?php echo $albergo->analytics ?>', 'auto', {allowLinker: true});
+ga('create', '<?php echo $albergo[0]->analytics ?>', 'auto', {allowLinker: true});
 ga('require', 'linker');
 ga('linker:autoLink', ['ciaohotel.com', 'hotellaurentia.it', 'hotellaurentia.com', 'hotellapergola.it', 'hotellapergola.com', 'ateneorome.com', 'carlomagnohotel.com'], true, true));
 
-<?php if( $gruppo =='conferma') {?>
+<?php if( $this->input->get_post('preno_id')  && $this->input->get_post('obm_cliente_id') ) {?>
 
 ga('ecommerce:addTransaction', {
 'id': '<?php echo $preno->preno_id; ?>',// Transaction ID. Required.

@@ -163,13 +163,21 @@ public function availability() {
         $data['preno_dal'] = $preno_dal;
         $data['preno_al'] = $preno_al;
         $data['Q1'] = $Q1;
-        $data['night'] = $this->my_tools->data_diff($preno_al, $preno_dal);
+        $data['night'] = $night = $this->my_tools->data_diff($preno_al, $preno_dal);
 
         $conto_id = 0;
         $clienti_id = 0;
         $conto_id = $this->uri->segment(3, 0);
         $clienti_id = $this->uri->segment(4, 1);
         $data['rs_clienti'] = $this->clienti_model->get_conto_cliente($conto_id, $clienti_id);
+
+        // mercato 
+        if ($this->input->cookie('mercato')) {
+          $mercato = $this->input->cookie('mercato');
+        } else {
+            $mercato = 1;
+        }
+
 
         $data['albergo'] = $this->hotel_model->hotel($hotel_id);
         $data['camere_obmp'] = $room_obmp = $this->prezzi_disponibilita_model->camere_obmp($hotel_id);
@@ -178,6 +186,7 @@ public function availability() {
         foreach ($room_obmp as $key => $value) {
             $room[$value->obmp_cm_rooms_id] = $value;
         }
+        
         $data['room'] = $room;
         $errore = 0;
         $data['stat'] = $stat = $this->stat_rechiesta($hotel_id, $preno_dal, $preno_al, $Q1, $T1, $errore);
@@ -209,64 +218,42 @@ public function availability() {
 // print_r($dati);
 // Sovrascrivo
 // per trovare i valori delle camare prenotate 
-//   $this->form_validation->set_rules('preno_id', 'lang:preno_id', 'trim');
-        $this->form_validation->set_rules('hotel_id', 'lang:hotel_id', 'required|trim|xss_clean');
-        $this->form_validation->set_rules('preno_in_data', 'lang:preno_in_data', 'required|trim|xss_clean');
-//  $this->form_validation->set_rules('preno_importo', 'lang:preno_importo', 'required|trim|xss_clean');
-//  $this->form_validation->set_rules('preno_impoto_mod', 'lang:preno_impoto_mod', 'trim|xss_clean');
-        $this->form_validation->set_rules('preno_dal', 'lang:preno_dal', 'required|trim|xss_clean');
-        $this->form_validation->set_rules('preno_al', 'lang:preno_al', 'required|trim|xss_clean');
-        $this->form_validation->set_rules('preno_n_notti', 'lang:preno_n_notti', 'required|trim|xss_clean');
+;
         $this->form_validation->set_rules('preno_arr_ore', 'lang:preno_arr_ore', 'trim');
-        $this->form_validation->set_rules('preno_trattamento', 'lang:preno_trattamento', 'required|trim|xss_clean');
-//        $this->form_validation->set_rules('t1', 'lang:t1', 'required|trim|is_numeric');
-//        $this->form_validation->set_rules('q1', 'lang:q1', 'required|trim|is_numeric');
-//        $this->form_validation->set_rules('p1', 'lang:p1', 'required|trim|is_numeric');
-//        $this->form_validation->set_rules('t2', 'lang:t2', 'trim|is_numeric');
-//        $this->form_validation->set_rules('q2', 'lang:q2', 'trim|is_numeric');
-//        $this->form_validation->set_rules('p2', 'lang:p2', 'trim|is_numeric');
-//        $this->form_validation->set_rules('t3', 'lang:t3', 'trim|is_numeric');
-//        $this->form_validation->set_rules('q3', 'lang:q3', 'trim|is_numeric');
-//        $this->form_validation->set_rules('p3', 'lang:p3', 'trim|is_numeric');
-//        $this->form_validation->set_rules('t4', 'lang:t4', 'trim|is_numeric');
-//        $this->form_validation->set_rules('q4', 'lang:q4', 'trim|is_numeric');
-//        $this->form_validation->set_rules('p4', 'lang:p4', 'trim|is_numeric');
-//        $this->form_validation->set_rules('t5', 'lang:t5', 'trim|is_numeric');
-//        $this->form_validation->set_rules('q5', 'lang:q5', 'trim|is_numeric');
-//        $this->form_validation->set_rules('p5', 'lang:p5', 'trim|is_numeric');
-//        $this->form_validation->set_rules('t6', 'lang:t6', 'trim|is_numeric');
-//        $this->form_validation->set_rules('q6', 'lang:q6', 'trim|is_numeric');
-//        $this->form_validation->set_rules('p6', 'lang:p6', 'trim|is_numeric');
+       
         $this->form_validation->set_rules('preno_nome', 'lang:preno_nome', 'required|trim|xss_clean');
         $this->form_validation->set_rules('preno_cogno', 'lang:preno_cogno', 'required|trim|xss_clean');
-        $this->form_validation->set_rules('preno_agenzia', 'lang:preno_agenzia', 'required|trim|is_numeric');
-// $this->form_validation->set_rules('voucher_id', 'lang:voucher_id', 'trim');
-// $this->form_validation->set_rules('allotment_id', 'lang:allotment_id', 'trim');
+        
         $this->form_validation->set_rules('preno_cc_tip', 'lang:preno_cc_tip', 'required|trim|is_numeric');
         $this->form_validation->set_rules('preno_cc_n', 'lang:preno_cc_n', 'required|trim|xss_clean');
         $this->form_validation->set_rules('preno_cc_scad', 'lang:preno_cc_scad', 'required|trim|xss_clean');
-        $this->form_validation->set_rules('preno_tel', 'lang:preno_tel', 'trim|xss_clean');
-        $this->form_validation->set_rules('preno_fax', 'lang:preno_fax', 'trim');
         $this->form_validation->set_rules('preno_email', 'lang:preno_email', 'required|trim|xss_clean|is_numeric');
-        $this->form_validation->set_rules('preno_mercato', 'lang:preno_mercato', 'required|trim|xss_clean');
         $this->form_validation->set_rules('preno_note', 'lang:preno_note', 'trim|xss_clean');
-//$this->form_validation->set_rules('preno_doc_fax', 'lang:preno_doc_fax', 'trim|xss_clean');
-// $this->form_validation->set_rules('preno_doc_email', 'lang:preno_doc_email', 'trim|xss_clean');
-        $this->form_validation->set_rules('preno_doc_form', 'lang:preno_doc_form', 'trim|xss_clean');
-// $this->form_validation->set_rules('preno_doc_mail', 'lang:preno_doc_mail', 'trim|xss_clean');
-//$this->form_validation->set_rules('preno_doc_vaglia', 'lang:preno_doc_vaglia', 'trim|xss_clean');
-//$this->form_validation->set_rules('preno_doc_woucher', 'lang:preno_doc_woucher', 'trim|xss_clean');
-        $this->form_validation->set_rules('preno_pag_modalita', 'lang:preno_pag_modalita', 'trim|xss_clean');
-// $this->form_validation->set_rules('preno_caparra', 'lang:preno_caparra', 'trim|xss_clean');
-        $this->form_validation->set_rules('preno_stato', 'lang:preno_stato', 'trim|xss_clean');
-// $this->form_validation->set_rules('data_opzione', 'lang:data_opzione', 'trim');
-//$this->form_validation->set_rules('cancella_data_record', 'lang:cancella_data_record', 'trim');
-//$this->form_validation->set_rules('cancella_user', 'lang:cancella_user', 'trim');
-//$this->form_validation->set_rules('cancella_pass', 'lang:cancella_pass', 'trim');
-//$this->form_validation->set_rules('preno_data_record', 'lang:preno_data_record', 'trim');
-        $this->form_validation->set_rules('agenda_utente_id', 'lang:agenda_utente_id', 'trim');
         $this->form_validation->set_error_delimiters('<span class="error">', '</span> <br />');
 
+
+        $this->form_validation->set_rules('preno_city', 'lang:obm_cliente_city', 'trim');			
+        $this->form_validation->set_rules('preno_country', 'lang:obm_cliente_country', 'trim');
+        $this->form_validation->set_rules('newsletter', 'lang:obm_cliente_newsletter', 'trim');	
+    
+  
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+//        print_r($this->form_validation);
+        
         if ($this->form_validation->run() == FALSE) { // validation hasn't been passed
 // scegli il templete
             $temi = 'tem_cb_obmp';
@@ -299,15 +286,15 @@ public function availability() {
 
             $form_data = array(
 // 'preno_id' => set_value('preno_id'),
-                'hotel_id' => set_value('hotel_id'),
-                'preno_in_data' => set_value('preno_in_data'),
+                'hotel_id' => $hotel_id,
+                'preno_in_data' => date("Y-m-d H:i:s"),
                 'preno_importo' => $importo,
                 'preno_impoto_mod' => $importo,
-                'preno_dal' => set_value('preno_dal'),
-                'preno_al' => set_value('preno_al'),
-                'preno_n_notti' => set_value('preno_n_notti'),
+                'preno_dal' => $preno_dal,
+                'preno_al' => $preno_al,
+                'preno_n_notti' => $night,
                 'preno_arr_ore' => set_value('preno_arr_ore'),
-                'preno_trattamento' => set_value('preno_trattamento'),
+                'preno_trattamento' => 'BB',
                 't1' => $t1,
                 'q1' => $q1,
                 'p1' => $p1,
@@ -328,32 +315,18 @@ public function availability() {
                 'p6' => $p6,
                 'preno_nome' => set_value('preno_nome'),
                 'preno_cogno' => set_value('preno_cogno'),
-                'preno_agenzia' => set_value('preno_agenzia'),
-// 'voucher_id' => set_value('voucher_id'),
-//  'allotment_id' => set_value('allotment_id'),
+                'preno_agenzia' => $sta['ref_agency'],
                 'preno_cc_tip' => set_value('preno_cc_tip'),
                 'preno_cc_n' => substr(set_value('preno_cc_n'), 0, -5),
                 'preno_cc_scad' => set_value('preno_cc_scad'),
                 'preno_tel' => $preno_tel,
-//'preno_fax' => set_value('preno_fax'),
                 'preno_email' => set_value('preno_email'),
-                'preno_mercato' => set_value('preno_mercato'),
+                'preno_mercato' => $mercato,
                 'preno_note' => set_value('preno_note'),
-// 'preno_doc_fax' => set_value('preno_doc_fax'),
-// 'preno_doc_email' => set_value('preno_doc_email'),
-                'preno_doc_form' => set_value('preno_doc_form'),
-// 'preno_doc_mail' => set_value('preno_doc_mail'),
-// 'preno_doc_vaglia' => set_value('preno_doc_vaglia'),
-// 'preno_doc_woucher' => set_value('preno_doc_woucher'),
-                'preno_pag_modalita' => set_value('preno_pag_modalita'),
-// 'preno_caparra' => set_value('preno_caparra'),
-                'preno_stato' => set_value('preno_stato'),
-// 'data_opzione' => set_value('data_opzione'),
-// 'cancella_data_record' => set_value('cancella_data_record'),
-// 'cancella_user' => set_value('cancella_user'),
-// 'cancella_pass' => set_value('cancella_pass'),
-// 'preno_data_record' => set_value('preno_data_record'),
-                'agenda_utente_id' => set_value('agenda_utente_id')
+                'preno_doc_form' => 1,
+                'preno_pag_modalita' => 1,
+                'preno_stato' => 1 ,
+                'agenda_utente_id' => '999'
             );
 
 // run insert model to write data to db
@@ -376,18 +349,17 @@ public function availability() {
                         'obm_cliente_first_name' => set_value('preno_nome'),
                         'obm_cliente_last_name' => set_value('preno_cogno'),
                         'obm_cliente_email' => set_value('preno_email'),
-                        'obm_cliente_city' => set_value('city'),
-                        'obm_cliente_country' => set_value('country'),
+                        'obm_cliente_city' => set_value('preno_city'),
+                        'obm_cliente_country' => set_value('preno_country'),
                         'obm_cliente_phone' => $preno_tel,
                         'obm_cliente_newsletter' => set_value('newsletter'),
                         'obm_cliente_pass' => $obm_cliente_pass,
                         'obm_cliente_data_insert' => set_value('obm_cliente_data_insert'),
-// 'obm_cliente_data_record' => set_value('obm_cliente_data_record'),
-// 'obm_cliente_cc_type' => set_value('obm_cliente_cc_type'),
-// 'obm_cliente_cc_number' => substr(set_value('preno_cc_n'), 0, -5), 
-// 'obm_cliente_holder' => set_value('preno_cc_holder'),
-// 'obm_cliente_cc_expire' => set_value('preno_cc_scad'),
-// 'obm_cliente_cc_security' => set_value('preno_cc_s_cod')
+
+                     'obm_cliente_cc_type' => set_value('obm_cliente_cc_type'),
+                     'obm_cliente_cc_number' => substr(set_value('preno_cc_n'), 0, -5), 
+                     'obm_cliente_holder' => set_value('preno_cc_holder'),
+                     'obm_cliente_cc_expire' => set_value('preno_cc_scad')
                     );
 
 //Sovrasceivo il 
@@ -398,12 +370,12 @@ public function availability() {
                     'ref_obm_data' => date("Y-m-d"),
                     'preno_id' => $preno_id,
                     'obm_cliente_id' => $obm_cliente_id,
-                    'hotel_id' => set_value('hotel_id'),
-                    'ref_site' => set_value('ref_site'),
-                    'ref_agency' => set_value('ref_agency'),
-                    'ref_event' => set_value('ref_event'),
-                    'ref_session' => set_value('ref_session'),
-                    'ref_cookie' => set_value('ref_cookie')
+                    'hotel_id' => $hotel_id,
+                    'ref_site' => $stat['ref_site'],
+                    'ref_agency' => $stat['ref_agency'],
+                    'ref_event' => $stat['ref_event'],
+                    'ref_session' => $stat['ref_session'],
+                    'ref_cookie' => $stat['ref_cookie']
                 );
 
                 if ($this->ref_obmp_booking_model->insert($form_data) == TRUE) { // the information has therefore been successfully saved in the db
@@ -611,6 +583,16 @@ public function availability() {
             $cookie_dominio = "";
             setcookie($cookie_nome, $cookie_valore, $cookie_scadenza, "/");
 
+            
+            // setto il mercato
+            $cookie_mercato = $evento_row->ref_event_nome ; 
+            $cookie_nome = "mercato";
+            $cookie_dominio = "";
+            setcookie($cookie_nome, $cookie_mercato, $cookie_scadenza, "/");
+
+            
+            
+            
             // setto l'agenzia   
             $agenzia_id =  $cookie_valore = $evento_row->agenzia_id ;
             $cookie_nome = "agenzia_id"; 

@@ -2,7 +2,7 @@
 
 
 <div class="small-12    large-12  columns">
-<form  data-abide  action="<?php echo ''; ?>" method="post"   name="booking" id="booking">
+<form  data-abide  action="<?php echo base_url(); ?>index.php/obmp/availability/?<?php echo $_SERVER['QUERY_STRING']; ?>" method="post"   name="booking" id="booking">
 
     <fieldset>
         <?php
@@ -280,6 +280,50 @@
 <input name="submit_booking" class="button  expand round success" type="submit" value="<?php echo $lg_tex['confirm_booking']; ?>">
 
 <h5> <?php echo $lg_tex['you_receive_e-mail']; ?> </h5>
+
+
+
+
+      <input name="hotel_id" type="hidden" id="hotel_id" value="<?php echo $hotel_id ; ?>" />
+      <input name="preno_dal" type="hidden" id="preno_dal" value="<?php echo $preno_dal ?>" />
+      <input name="preno_al" type="hidden" id="preno_al" value="<?php echo $preno_al; ?>" />
+      <input name="preno_in_data" type="hidden" id="preno_in_data2" value="<?php echo date("Y-m-d H:i:s"); ?>" />
+      <input name="preno_trattamento" type="hidden" id="preno_trattamento2" value="BB" />
+      <input name="preno_stato" type="hidden" id="preno_stato" value="1" />
+      <input name="preno_doc_form" type="hidden" id="preno_doc_form" value="1" />
+            
+      <input name="preno_mercato" type="hidden" id="preno_mercato" value="<?php echo $mercato;?>" />
+      
+      <input name="ref_site" type="hidden" id="ref_site" value="<?php echo $ref_site; ?>" />
+      <input name="ref_agency" type="hidden" id="ref_agency" value="<?php  echo $ref_agency; ?>" />
+      <input name="ref_event" type="hidden" id="ref_event" value="<?php echo $ref_event; ?>" />
+      <input name="ref_session" type="hidden" id="ref_session2" value="<?php echo $ref_session; ?>" />
+      <input name="ref_cookie" type="hidden" id="ref_cookie2" value="<?php echo $ref_cookie; ?>" />
+      
+      <input name="obm_cliente_pass" type="hidden" id="obm_cliente_pass" value="55555" />
+      <?php /* da sistema  */?>
+      <input name="utente_id" type="hidden" id="utente_id" value="999" />
+      <?php /* chi effetua la preno  metto 999 */?>
+      <input name="obm_cliente_id" type="hidden" id="obm_cliente_id3" />
+      <?php /* cfornito dal sistema  */?>
+      <?php /* <input name="preno_id" type="hidden" id="preno_id" />auto incremento   */?>
+      <input name="preno_cc_s_cod" type="hidden" id="0" />
+      <?php /* 0 non lo inserisco   */?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
