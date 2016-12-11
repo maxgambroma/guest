@@ -215,7 +215,7 @@ public function availability() {
         $q6 = 0;
         $p6 = 0;
 
-// print_r($dati);
+ print_r($dati);
 // Sovrascrivo
 // per trovare i valori delle camare prenotate 
 ;
@@ -224,33 +224,17 @@ public function availability() {
         $this->form_validation->set_rules('preno_nome', 'lang:preno_nome', 'required|trim|xss_clean');
         $this->form_validation->set_rules('preno_cogno', 'lang:preno_cogno', 'required|trim|xss_clean');
         
-        $this->form_validation->set_rules('preno_cc_tip', 'lang:preno_cc_tip', 'required|trim|is_numeric');
+        $this->form_validation->set_rules('preno_cc_tip', 'lang:preno_cc_tip', 'required|trim|xss_clean');
         $this->form_validation->set_rules('preno_cc_n', 'lang:preno_cc_n', 'required|trim|xss_clean');
         $this->form_validation->set_rules('preno_cc_scad', 'lang:preno_cc_scad', 'required|trim|xss_clean');
-        $this->form_validation->set_rules('preno_email', 'lang:preno_email', 'required|trim|xss_clean|is_numeric');
+        $this->form_validation->set_rules('preno_email', 'lang:preno_email', 'required|trim|xss_clean|valid_email');
         $this->form_validation->set_rules('preno_note', 'lang:preno_note', 'trim|xss_clean');
-        $this->form_validation->set_error_delimiters('<span class="error">', '</span> <br />');
-
-
-        $this->form_validation->set_rules('preno_city', 'lang:obm_cliente_city', 'trim');			
-        $this->form_validation->set_rules('preno_country', 'lang:obm_cliente_country', 'trim');
-        $this->form_validation->set_rules('newsletter', 'lang:obm_cliente_newsletter', 'trim');	
+        
+        $this->form_validation->set_rules('preno_city', 'lang:obm_cliente_city', 'trim|xss_clean');			
+        $this->form_validation->set_rules('preno_country', 'lang:obm_cliente_country', 'trim|xss_clean');
+        $this->form_validation->set_rules('newsletter', 'lang:obm_cliente_newsletter', 'trim|xss_clean');	
     
-  
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+        $this->form_validation->set_error_delimiters('<span class="error">', '</span> <br />');
         
 //        print_r($this->form_validation);
         
@@ -281,6 +265,9 @@ public function availability() {
                 }
             }
 
+            
+   
+            
             $importo = $q1 * $p1 + $q2 * $p2 + $q3 * $p3 + $q4 * $p4 + $q5 * $p5 + $q6 * $p6;
             $preno_tel = set_value('tel_stato') . " " . set_value('tel_prefisso') . " " . set_value('tel_nemero');
 
@@ -329,9 +316,16 @@ public function availability() {
                 'agenda_utente_id' => '999'
             );
 
+ 
+            
+            
 // run insert model to write data to db
             $preno_id = $this->agenda_model->insert($form_data);
 
+            
+            
+            
+            
             if ($preno_id) {
 // controllo che il cliente non sia gia registrato 
                 $obm_cliente_id = $this->obmp_clienti_model->get_by_email($email);
