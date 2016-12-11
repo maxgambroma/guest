@@ -354,12 +354,11 @@ public function availability() {
                         'obm_cliente_phone' => $preno_tel,
                         'obm_cliente_newsletter' => set_value('newsletter'),
                         'obm_cliente_pass' => $obm_cliente_pass,
-                        'obm_cliente_data_insert' => set_value('obm_cliente_data_insert'),
-
-                     'obm_cliente_cc_type' => set_value('obm_cliente_cc_type'),
-                     'obm_cliente_cc_number' => substr(set_value('preno_cc_n'), 0, -5), 
-                     'obm_cliente_holder' => set_value('preno_cc_holder'),
-                     'obm_cliente_cc_expire' => set_value('preno_cc_scad')
+                        'obm_cliente_data_insert' => date("Y-m-d H:i:s"),
+                        'obm_cliente_cc_type' => set_value('obm_cliente_cc_type'),
+                        'obm_cliente_cc_number' => substr(set_value('preno_cc_n'), 0, -5), 
+                        'obm_cliente_holder' => set_value('preno_cc_holder'),
+                        'obm_cliente_cc_expire' => set_value('preno_cc_scad')
                     );
 
 //Sovrasceivo il 
