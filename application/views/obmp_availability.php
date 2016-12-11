@@ -1,10 +1,10 @@
 <div class="row">
 
-   
+    <?php echo validation_errors(); ?>
 
 <div class="small-12    large-12  columns">
 <form  data-abide  action="<?php echo base_url(); ?>index.php/obmp/availability/?<?php echo $_SERVER['QUERY_STRING']; ?>" method="post"   name="booking" id="booking">
- <?php echo validation_errors(); ?>
+
     <fieldset>
         <?php
         
@@ -290,7 +290,51 @@
       <input name="hotel_id" type="hidden" id="hotel_id" value="<?php echo $hotel_id ; ?>" />
       <input name="preno_dal" type="hidden" id="preno_dal" value="<?php echo $preno_dal ?>" />
       <input name="preno_al" type="hidden" id="preno_al" value="<?php echo $preno_al; ?>" />
-            
+        
+      
+      
+<input id="t1" type="hidden" name="t1"  value="<?php echo ( !set_value('t1')) ? $t[1]  : set_value('t1');  ?>"  />
+<input id="q1" type="hidden" name="q1"  value="<?php echo ( !set_value('q1')) ? $q[1]  : set_value('q1');  ?>"  />
+<input id="p1" type="hidden" name="p1"  value="<?php echo ( !set_value('p1')) ? $p[1]  : set_value('p1');  ?>"  />
+
+<input id="t2" type="hidden" name="t2"  value="<?php echo ( !set_value('t2')) ? $t[2]  : set_value('t2');  ?>"  />
+<input id="q2" type="hidden" name="q2"  value="<?php echo ( !set_value('q2')) ? $q[2]  : set_value('q2');  ?>"  />
+<input id="p2" type="hidden" name="p2"  value="<?php echo ( !set_value('p2')) ? $p[2]  : set_value('p2');  ?>"  />
+
+<input id="t3" type="hidden" name="t3"  value="<?php echo ( !set_value('t3')) ? $t[3]  : set_value('t3');  ?>"  />
+<input id="q3" type="hidden" name="q3"  value="<?php echo ( !set_value('q3')) ? $q[3]  : set_value('q3');  ?>"  />
+<input id="p3" type="hidden" name="p3"  value="<?php echo ( !set_value('p3')) ? $p[3]  : set_value('p3');  ?>"  />
+
+<input id="t4" type="hidden" name="t4"  value="<?php echo ( !set_value('t4')) ? $t[4]  : set_value('t4');  ?>"  />
+<input id="q4" type="hidden" name="q4"  value="<?php echo ( !set_value('q4')) ? $q[4]  : set_value('q4');  ?>"  />
+<input id="p4" type="hidden" name="p4"  value="<?php echo ( !set_value('p4')) ? $p[4]  : set_value('p4');  ?>"  />
+
+<input id="t5" type="hidden" name="t5"  value="<?php echo ( !set_value('t5')) ? $t[5]  : set_value('t5');  ?>"  />
+<input id="q5" type="hidden" name="q5"  value="<?php echo ( !set_value('q5')) ? $q[5]  : set_value('q5');  ?>"  />
+<input id="p5" type="hidden" name="p5"  value="<?php echo ( !set_value('p5')) ? $p[5]  : set_value('p5');  ?>"  />
+
+<input id="t6" type="hidden" name="t6"  value="<?php echo ( !set_value('t6')) ? $t[6]  : set_value('t6');  ?>"  />
+<input id="q6" type="hidden" name="q6"  value="<?php echo ( !set_value('q6')) ? $q[6]  : set_value('q6');  ?>"  />
+<input id="p6" type="hidden" name="p6"  value="<?php echo ( !set_value('p6')) ? $p[6]  : set_value('p6');  ?>"  />
+      
+
+
+
+
+<?php foreach ($this->input->post('cm_rooms_id') as $key => $value) { ?>
+<input id="" type="hidden" name="cm_rooms_id[]"  value="<?php echo $value ;  ?>"  />
+<?php } ?>
+
+<?php foreach ($this->input->post('num') as $key => $value) { ?>
+<input id="" type="hidden" name="num[]"  value="<?php echo $value ;  ?>"  />
+<?php } ?>
+
+<?php foreach ($this->input->post('price') as $key => $value) { ?>
+<input id="" type="hidden" name="price[]"  value="<?php echo $value ;  ?>"  />
+<?php } ?>
+      
+      
+      
 
 </form>
 </div>

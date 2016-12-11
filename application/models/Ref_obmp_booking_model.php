@@ -72,7 +72,8 @@ class Ref_obmp_booking_model extends CI_Model {
             {
                 $this->db->set($data);
                 $this->db->insert('ref_obmp_booking');
-                return $this->db->insert_id();
+                //return $this->db->insert_id();
+                return $this->db->affected_rows();
             }
 		
         /** 

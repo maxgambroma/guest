@@ -11,13 +11,17 @@ class Obmp extends CI_Controller {
         $this->load->model('hotel_model');
         $this->load->model('agenda_model');
         $this->load->model('tipologia_camera_model');
-        $this->load->model('obmp_review_model');
         $this->load->model('conti_model');
         $this->load->model('prezzi_disponibilita_model');
         $this->load->model('tex_lingue_model');
+        $this->load->model('obmp_ref_event_model');
+           
+  
+        $this->load->model('obmp_review_model');
+        
         $this->load->model('log_obmp_model');
         $this->load->model('log_obmp_full_model');
-        $this->load->model('obmp_ref_event_model');     
+       $this->load->model('ref_obmp_booking_model');     
         $this->load->model('obmp_clienti_model');   
         
         
@@ -187,39 +191,96 @@ public function availability() {
             $room[$value->obmp_cm_rooms_id] = $value;
         }
         
+//        print_r($room);
+        
+        
         $data['room'] = $room;
         $errore = 0;
         $data['stat'] = $stat = $this->stat_rechiesta($hotel_id, $preno_dal, $preno_al, $Q1, $T1, $errore);
+       
+        print_r($stat); 
+        
+        
         $ref_event = $stat['ref_event'];
         $evento_html = $this->evento_html($hotel_id, $ref_event);
         $data['table_evento'] = $evento_html['table_evento'];
 //    $data['rs_clienti'] = $this->clienti_model->get_privacy($today, $hotel_id);
 //print_r($dati);
 
-        $t1 = 0;
-        $q1 = 0;
-        $p1 = 0;
-        $t2 = 0;
-        $q2 = 0;
-        $p2 = 0;
-        $t3 = 0;
-        $q3 = 0;
-        $p3 = 0;
-        $t4 = 0;
-        $q4 = 0;
-        $p4 = 0;
-        $t5 = 0;
-        $q5 = 0;
-        $p5 = 0;
-        $t6 = 0;
-        $q6 = 0;
-        $p6 = 0;
+        
+$t[1] = 0; 
+$q[1] = 0; 
+$p[1] = 0; 
 
- print_r($dati);
+$t[2] = 0; 
+$q[2] = 0; 
+$p[2] = 0;  
+
+$t[3] = 0; 
+$q[3] = 0; 
+$p[3] = 0; 
+
+$t[4] = 0; 
+$q[4] = 0; 
+$p[4] = 0;  
+
+$t[5] = 0; 
+$q[5] = 0; 
+$p[5] = 0; 
+
+$t[6] = 0; 
+$q[6] = 0; 
+$p[6] = 0;  
+
+
+ 
+ // sovrascrivo le variabili 
+    $i = 1;
+            foreach ($dati['num'] as $key => $value) {
+                if ($value != 0) {
+                    if ($i < 7) {
+                        $t[$i] = $room[$dati['cm_rooms_id'][$key]]->obmp_cm_rooms_tipologia_id;
+                        $q[$i] = $dati['num'][$key];
+                        $p[$i] = $dati['price'][$key];
+                        $i++;
+                    }
+                }
+            }
+            
+// passo le variabili al fom            
+$data['t']=  $t ;      
+$data['q']=  $q ;  
+$data['p']=  $p ; 
+
+            
+   // calcolo importo          
+   $importo = $q[1] * $p[1] + $q[2] * $p[2] + $q[3] * $p[3] + $q[4] * $p[4] + $q[5] * $p[5] + $q[6] * $p[6];
+ 
+ 
 // Sovrascrivo
 // per trovare i valori delle camare prenotate 
-;
+
         $this->form_validation->set_rules('preno_arr_ore', 'lang:preno_arr_ore', 'trim');
+        
+        $this->form_validation->set_rules('t1', 't1', 'trim|xss_clean');			
+        $this->form_validation->set_rules('q1', 'q1', 'trim|xss_clean');			
+        $this->form_validation->set_rules('p1', 'p1', 'trim|xss_clean');			
+        $this->form_validation->set_rules('t2', 't2', 'trim|xss_clean');			
+        $this->form_validation->set_rules('q2', 'q2', 'trim|xss_clean');			
+        $this->form_validation->set_rules('p2', 'p2', 'trim|xss_clean');			
+        $this->form_validation->set_rules('t3', 't3', 'trim|xss_clean');			
+        $this->form_validation->set_rules('q3', 'q3', 'trim|xss_clean');			
+        $this->form_validation->set_rules('p3', 'p3', 'trim|xss_clean');			
+        $this->form_validation->set_rules('t4', 't4', 'trim|xss_clean');			
+        $this->form_validation->set_rules('q4', 'q4', 'trim|xss_clean');			
+        $this->form_validation->set_rules('p4', 'p4', 'trim|xss_clean');			
+        $this->form_validation->set_rules('t5', 't5', 'trim|xss_clean');			
+        $this->form_validation->set_rules('q5', 'q5', 'trim|xss_clean');			
+        $this->form_validation->set_rules('p5', 'p5', 'trim|xss_clean');			
+        $this->form_validation->set_rules('t6', 't6', 'trim|xss_clean');			
+        $this->form_validation->set_rules('q6', 'q6', 'trim|xss_clean');			
+        $this->form_validation->set_rules('p6', 'p6', 'trim|xss_clean');	
+              
        
         $this->form_validation->set_rules('preno_nome', 'lang:preno_nome', 'required|trim|xss_clean');
         $this->form_validation->set_rules('preno_cogno', 'lang:preno_cogno', 'required|trim|xss_clean');
@@ -253,22 +314,9 @@ public function availability() {
             $this->load->view('templetes_obmp', $data);
         } else { // passed validation proceed to post success logic
 // build array for the model
-            $i = 1;
-            foreach ($dati['num'] as $key => $value) {
-                if ($value != 0) {
-                    if ($i < 7) {
-                        ${'t' . $i} = $dati['cm_rooms_id'][$key];
-                        ${'q' . $i} = $dati['num'][$key];
-                        ${'p' . $i} = $dati['price'][$key];
-                        $i++;
-                    }
-                }
-            }
+         
 
-            
-   
-            
-            $importo = $q1 * $p1 + $q2 * $p2 + $q3 * $p3 + $q4 * $p4 + $q5 * $p5 + $q6 * $p6;
+          // ricavo il telefono
             $preno_tel = set_value('tel_stato') . " " . set_value('tel_prefisso') . " " . set_value('tel_nemero');
 
             $form_data = array(
@@ -282,27 +330,30 @@ public function availability() {
                 'preno_n_notti' => $night,
                 'preno_arr_ore' => set_value('preno_arr_ore'),
                 'preno_trattamento' => 'BB',
-                't1' => $t1,
-                'q1' => $q1,
-                'p1' => $p1,
-                't2' => $t2,
-                'q2' => $q2,
-                'p2' => $p2,
-                't3' => $t3,
-                'q3' => $q3,
-                'p3' => $p3,
-                't4' => $t4,
-                'q4' => $q4,
-                'p4' => $p4,
-                't5' => $t5,
-                'q5' => $q5,
-                'p5' => $p5,
-                't6' => $t6,
-                'q6' => $q6,
-                'p6' => $p6,
+     
+                't1' => set_value('t1'),
+                'q1' => set_value('q1'),
+                'p1' => set_value('p1'),
+                't2' => set_value('t2'),
+                'q2' => set_value('q2'),
+                'p2' => set_value('p2'),
+                't3' => set_value('t3'),
+                'q3' => set_value('q3'),
+                'p3' => set_value('p3'),
+                't4' => set_value('t4'),
+                'q4' => set_value('q4'),
+                'p4' => set_value('p4'),
+                't5' => set_value('t5'),
+                'q5' => set_value('q5'),
+                'p5' => set_value('p5'),
+                't6' => set_value('t6'),
+                'q6' => set_value('q6'),
+                'p6' => set_value('p6'),
+                
+                
                 'preno_nome' => set_value('preno_nome'),
                 'preno_cogno' => set_value('preno_cogno'),
-                'preno_agenzia' => $sta['ref_agency'],
+                'preno_agenzia' => $stat['ref_agency'],
                 'preno_cc_tip' => set_value('preno_cc_tip'),
                 'preno_cc_n' => substr(set_value('preno_cc_n'), 0, -5),
                 'preno_cc_scad' => set_value('preno_cc_scad'),
@@ -317,20 +368,24 @@ public function availability() {
             );
 
  
-            
-            
 // run insert model to write data to db
             $preno_id = $this->agenda_model->insert($form_data);
 
-            
+            if (!$preno_id)
+            { echo 'errore agebda';}
             
             
             
             if ($preno_id) {
 // controllo che il cliente non sia gia registrato 
-                $obm_cliente_id = $this->obmp_clienti_model->get_by_email($email);
+                
+               
+                $obm_cliente = $this->obmp_clienti_model->get_by_email(set_value('preno_email'));
+                
+     
+                
 //lo registro 
-                if (!$obm_cliente_id) {
+                if (!$obm_cliente) {
 // condizione di non cliente 
 // INIZIO iserisci il cliente nuovo per l'email 
 // INIZIO si crea la password di accesso al gentianale   
@@ -338,7 +393,7 @@ public function availability() {
                     $obm_cliente_pass = rand(10000, 99999) . "-" . substr("$cogn", 0, 5) . "-" . rand(1000, 9999);
 // FINE si crea la password di accesso al gentianale
 
-                    $form_data = array(
+                    $form_obmp_clienti = array(
 // 'obm_cliente_id' => set_value('obm_cliente_id'),
                         'obm_cliente_first_name' => set_value('preno_nome'),
                         'obm_cliente_last_name' => set_value('preno_cogno'),
@@ -356,11 +411,22 @@ public function availability() {
                     );
 
 //Sovrasceivo il 
-                    $obm_cliente_id = $this->obmp_clienti_model->insert($form_data);
+                    $obm_cliente_id = $this->obmp_clienti_model->insert($form_obmp_clienti);
+                    
+                    
+                          if (!$obm_cliente_id )
+            { echo 'errore clienti_model';}
+                    
                 }
-
-                $form_data = array(
-                    'ref_obm_data' => date("Y-m-d"),
+// è gi acliente 
+ else {
+     
+   $obm_cliente_id = $obm_cliente->obm_cliente_id ;
+ }
+                
+ 
+                $form_obmp_booking = array(
+                  //  'ref_obm_data' => date("Y-m-d H:i:s"),
                     'preno_id' => $preno_id,
                     'obm_cliente_id' => $obm_cliente_id,
                     'hotel_id' => $hotel_id,
@@ -370,11 +436,16 @@ public function availability() {
                     'ref_session' => $stat['ref_session'],
                     'ref_cookie' => $stat['ref_cookie']
                 );
-
-                if ($this->ref_obmp_booking_model->insert($form_data) == TRUE) { // the information has therefore been successfully saved in the db
+                
+                
+                print_r($form_obmp_booking) ;
+                
+                
+                if ($this->ref_obmp_booking_model->insert($form_obmp_booking) == TRUE) { 
+// the information has therefore been successfully saved in the db
                     redirect($dase_url . 'index.php/obmp/confirmation/?preno_id=' . $preno_id . '&obm_cliente_id=' . $obm_cliente_id . '&' . $_SERVER['QUERY_STRING']);   // or whatever logic needs to occur
                 } else {
-                    echo 'errore';
+                    echo 'errore obmp_booking' ;
                 }
             }
         }
@@ -560,7 +631,7 @@ public function availability() {
         
         
         
-        if ($this->input->get_post('ref_event') !== NULL ) {
+        if ($this->input->get_post('ref_event') != NULL ) {
          
     $ref_event = $this->input->get_post('ref_event') ; 
           $evento_row = $this->obmp_ref_event_model->controlla_evento($hotel_id, $ref_event);
@@ -616,29 +687,32 @@ public function availability() {
     /**
      * se un affiliazione 
      */
-   private function get_site() {
-        $ref_site = 0;
-        if ($this->input->get_post('ref_site') !== NULL) {
+    private function get_site() {
+
+        if ($this->input->get_post('ref_site') != NULL) {
+
             if (!$this->input->cookie('ref_site')) {
-                //se esiste un sito di affiliazione si setta in cookie dell sito di provenienza 
+//se esiste un sito di affiliazione si setta in cookie dell sito di provenienza 
                 $cookie_valore = $this->input->get_post('ref_site');
                 $cookie_nome = "ref_site";
                 $cookie_scadenza = time() + 60 * 60 * 24 * 30 * 12;
                 $cookie_dominio = "";
                 setcookie($cookie_nome, $cookie_valore, $cookie_scadenza, "/");
+
                 $ref_site = $this->input->get_post('ref_site');
             }
-        } else {
+        }
+
+        if ($this->input->cookie('ref_site')) {
             $ref_site = $this->input->cookie('ref_site');
+        }
+
+        if (!$this->input->cookie('ref_site') && !$this->input->get_post('ref_site')) {
+            $ref_site = 0;
         }
         return $ref_site;
     }
-    
 
-    
-    
-    
-    
     /**
      * setto l'agenzia di riferimento 
      * @return int
@@ -767,29 +841,29 @@ public function availability() {
      * @return type
      */
     
- private function evento_html($hotel_id, $ref_event) {
-       $row =  $this->obmp_ref_event_model->controlla_evento($hotel_id, $ref_event) ; 
-       
-        if ( $row) {
-            $agenzia_id = $row->agenzia_id;
-           $table_evento = "<div class=\"evento\">You Welcome Participants of Meeting<br> <table width=\"100%\" border=\"0\">
+private function evento_html($hotel_id, $ref_event) {
+$row =  $this->obmp_ref_event_model->controlla_evento($hotel_id, $ref_event) ; 
+
+if ( $row) {
+$agenzia_id = $row->agenzia_id;
+$table_evento = "<div class=\"evento\">You Welcome Participants of Meeting<br> <table width=\"100%\" border=\"0\">
 <tr>
 <td bgcolor=\"#FF99CC\"><strong>" . $row->ref_event_nome .
-                    " -" . $row->listino_nome_id . "-" . $row->ref_site_id . "- " . $row->ref_event_id . "</strong></td>
+" -" . $row->listino_nome_id . "-" . $row->ref_site_id . "- " . $row->ref_event_id . "</strong></td>
 </tr>
 </table> </div> ";
-           
-         $evento = array('evento_stato' => $row->ref_event_id, 'table_evento' => $table_evento, 'agenzia_id' => $agenzia_id);
-           
-           
-        } else {
-            $evento = array('evento_stato' => '', 'table_evento' => '', 'agenzia_id' => '279');
-        }
-        
-        
-        return $evento;
-    }
-    
+
+$evento = array('evento_stato' => $row->ref_event_id, 'table_evento' => $table_evento, 'agenzia_id' => $agenzia_id);
+
+
+} else {
+$evento = array('evento_stato' => '', 'table_evento' => '', 'agenzia_id' => '279');
+}
+
+
+return $evento;
+}
+
     
     /**
      * per la visualizzazione del prezzo nel caso dei portali
