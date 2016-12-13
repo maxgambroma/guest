@@ -10,6 +10,12 @@ if( $temp['templete'] == 'tem_cb_obmp' )
 {  
     $this->load->view('sections/tem_cb_obmp'); 
 } 
+
+if( $temp['templete'] == 'tem_full_obmp' )
+{  
+    $this->load->view('sections/tem_full_obmp'); 
+} 
+
 if( $temp['templete'] == 'tem_bc' )
 {  
     $this->load->view('sections/tem_bc'); 

@@ -1,6 +1,4 @@
 <?php
-// pippo
-
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
@@ -260,7 +258,7 @@ class Obmp extends CI_Controller {
         //        print_r($this->form_validation);
         if ($this->form_validation->run() == FALSE) { // validation hasn't been passed
             // scegli il templete
-            $temi = 'tem_cb_obmp';
+            $temi = 'tem_full_obmp';
             // carica la vista del contenuto
             $vista = 'obmp_availability';
             // gestore templete
@@ -435,6 +433,7 @@ class Obmp extends CI_Controller {
         $data['rs_clienti'] = $this->clienti_model->get_conto_cliente($conto_id, $clienti_id);
 
         $data['albergo'] = $this->hotel_model->hotel($hotel_id);
+        
         $data['camere_obmp'] = $room_obmp = $this->prezzi_disponibilita_model->camere_obmp($hotel_id);
         
         foreach ($room_obmp as $key => $value) {
@@ -443,8 +442,9 @@ class Obmp extends CI_Controller {
         
     $data['rooms'] = $room ;
         
-               
-      $data['stat'] =  $stat = $this->stat_rechiesta($hotel_id,$preno_dal,$preno_al,$Q1,$T1, $errore ) ; 
+       $errore = 0;  
+       $T1 = 1;
+     $data['stat'] =  $stat = $this->stat_rechiesta($hotel_id,$preno_dal,$preno_al,$Q1,$T1, $errore ) ; 
       $ref_event = $stat['ref_event'];
       $evento_html =   $this->evento_html($hotel_id, $ref_event);  
       $data['table_evento'] = $evento_html['table_evento'];
@@ -453,7 +453,7 @@ class Obmp extends CI_Controller {
         
 //    $data['rs_clienti'] = $this->clienti_model->get_privacy($today, $hotel_id);
 // scegli il templete
-        $temi = 'tem_cb_obmp';
+        $temi = 'tem_full_obmp';
 // carica la vista del contenuto
         $vista = 'obmp_confirmation';
 // gestore templete
