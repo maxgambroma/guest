@@ -178,6 +178,12 @@ class Obmp extends CI_Controller {
         $data['albergo'] = $this->hotel_model->hotel($hotel_id);
         $data['camere_obmp'] = $room_obmp = $this->prezzi_disponibilita_model->camere_obmp($hotel_id);
         $dati = $this->input->post();
+        
+        
+        // converto in json
+       $room_obmp_string = json_encode($dati); 
+        
+        
 //        Creo una array per camare id 
         foreach ($room_obmp as $key => $value) {
             $room[$value->obmp_cm_rooms_id] = $value;
@@ -373,7 +379,8 @@ class Obmp extends CI_Controller {
                     'ref_agency' => $stat['ref_agency'],
                     'ref_event' => $stat['ref_event'],
                     'ref_session' => $stat['ref_session'],
-                    'ref_cookie' => $stat['ref_cookie']
+                    'ref_cookie' => $stat['ref_cookie'], 
+                    'room_obmp_string' => $room_obmp_string
                 );
             //print_r($form_obmp_booking) ;
 

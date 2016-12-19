@@ -1,3 +1,5 @@
+<?php $url_img = 'http://www.ciaohotel.com/html/obmpmax/obmpmax/'; ?>
+
 <div class="row">
   <div class="small-12  medium-12  large-12 columns">
     <fieldset>

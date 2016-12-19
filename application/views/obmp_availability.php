@@ -1,42 +1,56 @@
+<?php $url_img = 'http://www.ciaohotel.com/html/obmpmax/obmpmax/'; 
+
+
+       //  prendo i dati del post
+        $cm_rooms = $this->input->post('cm_rooms_id');
+        $cm_num = $this->input->post('num');
+        $cm_price = $this->input->post('price');
+
+
+?>
+
+
+
+Selected Period: From  14/12/2016  to  15/12/2016 
 <div class="row">
-
-    <?php echo validation_errors(); ?>
-
 <div class="small-12    large-12  columns">
-<form  data-abide  action="<?php echo base_url(); ?>index.php/obmp/availability/?<?php echo $_SERVER['QUERY_STRING']; ?>" method="post"   name="booking" id="booking">
+<form  data-abide  action="<?php echo base_url(); ?>index.php/obmp/availability/?<?php echo $_SERVER['QUERY_STRING']; ?>" method="post"   name="booking" id="booking">   
+<?php
+// controllo le tipologie selezionate
+foreach ($this->input->post('cm_rooms_id') as $key => $value) {
+// se selezionate 
+if ($cm_num[$key] != 0) {
+$row_rooms = $room[$value];
+?>  
+<div class="row">
+<div class="large-2 columns" >
+<img src="<?php echo $url_img . $row_rooms->obmp_cm_rooms_foto150; ?>">
+</div>             
+<div class="large-10 columns" >
+<?php echo $row_rooms->obmp_cm_lingue_nome; ?>
+Prezzo  <?php echo $cm_price[$key]; ?> X  Quantita <?php echo $cm_num[$key]; ?>  X notti  <?php echo $night; ?> = 
+<div class="row">
+<div class="large-12 columns">  </div>   
+</div>
+<div class="row">
+<div class="large-12 columns">
+INFO ABOUT ROOM
+</div>   
+</div>
+<div class="row">
+<div class="large-12 columns">
+Personalize your room 
+</div>   
+</div>   
+</div>   
+</div>   
 
-    <fieldset>
-        <?php
-        
-        // prendo i dati del post
-//        $camera = $this->input->post('cm_rooms_id');
-        // controllo le tipologie selezionate
-//        foreach ($this->input->post('num') as $key => $value) {
-//            // se selezionate 
-//            if ($value != 0) {
-//                
-//                // ho i dettagli della camare
-//                $ris = $room[$camera[$key]];
-//                print_r($ris);
-                ?>       
-                <div class="row">
-                    <div class="large-1" >
-                    </div>             
-                    <div class="large-11" >
-                        <?php ?> 
-                    </div>             
-                </div>
-<!--            <?php
-//            }
-//        }
-        ?>         -->
-    </fieldset>   
-    
-    <?php
-    
-//    print_r($this->input->post()); 
-    ?>
-  
+<hr>
+<?php
+}
+}
+?>         
+   
     
 
     
@@ -335,9 +349,7 @@
       
       
       
-
 </form>
-</div>
 </div>
 
 
