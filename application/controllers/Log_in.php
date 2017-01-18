@@ -56,9 +56,17 @@ $data = NULL;
 
 
 
-$this->form_validation->set_rules('user', 'lang:user', 'required|trim|xss_clean|valid_email');			
+$this->form_validation->set_rules('user', 'lang:user', 'required|trim|xss_clean|valid_email');
 $this->form_validation->set_rules('pass', 'lang:pass', 'required|trim|xss_clean');
 $this->form_validation->set_error_delimiters('<span class="error">', '</span> <br />');
+
+
+          
+     if($this->input->post('MM_email')==1 ){
+       $this->form_validation->set_rules('email', 'lang:user', 'required|trim|xss_clean|valid_email');	  
+
+     }
+
 
 
 
@@ -88,7 +96,7 @@ $this->load->view('sections/footer_scripts');
           
      if($this->input->post('MM_email')==1 ){
          
-          $user = set_value('user');
+          $user = set_value('email');
           
          $this->richiedi_pass($pass) ;
      }
@@ -100,9 +108,7 @@ $this->load->view('sections/footer_scripts');
 }
 
 
-function autentica($user, $pass) {
-        
-       
+function autentica($user, $pass) {   
     
         $cliente = $this->clienti_model->get_autentica($user, $pass);
 // controllo tra i clienti conto

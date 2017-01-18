@@ -181,7 +181,7 @@ class Obmp extends CI_Controller {
         
         
         // converto in json
-       $room_obmp_string = json_encode($dati); 
+      
         
         
 //        Creo una array per camare id 
@@ -216,11 +216,20 @@ class Obmp extends CI_Controller {
                     $t[$i] = $room[$dati['cm_rooms_id'][$key]]->obmp_cm_rooms_tipologia_id;
                     $q[$i] = $dati['num'][$key];
                     $p[$i] = $dati['price'][$key];
+                    
+                    // 
+                     $cam_json[$dati['cm_rooms_id'][$key]] = array($dati['cm_rooms_id'][$key], $dati['num'][$key],$dati['price'][$key]  );
                     $i++;
                 }
-            }
+            }     
+            
+           
         }
-
+        
+        
+         $room_obmp_string = json_encode($cam_json); 
+        
+        
 // passo le variabili al fom            
         $data['t'] = $t;
         $data['q'] = $q;
@@ -403,6 +412,10 @@ class Obmp extends CI_Controller {
         $data['lg_tex'] =  $this->tex_lingue_model->tex_lg($lg);
 
         
+         
+
+        
+        
             
       $preno_id =  $this->input->get_post('preno_id') ;
       $obm_cliente_id =   $this->input->get_post('obm_cliente_id') ;    
@@ -441,7 +454,8 @@ class Obmp extends CI_Controller {
 
         $data['albergo'] = $this->hotel_model->hotel($hotel_id);
         
-        $data['camere_obmp'] = $room_obmp = $this->prezzi_disponibilita_model->camere_obmp($hotel_id);
+      
+        $data['camere_obmp'] = $room_obmp = $this->prezzi_disponibilita_model->camere_obmp($hotel_id, $tipologia_id = NULL, $agenzia_id = 279, $lg , $stato = NULL);
         
         foreach ($room_obmp as $key => $value) {
             $room[$value->obmp_cm_rooms_tipologia_id] = $value;

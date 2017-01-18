@@ -165,6 +165,7 @@ SELECT
 	ref_obmp_booking.ref_event,
 	ref_obmp_booking.ref_session,
 	ref_obmp_booking.ref_cookie,
+        ref_obmp_booking.room_obmp_string,
 	agenda.preno_id,
 	agenda.hotel_id,
 	agenda.preno_in_data,
