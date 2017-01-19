@@ -410,12 +410,6 @@ class Obmp extends CI_Controller {
 
         $data['lg'] = $lg = $this->lg;
         $data['lg_tex'] =  $this->tex_lingue_model->tex_lg($lg);
-
-        
-         
-
-        
-        
             
       $preno_id =  $this->input->get_post('preno_id') ;
       $obm_cliente_id =   $this->input->get_post('obm_cliente_id') ;    
@@ -454,15 +448,29 @@ class Obmp extends CI_Controller {
 
         $data['albergo'] = $this->hotel_model->hotel($hotel_id);
         
-      
-        $data['camere_obmp'] = $room_obmp = $this->prezzi_disponibilita_model->camere_obmp($hotel_id, $tipologia_id = NULL, $agenzia_id = 279, $lg , $stato = NULL);
+      // rooms Obmp
+        $room_obmp = $this->prezzi_disponibilita_model->camere_obmp($hotel_id, $tipologia_id = NULL, $agenzia_id = 279, $lg , $stato = NULL);
         
         foreach ($room_obmp as $key => $value) {
-            $room[$value->obmp_cm_rooms_tipologia_id] = $value;
+            $rooms_obmp[$value->obmp_cm_rooms_id] = $value;
         }
         
-    $data['rooms'] = $room ;
+    $data['rooms_obmp'] = $rooms_obmp ;
+    
+    
+    
+    
+    // rooms del gestionale 
+      $room = $this->prezzi_disponibilita_model->rs_tip_camere($hotel_id);
+         
+      foreach ($room as $key => $value) {
+            $rooms[$value->tipologia_id] = $value;
+        }
         
+     $data['rooms'] = $rooms ;
+
+
+    
        $errore = 0;  
        $T1 = 1;
      $data['stat'] =  $stat = $this->stat_rechiesta($hotel_id,$preno_dal,$preno_al,$Q1,$T1, $errore ) ; 
