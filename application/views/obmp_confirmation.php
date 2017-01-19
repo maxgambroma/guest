@@ -1,12 +1,11 @@
 <?php $url_img = 'http://www.ciaohotel.com/html/obmpmax/obmpmax/';
 
 
- echo $string = $preno->room_obmp_string ; 
- 
- $risu =  json_decode($string , true);
- print_r($risu) ;
+ $string = $preno->room_obmp_string ; 
+  $risu =  json_decode($string , true);
+ // print_r($risu) ;
 
-
+ // print_r($rooms) ;
 ?>
 
 <div class="row">
@@ -18,10 +17,12 @@
     <fieldset>
     <legend>BOOKING</legend>
     
+     <?php foreach ($risu as $key => $row_rooms) {  ?>
+    
     <div class="row">
       <div class="small-12  medium-6 large-6 columns">
         <p> <?php echo $lg_tex['your_reservation'] ; ?>:<br>
-          <strong><?php echo $preno->q1; ?> <?php // echo @$tariffa_selezione['lingue_nome'];?>, <?php echo $preno->preno_n_notti; ?> <?php echo $lg_tex['night'] ; ?> </strong> <br>
+          <strong><?php echo $preno->q1; ?> <?php  echo $rooms_obmp[$key]->obmp_cm_lingue_nome ;?>, <?php echo $preno->preno_n_notti; ?> <?php echo $lg_tex['night'] ; ?> </strong> <br>
           <?php echo $lg_tex['check-in'] ; ?>: <strong><?php echo date("D F j, Y", strtotime($preno->preno_dal)) ; ?> </strong> <br>
           <?php echo $lg_tex['check-out'] ; ?>: <strong> <?php echo date("D F j, Y", strtotime($preno->preno_al)) ; ?> </strong><br>
           <br>
@@ -29,41 +30,11 @@
           <br>
         </p>
       </div>
+           
+    <?php  }?> 
         
-        
-           <div class="small-12  medium-6 large-6 columns">
-        <p> <?php echo $lg_tex['your_reservation'] ; ?>:<br>
-          <strong><?php echo $preno->q1; ?> <?php // echo @$tariffa_selezione['lingue_nome'];?>, <?php echo $preno->preno_n_notti; ?> <?php echo $lg_tex['night'] ; ?> </strong> <br>
-          <?php echo $lg_tex['check-in'] ; ?>: <strong><?php echo date("D F j, Y", strtotime($preno->preno_dal)) ; ?> </strong> <br>
-          <?php echo $lg_tex['check-out'] ; ?>: <strong> <?php echo date("D F j, Y", strtotime($preno->preno_al)) ; ?> </strong><br>
-          <br>
-          <?php echo $lg_tex['totale_price'] ; ?>: <strong> <?php echo  number_format(( $preno->p1 * $preno->q1), 2, '.', ',');?> EUR </strong> <br>
-          <br>
-        </p>
-      </div>
-        
-        
-           <div class="small-12  medium-6 large-6 columns">
-        <p> <?php echo $lg_tex['your_reservation'] ; ?>:<br>
-          <strong><?php echo $preno->q1; ?> <?php // echo @$tariffa_selezione['lingue_nome'];?>, <?php echo $preno->preno_n_notti; ?> <?php echo $lg_tex['night'] ; ?> </strong> <br>
-          <?php echo $lg_tex['check-in'] ; ?>: <strong><?php echo date("D F j, Y", strtotime($preno->preno_dal)) ; ?> </strong> <br>
-          <?php echo $lg_tex['check-out'] ; ?>: <strong> <?php echo date("D F j, Y", strtotime($preno->preno_al)) ; ?> </strong><br>
-          <br>
-          <?php echo $lg_tex['totale_price'] ; ?>: <strong> <?php echo  number_format(( $preno->p1 * $preno->q1), 2, '.', ',');?> EUR </strong> <br>
-          <br>
-        </p>
-      </div>
-        
-           <div class="small-12  medium-6 large-6 columns">
-        <p> <?php echo $lg_tex['your_reservation'] ; ?>:<br>
-          <strong><?php echo $preno->q1; ?> <?php // echo @$tariffa_selezione['lingue_nome'];?>, <?php echo $preno->preno_n_notti; ?> <?php echo $lg_tex['night'] ; ?> </strong> <br>
-          <?php echo $lg_tex['check-in'] ; ?>: <strong><?php echo date("D F j, Y", strtotime($preno->preno_dal)) ; ?> </strong> <br>
-          <?php echo $lg_tex['check-out'] ; ?>: <strong> <?php echo date("D F j, Y", strtotime($preno->preno_al)) ; ?> </strong><br>
-          <br>
-          <?php echo $lg_tex['totale_price'] ; ?>: <strong> <?php echo  number_format(( $preno->p1 * $preno->q1), 2, '.', ',');?> EUR </strong> <br>
-          <br>
-        </p>
-      </div>
+           
+       
         
       <div class="small-12  medium-6 large-6 columns">
         <p> Guest Details :<br>
