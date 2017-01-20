@@ -1,3 +1,47 @@
+<?php
+// Function to return the JavaScript representation of a TransactionData object.
+function getTransactionJs(&$trans) {
+    return <<<HTML
+ga('ecommerce:addTransaction', {
+'id': '{$trans['id']}',
+'affiliation': '{$trans['affiliation']}',
+'revenue': '{$trans['revenue']}',
+'shipping': '{$trans['shipping']}',
+'tax': '{$trans['tax']}'
+});
+HTML;
+}
+
+// Function to return the JavaScript representation of an ItemData object.
+function getItemJs(&$transId, &$item) {
+    return <<<HTML
+ga('ecommerce:addItem', {
+'id': '$transId',
+'name': '{$item['name']}',
+'sku': '{$item['sku']}',
+'category': '{$item['category']}',
+'price': '{$item['price']}',
+'quantity': '{$item['quantity']}'
+});
+HTML;
+}
+
+ if ($this->input->get_post('preno_id') && $this->input->get_post('obm_cliente_id')) {  
+// Transaction Data
+$trans = array('id' => $preno->preno_id, 'affiliation' => $preno->ref_site, 'revenue' => $preno->preno_importo, 'shipping' => '0', 'tax' => '0');
+
+// List of Items Purchased.
+$items = array(
+    @array('sku' => $preno->t1, 'name' => $rooms[$preno->t1]->nome_tipologia, 'category' => 'Rooms', 'price' => $preno->p1, 'quantity' => ($preno->q1 * $preno->preno_n_notti)),
+    @array('sku' => $preno->t2, 'name' => $rooms[$preno->t2]->nome_tipologia, 'category' => 'Rooms', 'price' => $preno->p2, 'quantity' => ($preno->q2 * $preno->preno_n_notti)),
+    @array('sku' => $preno->t3, 'name' => $rooms[$preno->t3]->nome_tipologia, 'category' => 'Rooms', 'price' => $preno->p3, 'quantity' => ($preno->q3 * $preno->preno_n_notti)),
+    @array('sku' => $preno->t4, 'name' => $rooms[$preno->t4]->nome_tipologia, 'category' => 'Rooms', 'price' => $preno->p4, 'quantity' => ($preno->q4 * $preno->preno_n_notti)),
+    @array('sku' => $preno->t5, 'name' => $rooms[$preno->t5]->nome_tipologia, 'category' => 'Rooms', 'price' => $preno->p5, 'quantity' => ($preno->q5 * $preno->preno_n_notti)),
+    @array('sku' => $preno->t6, 'name' => $rooms[$preno->t6]->nome_tipologia, 'category' => 'Rooms', 'price' => $preno->p6, 'quantity' => ($preno->q6 * $preno->preno_n_notti)),
+);
+
+ }
+?>
 <body>
  <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -9,79 +53,23 @@
   ga('require', 'linker');
   ga('linker:autoLink', ['hotellaurentia.it', 'hotellaurentia.com', 'hotellapergola.it', 'hotellapergola.com', 'ateneorome.com', 'carlomagnohotel.com'], true , true  );
   
-<?php if ($this->input->get_post('preno_id') && $this->input->get_post('obm_cliente_id')) { ?>
-ga('ecommerce:addTransaction', {
-'id': '<?php echo $preno->preno_id; ?>', // Transaction ID. Required.
-'affiliation': '<?php echo $preno->ref_site; ?>', // Affiliation or store name.
-'revenue': '<?php echo $preno->preno_importo; ?>', // Grand Total.
-'shipping': '0', // Shipping.
-'tax': '0' // Tax.
-});
+<?php if ($this->input->get_post('preno_id') && $this->input->get_post('obm_cliente_id')) { ?> 
 
-<?php if ($preno->q1 != 0) { ?>
-ga('ecommerce:addItem', {
-'id': '<?php echo $preno->preno_id; ?>', // Transaction ID. Required.
-'name': '<?php echo $rooms[$preno->t1]->nome_tipologia; ?>', // Product name. Required.
-'sku': '<?php echo $preno->t1; ?>', // SKU/code.
-'category': 'Rooms', // Category or variation.
-'price': '<?php echo $preno->p1; ?>', // Unit price.
-'quantity': '<?php echo $preno->q1 * $preno->preno_n_notti; ?>' // Quantity.
-});
+ga('require', 'ecommerce');
 
-<?php } if ($preno->q2 != 0) { ?>
-ga('ecommerce:addItem', {
-'id': '<?php echo $preno->preno_id; ?>', // Transaction ID. Required.
-'name': '<?php echo $rooms[$preno->t2]->nome_tipologia; ?>', // Product name. Required.
-'sku': '<?php echo $preno->t2; ?>', // SKU/code.
-'category': 'Rooms', // Category or variation.
-'price': '<?php echo $preno->p2; ?>', // Unit price.
-'quantity': '<?php echo $preno->q2 * $preno->preno_n_notti; ?>' // Quantity.
-});
-
-<?php } if ($preno->q3 != 0) { ?>
-ga('ecommerce:addItem', {
-'id': '<?php echo $preno->preno_id; ?>', // Transaction ID. Required.
-'name': '<?php echo $rooms[$preno->t3]->nome_tipologia ?>', // Product name. Required.
-'sku': '<?php echo $preno->t3; ?>', // SKU/code.
-'category': 'Rooms', // Category or variation.
-'price': '<?php echo $preno->p3; ?>', // Unit price.
-'quantity': '<?php echo $preno->q3 * $preno->preno_n_notti; ?>' // Quantity.
-});
-
-<?php } if ($preno->q4 != 0) { ?>
-ga('ecommerce:addItem', {
-'id': '<?php echo $preno->preno_id; ?>', // Transaction ID. Required.
-'name': '<?php echo $rooms[$preno->t4]->nome_tipologia ?>', // Product name. Required.
-'sku': '<?php echo $preno->t4; ?>', // SKU/code.
-'category': 'Rooms', // Category or variation.
-'price': '<?php echo $preno->p4; ?>', // Unit price.
-'quantity': '<?php echo $preno->q4 * $preno->preno_n_notti; ?>' // Quantity.
-});
-
-<?php } if ($preno->q5 != 0) { ?>
-ga('ecommerce:addItem', {
-'id': '<?php echo $preno->preno_id; ?>', // Transaction ID. Required.
-'name': '<?php echo $rooms[$preno->t5]->nome_tipologia; ?>', // Product name. Required.
-'sku': '<?php echo $preno->t5; ?>', // SKU/code.
-'category': 'Rooms', // Category or variation.
-'price': '<?php echo $preno->p5; ?>', // Unit price.
-'quantity': '<?php echo $preno->q5 * $preno->preno_n_notti; ?>' // Quantity.
-});
-
-<?php } if ($preno->q6 != 0) { ?>
-
-ga('ecommerce:addItem', {
-'id': '<?php echo $preno->preno_id; ?>', // Transaction ID. Required.
-'name': '<?php echo $rooms[$preno->t6]->nome_tipologia ?>', // Product name. Required.
-'sku': '<?php echo $preno->t6; ?>', // SKU/code.
-'category': 'Rooms', // Category or variation.
-'price': '<?php echo $preno->p6; ?>', // Unit price.
-'quantity': '<?php echo $preno->q6 * $preno->preno_n_notti; ?>' // Quantity.
-});
-<?php } ?>
-ga('ecommerce:send');
-<?php } ?>
+<?php
+echo getTransactionJs($trans);
+foreach ($items as $item) {
+  if( $item['sku']){  
+  echo getItemJs($trans['id'], $item);
+  }
+}
+?>
     
+ga('ecommerce:send');
+
+<?php } ?>
+
 ga('send', 'pageview');
 
 </script>
@@ -157,8 +145,3 @@ if ($this->session->area >= 2) {
             </p>            
         </div>
     </div>
-
-
-
-
-
