@@ -1,7 +1,7 @@
 <?php
 // Function to return the JavaScript representation of a TransactionData object.
 function getTransactionJs(&$trans) {
-    return <<<HTML
+return <<<HTML
 ga('ecommerce:addTransaction', {
 'id': '{$trans['id']}',
 'affiliation': '{$trans['affiliation']}',
@@ -14,7 +14,7 @@ HTML;
 
 // Function to return the JavaScript representation of an ItemData object.
 function getItemJs(&$transId, &$item) {
-    return <<<HTML
+return <<<HTML
 ga('ecommerce:addItem', {
 'id': '$transId',
 'name': '{$item['name']}',
@@ -26,57 +26,57 @@ ga('ecommerce:addItem', {
 HTML;
 }
 
- if ($this->input->get_post('preno_id') && $this->input->get_post('obm_cliente_id')) {  
+if ($this->input->get_post('preno_id') && $this->input->get_post('obm_cliente_id')) {  
 // Transaction Data
 $trans = array('id' => $preno->preno_id, 'affiliation' => $preno->ref_site, 'revenue' => $preno->preno_importo, 'shipping' => '0', 'tax' => '0');
 
 // List of Items Purchased.
 $items = array(
-    @array('sku' => $preno->t1, 'name' => $rooms[$preno->t1]->nome_tipologia, 'category' => 'Rooms', 'price' => $preno->p1, 'quantity' => ($preno->q1 * $preno->preno_n_notti)),
-    @array('sku' => $preno->t2, 'name' => $rooms[$preno->t2]->nome_tipologia, 'category' => 'Rooms', 'price' => $preno->p2, 'quantity' => ($preno->q2 * $preno->preno_n_notti)),
-    @array('sku' => $preno->t3, 'name' => $rooms[$preno->t3]->nome_tipologia, 'category' => 'Rooms', 'price' => $preno->p3, 'quantity' => ($preno->q3 * $preno->preno_n_notti)),
-    @array('sku' => $preno->t4, 'name' => $rooms[$preno->t4]->nome_tipologia, 'category' => 'Rooms', 'price' => $preno->p4, 'quantity' => ($preno->q4 * $preno->preno_n_notti)),
-    @array('sku' => $preno->t5, 'name' => $rooms[$preno->t5]->nome_tipologia, 'category' => 'Rooms', 'price' => $preno->p5, 'quantity' => ($preno->q5 * $preno->preno_n_notti)),
-    @array('sku' => $preno->t6, 'name' => $rooms[$preno->t6]->nome_tipologia, 'category' => 'Rooms', 'price' => $preno->p6, 'quantity' => ($preno->q6 * $preno->preno_n_notti)),
+@array('sku' => $preno->t1, 'name' => $rooms[$preno->t1]->nome_tipologia, 'category' => 'Rooms', 'price' => $preno->p1, 'quantity' => ($preno->q1 * $preno->preno_n_notti)),
+@array('sku' => $preno->t2, 'name' => $rooms[$preno->t2]->nome_tipologia, 'category' => 'Rooms', 'price' => $preno->p2, 'quantity' => ($preno->q2 * $preno->preno_n_notti)),
+@array('sku' => $preno->t3, 'name' => $rooms[$preno->t3]->nome_tipologia, 'category' => 'Rooms', 'price' => $preno->p3, 'quantity' => ($preno->q3 * $preno->preno_n_notti)),
+@array('sku' => $preno->t4, 'name' => $rooms[$preno->t4]->nome_tipologia, 'category' => 'Rooms', 'price' => $preno->p4, 'quantity' => ($preno->q4 * $preno->preno_n_notti)),
+@array('sku' => $preno->t5, 'name' => $rooms[$preno->t5]->nome_tipologia, 'category' => 'Rooms', 'price' => $preno->p5, 'quantity' => ($preno->q5 * $preno->preno_n_notti)),
+@array('sku' => $preno->t6, 'name' => $rooms[$preno->t6]->nome_tipologia, 'category' => 'Rooms', 'price' => $preno->p6, 'quantity' => ($preno->q6 * $preno->preno_n_notti)),
 );
 
- }
-?>
-<body>
- <script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-  ga('create', '<?php echo $albergo[0]->analytics ?>', 'auto', {'allowLinker': true});
-  ga('require', 'linker');
-  ga('linker:autoLink', ['hotellaurentia.it', 'hotellaurentia.com', 'hotellapergola.it', 'hotellapergola.com', 'ateneorome.com', 'carlomagnohotel.com'], true , true  );
-  
-<?php if ($this->input->get_post('preno_id') && $this->input->get_post('obm_cliente_id')) { ?> 
-
-ga('require', 'ecommerce');
-
-<?php
-echo getTransactionJs($trans);
-foreach ($items as $item) {
-  if( $item['sku']){  
-  echo getItemJs($trans['id'], $item);
-  }
 }
 ?>
-    
-ga('ecommerce:send');
+<body>
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', '<?php echo $albergo[0]->analytics ?>', 'auto', {'allowLinker': true});
+    ga('require', 'linker');
+    ga('linker:autoLink', ['hotellaurentia.it', 'hotellaurentia.com', 'hotellapergola.it', 'hotellapergola.com', 'ateneorome.com', 'carlomagnohotel.com'], true , true  );
+
+<?php if ($this->input->get_post('preno_id') && $this->input->get_post('obm_cliente_id')) { ?> 
+
+        ga('require', 'ecommerce');
+
+    <?php
+    echo getTransactionJs($trans);
+    foreach ($items as $item) {
+        if ($item['sku']) {
+            echo getItemJs($trans['id'], $item);
+        }
+    }
+    ?>
+
+        ga('ecommerce:send');
 
 <?php } ?>
 
-ga('send', 'pageview');
+    ga('send', 'pageview');
 
-</script>
-<?php
+    </script>
+    <?php
 //se ho il cliente settato 
-if ($this->session->area >= 2) {
-    ?>
+    if ($this->session->area >= 2) {
+        ?>
         <div class="barra_icone">
             <div class="row">
                 <div class="large-12  columns">
@@ -118,7 +118,7 @@ if ($this->session->area >= 2) {
                 <div class="large-12  columns">&nbsp; </div>
             </div>
         </div>
-<?php } ?>   
+    <?php } ?>   
     <div class="row">
         <div class="large-2 medium-3 small-4 columns">
             <a href="http://<?php echo $albergo['0']->hotel_web; ?>" ><img src="<?php echo base_url(); ?>asset/img/logo_<?php echo $albergo['0']->hotel_id; ?>.gif"   title="WWWW HOTEL"  /> </a> 
@@ -141,7 +141,6 @@ if ($this->session->area >= 2) {
                 <li><a href="<?php echo base_url(); ?>index.php/<?php echo uri_string(); ?>?lg=ru"><img src="<?php echo base_url(); ?>asset/img/flags/ru.gif"  border="0" /> Russian </a></li>
                 <li><a href="<?php echo base_url(); ?>index.php/<?php echo uri_string(); ?>?lg=se"><img src="<?php echo base_url(); ?>asset/img/flags/se.gif"  border="0" /> Svenska </a></li>
                 -->
-            </ul>
-            </p>            
+            </ul> 
         </div>
     </div>

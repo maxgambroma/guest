@@ -42,6 +42,5 @@ if( $temp['templete'] == 'tem_full' )
 
 ?>
 <?php $this->load->view('sections/footer_obmp'); ?>  
-<?php $this->load->view('sections/footer_guest'); ?>  
 <?php $this->load->view('sections/footer_scripts'); ?>
 <?php // $this->output->enable_profiler(TRUE); ?>
