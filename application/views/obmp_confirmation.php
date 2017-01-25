@@ -55,7 +55,9 @@ $risu = json_decode($string, true);
             <div class="small-12  medium-12 large-6 columns">
                 <fieldset> 
                     <legend><?php echo $lg_tex['your_reservation']; ?> <?php echo $i; ?> ° </legend>
-                    <div class="row"> 
+                    <div class="row">
+                          <div class="small-12  medium-4 large-4 columns"> <img src="<?php echo $url_img . $rooms_obmp[$key]->obmp_cm_rooms_foto150; ?>"/>
+                        </div> 
                         <div class="small-12  medium-8 large-8 columns">
                             <p> 
                                 <strong><?php echo $preno->{'q' . $i}; ?> <?php echo $rooms_obmp[$key]->obmp_cm_lingue_nome; ?>, <?php echo $preno->preno_n_notti; ?> <?php echo $lg_tex['night']; ?> </strong> <br>
@@ -65,8 +67,7 @@ $risu = json_decode($string, true);
                                 <br>
                             </p>
                         </div>
-                        <div class="small-12  medium-4 large-4 columns"> <img src="<?php echo $url_img . $rooms_obmp[$key]->obmp_cm_rooms_foto150; ?>"/>
-                        </div> 
+                      
                     </div>
                 </fieldset> 
             </div>

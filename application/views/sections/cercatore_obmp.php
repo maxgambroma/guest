@@ -24,7 +24,7 @@
                     <div class="box_booking">                       
                         <div class="small-12 large-4 columns box_booking"> 
                             Verifica Disponibilità
-                            <form action="<?php echo base_url() . 'index.php/obmp/index/?hotel_id='.$hotel ; ?>" method="post" id="form_prezzi" name="form_prezzi">
+                            <form action="<?php echo base_url() . 'index.php/obmp/index/?hotel_id='.$hotel_id ; ?>" method="post" id="form_prezzi" name="form_prezzi">
                                 <div class="row">
                                     <div class="   large-12 columns">
                                         <label>Arrivo  
