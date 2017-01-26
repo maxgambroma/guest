@@ -1,5 +1,7 @@
 <div class="row">
+  
     <div class="small-12 large-12 columns">
+          <fieldset>
         <div id="calendario1" class="av-summary" > 
             <div class="row"> 
                 <div class="small-4 large-3 columns">
@@ -18,6 +20,7 @@
                 </div>
             </div>
         </div>
+        </fieldset>
         <div id="cercatore1" style="display: none;"  >  
             <fieldset> 
                 <div class="row">

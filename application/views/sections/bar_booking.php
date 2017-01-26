@@ -8,7 +8,7 @@
         <?php
         // Change the css classes to suit your needs    
         $attributes = array('class' => '', 'id' => '');
-        echo form_open( base_url().'index.php/obmp/index/'.$rs_clienti[0]->conto_id .'/'.$rs_clienti[0]->clienti_id .'/?'. $_SERVER['QUERY_STRING'], $attributes);
+        echo form_open( base_url().'index.php/obmp/index/'.$rs_clienti[0]->conto_id .'/'.$rs_clienti[0]->clienti_id .'/?lg='. $lg , $attributes);
         ?>   
         <p>
             <?php echo lang('property', 'hotel_id'); ?>        <?php echo form_error('hotel_id'); ?>
@@ -18,9 +18,8 @@
                 '2' => 'Hotel Laurentia',
                 '4' => 'Ateneo Garden Palace',
                 '1' => 'Hotel La Pergola',
+                '3' => 'Hotel Carlo Magno',
             );
-            
-        
             ?>
            
             <?php echo form_dropdown('hotel_id', $options, (!set_value('hotel_id')) ? $albergo[0]->hotel_id : set_value('hotel_id') ) ?>
@@ -28,12 +27,12 @@
         <p>
 <?php echo lang('check_in', 'Check-in'); ?> 
 <?php echo form_error('check_in'); ?>
-            <input id="preno_dal_c" type="text" name="preno_dal" value="<?php echo set_value('preno_dal'); ?>"  />
+            <input id="preno_dal_c" type="text" name="preno_dal" value="<?php echo (!set_value('preno_dal')) ? date('Y-m-d') : set_value('preno_dal'); ?>"  />
         </p>
         <p>
 <?php echo lang('check_out', 'Check-out'); ?> 
 <?php echo form_error('check_out'); ?>
-            <input id="preno_al_c" type="text" name="preno_al"   value="<?php echo set_value('preno_dal'); ?>"  />
+            <input id="preno_al_c" type="text" name="preno_al"   value="<?php echo (!set_value('preno_al')) ? date('Y-m-d', strtotime("+1 day")) : set_value('preno_al'); ?>""  />
         </p>
         <p>
 <?php echo lang('numbers', 'Numbers'); ?> 

@@ -119,27 +119,26 @@
                     <p></p>
 
                     <?php
-                    
 //                            print_r($review);
-                    
-                    // non posso modicare la prenotazioni passata
-                    if ($row_new->preno_dal > $today) {
+// non posso modicare la prenotazioni passata
+                    if ($row_new->preno_dal >= $today) {
                         ?>
                         <a href="#" data-reveal-id="secondModal" class="radius button right"><?php echo $lg_tex['modifica_data']; ?></a> &nbsp;
                         <a href="#" data-reveal-id="firstModal" class="radius button alert right"><?php echo $lg_tex['cax_preno']; ?></a> 
-                       
-                    <?php
-                    
-                    
-                
-                    
-                    } else {
-                        if (!$review->review_id > 0) {
-                            ?>                    
-                        <a href="<?php echo base_url(); ?>index.php/obmp_review/insert/<?php echo $review->conto_id ; ?>/<?php echo $this->session->clienti_id  ; ?>/?lg=en" class="button right"><?php echo $lg_tex['scrivi_review']; ?></a>
-                        <?php } else { ?>
-                            <a href="<?php echo base_url(); ?>index.php/obmp_review/edit/<?php echo $review->conto_id ; ?>/<?php echo $this->session->clienti_id  ; ?>/?lg=en " class="button success right"><?php echo $lg_tex['leggi_review']; ?></a>
-                        <?php }
+
+        <?php
+    } else {
+        
+        // preno passate senza review 
+        if ($review->review_id > 0) {
+            ?>                    
+                            <a href="<?php echo base_url(); ?>index.php/obmp_review/insert/<?php echo $review->conto_id; ?>/<?php echo $this->session->clienti_id; ?>/?lg=en" class="button right"><?php echo $lg_tex['scrivi_review']; ?></a>
+                        <?php } 
+      // preno passate con  review  
+                        else { ?>
+                            <a href="<?php echo base_url(); ?>index.php/obmp_review/edit/<?php echo $review->conto_id; ?>/<?php echo $this->session->clienti_id; ?>/?lg=en " class="button success right"><?php echo $lg_tex['leggi_review']; ?></a>
+                        <?php
+                        }
                     }
                     ?>
 
@@ -161,14 +160,14 @@
                         </p>
                     </div>
                     <div class="large-3 columns">
-    <?php echo lang('check_out', 'Check-out'); ?> 
+                            <?php echo lang('check_out', 'Check-out'); ?> 
     <?php echo form_error('check_out'); ?>
                         <input id="preno_al" type="text" name="preno_al"   value="<?php echo $row_new->preno_al; ?>"  />
                     </div>
                     <div  class="large-3 columns"> 
-    <!--                        <p> 
-                            <a href="#"  id="aggiorna_preno"  class="button right">Default Button</a>
-                        </p>-->
+                    <!--                        <p> 
+                    <a href="#"  id="aggiorna_preno"  class="button right">Default Button</a>
+                    </p>-->
                     </div>
                 </div>
                 <div id="new_preno"></div>
@@ -186,13 +185,13 @@
                     <!--  agenda_edit.php  -->
                 <fieldset>                                
                     <legend>Agenda:</legend>	
-                    <?php
+    <?php
 // Change the css classes to suit your needs    
-                    $attributes = array('class' => '', 'id' => '');
-                    echo form_open(base_url() . 'index.php/agenda/cax_preno', $attributes);
-                    ?>
+    $attributes = array('class' => '', 'id' => '');
+    echo form_open(base_url() . 'index.php/agenda/cax_preno', $attributes);
+    ?>
                     <p>
-                      <?php echo $lg_tex['motivo_cax']; ?>
+                    <?php echo $lg_tex['motivo_cax']; ?>
                         <input type="radio" name="motivo" value="1" id="motivo1" /> <label for="motivo1"> <?php echo $lg_tex['motivo1']; ?></label> <br>
                         <input type="radio" name="motivo" value="2" id="motivo2"  /> <label for="motivo1"><?php echo $lg_tex['motivo2']; ?></label><br>
                         <input type="radio" name="motivo" value="3" id="motivo3"  /> <label for="motivo1"><?php echo $lg_tex['motivo3']; ?></label><br>
@@ -215,7 +214,7 @@
 
 
                     <p>
-                    <?php echo form_submit('submit',  $lg_tex['cax_preno'], 'class="button"'); ?>
+    <?php echo form_submit('submit', $lg_tex['cax_preno'], 'class="button"'); ?>
                     </p>
     <?php echo form_close(); ?>
                 </fieldset>  

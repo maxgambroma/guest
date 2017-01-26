@@ -337,9 +337,12 @@ background-color:  #2cc36b;
 
 
 .av-summary{
-    background-color: #e2e2e2;
-    padding: 0.8em;
-       
+ padding-top: 1.5em;
+ padding-bottom: 0.5em;
+ padding-left:  0.8em;
+ padding-right:  0.8em;
+ border: 1px solid #feba02;
+
 }
 
 
