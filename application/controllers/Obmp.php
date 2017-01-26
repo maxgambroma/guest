@@ -395,7 +395,7 @@ class Obmp extends CI_Controller {
 
                 if ($this->ref_obmp_booking_model->insert($form_obmp_booking) == TRUE) {
                     // the information has therefore been successfully saved in the db
-                    redirect( $dase_url . '/obmp/confirmation/?preno_id=' . $preno_id . '&obm_cliente_id=' . $obm_cliente_id . '&' . $_SERVER['QUERY_STRING']);   // or whatever logic needs to occur
+                    redirect( $dase_url . '/obmp/confirmation/?preno_id=' . $preno_id . '&obm_cliente_id=' . $obm_cliente_id . '&hotel_id= '. $hotel_id );   // or whatever logic needs to occur
                 } else {
                     echo 'errore obmp_booking';
                 }
