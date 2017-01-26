@@ -4,6 +4,10 @@ $string = $preno->room_obmp_string;
 $risu = json_decode($string, true);
 // print_r($risu) ;
 // print_r($rooms) ;
+
+
+// rooms_obmp  camare Obmp
+// $rooms camre gestionale
 ?>
 <div class="row">
     <div class="small-12  medium-12  large-12 columns">
@@ -49,6 +53,9 @@ $risu = json_decode($string, true);
     <div class="row"> 
         <?php
         $i = 1;
+        
+        
+        // per i dati della stringa json_decode
         foreach ($risu as $key => $row_rooms) {
             ?>
             <!--camere-->
