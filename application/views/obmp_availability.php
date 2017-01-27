@@ -9,13 +9,16 @@
 
 ?>
 
-
-
-Selected Period: From  14/12/2016  to  15/12/2016 
 <div class="row">
-<div class="small-12    large-12  columns">
+<div class="small-12    large-12  columns"> 
 <form  data-abide  action="<?php echo base_url(); ?>index.php/obmp/availability/?<?php echo $_SERVER['QUERY_STRING']; ?>" method="post"   name="booking" id="booking">   
-<?php
+    <fieldset> 
+    <legend> Selected Period </legend>   
+    From  <?php    echo $preno_dal ;?>   to  <?php   echo $preno_al ;?> <br  />
+    
+    
+    
+    <?php
 // controllo le tipologie selezionate
 foreach ($this->input->post('cm_rooms_id') as $key => $value) {
 // se selezionate 
@@ -27,21 +30,17 @@ $row_rooms = $room[$value];
 <img src="<?php echo $url_img . $row_rooms->obmp_cm_rooms_foto150; ?>">
 </div>             
 <div class="large-10 columns" >
-<?php echo $row_rooms->obmp_cm_lingue_nome; ?>
-Prezzo  <?php echo $cm_price[$key]; ?> X  Quantita <?php echo $cm_num[$key]; ?>  X notti  <?php echo $night; ?> = 
+    <h4> <?php echo $row_rooms->obmp_cm_lingue_nome; ?>
+Prezzo  <?php echo $cm_price[$key]; ?> X  Quantita <?php echo $cm_num[$key]; ?>  X notti  <?php echo $night; ?> = <?php echo  (float) $cm_price[$key] * (float) $night * (float) $cm_num[$key];  ?></h4>
 <div class="row">
 <div class="large-12 columns">  </div>   
 </div>
 <div class="row">
 <div class="large-12 columns">
-INFO ABOUT ROOM
+<?php echo $row_rooms->obmp_cm_lingue_html1 ;  ?>
 </div>   
 </div>
-<div class="row">
-<div class="large-12 columns">
-Personalize your room 
-</div>   
-</div>   
+  
 </div>   
 </div>   
 
@@ -50,11 +49,7 @@ Personalize your room
 }
 }
 ?>         
-   
-    
-
-    
-    
+</fieldset>
     <fieldset> 
 <legend><?php echo $lg_tex['guest_details']; ?></legend>
 <h5> <?php echo $lg_tex['your_privacy_is_guaranteed']; ?></h5>
@@ -351,7 +346,7 @@ Personalize your room
       
 </form>
 </div>
-
+</div>
 
      <script>
     $(function() {

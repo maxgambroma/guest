@@ -4,9 +4,7 @@ $string = $preno->room_obmp_string;
 $risu = json_decode($string, true);
 // print_r($risu) ;
 // print_r($rooms) ;
-
-
-// rooms_obmp  camare Obmp
+// $rooms_obmp  camare Obmp
 // $rooms camre gestionale
 ?>
 <div class="row">

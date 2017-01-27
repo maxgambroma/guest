@@ -766,15 +766,15 @@ $risu = json_decode($string, true);
                                                             <?php // echo $testo; ?>
                                                             
                                                             
-<fieldset>
-<legend><?php echo $lg_tex['notify']; ?></legend>
-<p><?php echo $lg_tex['i_would_like_to_notify_my_arrival_time']; ?> h: <?php echo $preno->preno_arr_ore; ?> <br>
-<?php echo $lg_tex['special_requests']; ?> <?php echo $preno->preno_note; ?> <br>
-</p>
-</fieldset>
 
+<fieldset> 
+<legend>BOOKING_ID <?php echo $preno->preno_id; ?></legend>
+<h6><?php echo $lg_tex['RESERVATION CODE']; ?> <?php echo $preno->preno_id; ?></h6> 
+    <?php echo $preno->preno_in_data; ?> <br /> 
+<p><?php echo $lg_tex['please_keep_the_reservation']; ?></p>
+</fieldset>                                                  
 
-<table border="0" style="width:100%" >
+<table border="0" style="width:100%"  >
 <tr  >
 <td style="width:50%" >
 <fieldset>   
@@ -815,7 +815,7 @@ foreach ($risu as $key => $row_rooms) {
 <fieldset> 
 <legend><?php echo $lg_tex['your_reservation']; ?> <?php echo $i; ?> ° </legend>
 <div class="row">
-<div class="small-12  medium-4 large-4 columns"> <img src="<?php echo $url_img . $rooms_obmp[$key]->obmp_cm_rooms_foto150; ?>"/>
+<div class="small-12  medium-4 large-4 columns"> <img  style="margin-right: 10px" src="<?php echo $url_img . $rooms_obmp[$key]->obmp_cm_rooms_foto150; ?>"/>
 </div> 
     
 <div class="small-12  medium-8 large-8 columns">
@@ -857,8 +857,9 @@ $i ++;
 <strong><?php echo $lg_tex['by_train']; ?>:</strong> <?php echo $albergo[0]->hotel_reach_by_treno; ?> <br>
 <strong><?php echo $lg_tex['by_airplane']; ?>:</strong> <?php echo $albergo[0]->hotel_reach_aereo; ?> </p>
 </fieldset>
-<label><?php echo $lg_tex['cancellation_without_penalty_until']; ?>
-<?php
+    <h4><?php echo $lg_tex['cancellation_without_penalty_until']; ?> </h4>
+
+ <h5> <?php
 // si determina la data di cancellazione senza penale 
 $DATA = strtotime($preno->preno_dal);
 $anno = date("Y", $DATA);
@@ -870,14 +871,36 @@ $canc_polity = $albergo[0]->hotel_cancel_pol;
 /* si incrementa la data di un giono */
 echo date("D F j, Y H : i", mktime($ora, $minute, 0, $mese, ($giorno - $canc_polity), $anno));
 ?>
-</label>
+</h5>
+    <br />   
+
+    
+    User : <?php echo  $preno->obm_cliente_email; ?>   <br>
+    Passwor: <?php echo  $preno->obm_cliente_pass; ?>  <br>
+ 
+<br />  
+<table class="button rounded adminuser">
+<tr>
+<td><a href="https://www.ciaohotel.com/html/guest/index.php/clienti/index/<?php // echo  $rs_clienti[0]->conto_id; ?>/<?php // echo $rs_clienti[0]->clienti_id; ?>/?lg=en">  Log In   </a></td>
+</tr>
+<br /> 
+</table>
+<br /> 
 <!--        </fieldset>-->         
 </td>
 <!--<td></td>-->
 </tr>
 <tr>
-<td></td>
-<td></td>
+    <td colspan="2" >
+        
+      <fieldset>
+<legend><?php echo $lg_tex['notify']; ?></legend>
+<p><?php echo $lg_tex['i_would_like_to_notify_my_arrival_time']; ?> h: <?php echo $preno->preno_arr_ore; ?> <br>
+<?php echo $lg_tex['special_requests']; ?> <?php echo $preno->preno_note; ?> <br>
+</p>
+</fieldset>
+</td>
+<!--<td></td>-->
 </tr>
 </table>
 
@@ -885,14 +908,7 @@ echo date("D F j, Y H : i", mktime($ora, $minute, 0, $mese, ($giorno - $canc_pol
                                                             
                                                             
                                                             <!-- -->
-                                                            <br />  
-                                                            <table class="button rounded adminuser">
-                                                                <tr>
-                                                                    <td><a href="https://www.ciaohotel.com/html/guest/index.php/clienti/index/<?php // echo  $rs_clienti[0]->conto_id; ?>/<?php // echo $rs_clienti[0]->clienti_id; ?>/?lg=en">  Log In   </a></td>
-                                                                </tr>
-                                                                <br /> 
-                                                            </table>
-                                                            <br />  
+                        
                                                         </td>
                                                         <td class="expander"></td>
                                                     </tr>

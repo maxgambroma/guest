@@ -894,46 +894,46 @@ class Obmp extends CI_Controller {
     }
 
     /**
-     * invial la confermo al cliente 
+     * invia  la confermo al cliente 
      * @param type $hotel_id
      * @param type $preno_id
      * @param type $obm_cliente_id
      * @return type
      */
     
-    function email_conferma($hotel_id, $preno_id, $obm_cliente_id) {
-$data['lg'] = $lg = $this->lg;
-$data['lg_tex'] = $this->tex_lingue_model->tex_lg($lg);
-$data['today'] = $today = date('Y-m-d');
-$data['hotel_id'] = $hotel_id;
-$data['albergo'] = $albergo = $this->hotel_model->hotel($hotel_id);
-$data['preno'] = $preno = $this->obmp_clienti_model->get_preno_obmp($preno_id, $obm_cliente_id);
+ function email_conferma($hotel_id, $preno_id, $obm_cliente_id) {
+        $data['lg'] = $lg = $this->lg;
+        $data['lg_tex'] = $this->tex_lingue_model->tex_lg($lg);
+        $data['today'] = $today = date('Y-m-d');
+        $data['hotel_id'] = $hotel_id;
+        $data['albergo'] = $albergo = $this->hotel_model->hotel($hotel_id);
+        $data['preno'] = $preno = $this->obmp_clienti_model->get_preno_obmp($preno_id, $obm_cliente_id);
 
-// rooms Obmp
-$room_obmp = $this->prezzi_disponibilita_model->camere_obmp($hotel_id, $tipologia_id = NULL, $agenzia_id = 279, $lg, $stato = NULL);
-foreach ($room_obmp as $key => $value) {
-$rooms_obmp[$value->obmp_cm_rooms_id] = $value;
-}
-$data['rooms_obmp'] = $rooms_obmp;
+        // rooms Obmp
+        $room_obmp = $this->prezzi_disponibilita_model->camere_obmp($hotel_id, $tipologia_id = NULL, $agenzia_id = 279, $lg, $stato = NULL);
+        foreach ($room_obmp as $key => $value) {
+        $rooms_obmp[$value->obmp_cm_rooms_id] = $value;
+        }
+        $data['rooms_obmp'] = $rooms_obmp;
 
-// rooms del gestionale 
-$room = $this->prezzi_disponibilita_model->rs_tip_camere($hotel_id);
-foreach ($room as $key => $value) {
-$rooms[$value->tipologia_id] = $value;
-}
-$data['rooms'] = $rooms;
+        // rooms del gestionale 
+        $room = $this->prezzi_disponibilita_model->rs_tip_camere($hotel_id);
+        foreach ($room as $key => $value) {
+        $rooms[$value->tipologia_id] = $value;
+        }
+        $data['rooms'] = $rooms;
 
-$this->email->from($albergo[0]->hotel_email);
-$this->email->to($preno->preno_email);
-$this->email->subject('Privacy');
-$this->email->set_mailtype('html');
+        $this->email->from($albergo[0]->hotel_email);
+        $this->email->to($preno->preno_email);
+        $this->email->subject('Privacy');
+        $this->email->set_mailtype('html');
 
-$body = $this->load->view('email_conferma.php', $data, TRUE);
+        $body = $this->load->view('email_conferma.php', $data, TRUE);
 
-$this->email->message($body);
-$this->email->send();
-return $body;
-//  return;
+        $this->email->message($body);
+        $this->email->send();
+        return $body;
+        //  return;
 }
 
 
