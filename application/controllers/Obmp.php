@@ -175,8 +175,8 @@ class Obmp extends CI_Controller {
             $mercato = 1;
         }
 
-        $data['albergo'] = $this->hotel_model->hotel($hotel_id);
-        $data['camere_obmp'] = $room_obmp = $this->prezzi_disponibilita_model->camere_obmp($hotel_id);
+        $data['albergo'] =  $albergo = $this->hotel_model->hotel($hotel_id);
+        $data['camere_obmp'] =   $data['rooms_obmp'] =  $room_obmp = $this->prezzi_disponibilita_model->camere_obmp($hotel_id);
         $dati = $this->input->post();
 
 
@@ -403,11 +403,11 @@ class Obmp extends CI_Controller {
                 if ($this->ref_obmp_booking_model->insert($form_obmp_booking) == TRUE) {
 // the information has therefore been successfully saved in the db
 
-                   $this->email_conferma($hotel_id, $preno_id, $obm_cliente_id);
-
-
-
-                    redirect($dase_url . '/obmp/confirmation/?preno_id=' . $preno_id . '&obm_cliente_id=' . $obm_cliente_id . '&hotel_id= ' . $hotel_id);   // or whatever logic needs to occur
+                    
+                 echo   $this->email_conferma($hotel_id, $preno_id, $obm_cliente_id) ;
+        
+        
+                //     redirect($dase_url . '/obmp/confirmation/?preno_id=' . $preno_id . '&obm_cliente_id=' . $obm_cliente_id . '&hotel_id= ' . $hotel_id);   // or whatever logic needs to occur
                 } else {
                     echo 'errore obmp_booking';
                 }
@@ -893,45 +893,48 @@ class Obmp extends CI_Controller {
         return $param;
     }
 
-    function email_conferma($hotel_id, $preno_id, $obm_cliente_id) {
-
-
-        $data['lg'] = $lg = $this->lg;
-        $today = date('Y-m-d');
-
-
-        $data['today'] = $today = date('Y-m-d');
-        $data['hotel_id'] = $hotel_id;
-        $data['albergo'] = $albergo = $this->hotel_model->hotel($hotel_id);
-        $data['preno'] = $preno = $this->obmp_clienti_model->get_preno_obmp($preno_id, $obm_cliente_id);
-
-        $this->email->from($albergo[0]->hotel_email);
-        $this->email->to($preno->preno_email);
-        $this->email->subject('Privacy');
-        $this->email->set_mailtype('html');
-// html
-
-
-//        $myfile = fopen("obmp_confirmation.php/?preno_id='.$preno_id.'&obm_cliente_id='.$obm_cliente_id.'&lg='.$lg.'&hotel_id='.$hotel_id", "r")
-//        or die("Unable to open file!");
-//           
-//        fclose($myfile);
-
-        
-        $data['testo'] = 'myfile';
+    /**
+     * invial la confermo al cliente 
+     * @param type $hotel_id
+     * @param type $preno_id
+     * @param type $obm_cliente_id
+     * @return type
+     */
     
-        $body = $this->load->view('temp_email_hotel.php', $data, TRUE);
+    function email_conferma($hotel_id, $preno_id, $obm_cliente_id) {
+$data['lg'] = $lg = $this->lg;
+$data['lg_tex'] = $this->tex_lingue_model->tex_lg($lg);
+$data['today'] = $today = date('Y-m-d');
+$data['hotel_id'] = $hotel_id;
+$data['albergo'] = $albergo = $this->hotel_model->hotel($hotel_id);
+$data['preno'] = $preno = $this->obmp_clienti_model->get_preno_obmp($preno_id, $obm_cliente_id);
 
+// rooms Obmp
+$room_obmp = $this->prezzi_disponibilita_model->camere_obmp($hotel_id, $tipologia_id = NULL, $agenzia_id = 279, $lg, $stato = NULL);
+foreach ($room_obmp as $key => $value) {
+$rooms_obmp[$value->obmp_cm_rooms_id] = $value;
+}
+$data['rooms_obmp'] = $rooms_obmp;
 
-        $this->email->message($body);
-        $this->email->send();
-//echo $body ;
+// rooms del gestionale 
+$room = $this->prezzi_disponibilita_model->rs_tip_camere($hotel_id);
+foreach ($room as $key => $value) {
+$rooms[$value->tipologia_id] = $value;
+}
+$data['rooms'] = $rooms;
+
+$this->email->from($albergo[0]->hotel_email);
+$this->email->to($preno->preno_email);
+$this->email->subject('Privacy');
+$this->email->set_mailtype('html');
+
+$body = $this->load->view('email_conferma.php', $data, TRUE);
+
+$this->email->message($body);
+$this->email->send();
+return $body;
 //  return;
-    }
+}
 
-    function email_richiesta() {
-
-        return;
-    }
 
 }
