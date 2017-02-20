@@ -10,12 +10,8 @@ if ($rs_clienti) {
     ?>
 
     <div class="panel">
-        <p>
-            Ciao <?php echo $rs_clienti[0]->clienti_nome; ?>, <br>
-            <?php echo $lg_tex['vantaggi_breve']; ?>
-            
-        </p>
-
+              Ciao <?php echo $rs_clienti[0]->clienti_nome; ?>, <br>
+            <?php echo $lg_tex['vantaggi_breve']; ?> <br>
         <span id="vantaggi_apri" class="apri_pannello"> <i class="fi-plus"></i>   </span>
         <p>&nbsp;</p>
         <div id="vantaggi" style="display: none;" >
@@ -29,9 +25,6 @@ if ($rs_clienti) {
                     </tr>
                 </thead>
                 <tbody>
-                    
-                   
-                    
                     <tr>
                         <td>  <?php echo $lg_tex['vantaggi_inferiore']; ?></td>
                         <td><i class="fi-check"></i></td>
@@ -65,11 +58,7 @@ if ($rs_clienti) {
                 <span id="vantaggi_chiudi" class="chiudi_pannello"> <i class="fi-x-circle"></i>   </span>
             </p>
             <p>&nbsp;</p>
-
-
         </div>
-
-
     </div>
 
     <?php if (isset($punti)) { ?>
@@ -145,22 +134,13 @@ if ($rs_clienti) {
 
 
 <?php if ($conti) { ?>
-
 <div class="panel">
     <h4>Room</h4>
-
 <div class="row">
 <div class="large-6 columns">
-
 C
-
-</div>
-    
+</div> 
 <div class="large-6 columns"> 
-    
-
-
-
 <ul class="pricing-table">
 <li class="title">ROOM N° <?php echo $conti[0]->numero_camera; ?></li>
 <li class="price"> <?php echo $lg_tex['imp_camera']; ?> <?php echo $conti_saldo['conto_camera']; ?></li>
@@ -170,20 +150,13 @@ C
 <li class="bullet-item"><?php echo $lg_tex['saldo']; ?>  <?php echo $conti_saldo['saldo_preno']; ?></li>
 <li class="cta-button"><a class="button" href="#">Buy Now</a></li>
 </ul>
-
 </div>
 </div>
-
 </div>
-
-
-
 <?php } ?>
 
+
 <?php // } ?>
-
-
-
 <?php if (isset($preno)) { ?>
     <?php foreach ($preno as $key => $row_new) { ?>
         <div>
