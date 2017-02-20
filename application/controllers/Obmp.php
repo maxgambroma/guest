@@ -151,6 +151,7 @@ class Obmp extends CI_Controller {
         $preno_al = $this->my_tools->somma_gg($today, 1);
         $Q1 = 1;
 
+        // se hoi i dati del form di booking
         if ($this->input->get_post('preno_dal') && $this->input->get_post('preno_al')) {
             $preno_dal = $this->input->get_post('preno_dal');
             $preno_al = $this->input->get_post('preno_al');
@@ -176,11 +177,10 @@ class Obmp extends CI_Controller {
         }
 
         $data['albergo'] =  $albergo = $this->hotel_model->hotel($hotel_id);
+//        camere e prezzi  in vendita sul sito
         $data['camere_obmp'] =   $data['rooms_obmp'] =  $room_obmp = $this->prezzi_disponibilita_model->camere_obmp($hotel_id);
         $dati = $this->input->post();
 
-
-// converto in json
 //        Creo una array per camare id 
         foreach ($room_obmp as $key => $value) {
             $room[$value->obmp_cm_rooms_id] = $value;

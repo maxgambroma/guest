@@ -13,10 +13,10 @@
 ; ?> </p>
                 </div>
                 <div class="small-4 large-3 columns">
-                    <p>  Soggiorno:  <br> <?php $night; ?> notti)  </p>
+                    <p>  Soggiorno:  <br> <?php $night; ?> notti   </p>
                 </div>
                 <div class="small-12 large-3 columns">
-                    <a href="#" class="button expand ">Modifica Ricerca</a>
+                    <a href="#" class="button expand "> Modifica Ricerca </a>
                 </div>
             </div>
         </div>
