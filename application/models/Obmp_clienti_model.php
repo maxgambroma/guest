@@ -114,12 +114,16 @@ class Obmp_clienti_model extends CI_Model {
 function get_autentica($user, $pass)
 {
 $sql = "SELECT
-	*
+*
 FROM
-	usr_web1_3.obmp_clienti
+	`usr_web1_3`.`ref_obmp_booking`
+	INNER JOIN `usr_web1_3`.`obmp_clienti`
+	 ON `usr_web1_3`.`ref_obmp_booking`.`obm_cliente_id` = `usr_web1_3`.`obmp_clienti`.`obm_cliente_id`
 WHERE
 	usr_web1_3.obmp_clienti.obm_cliente_email = '$user'
-	AND usr_web1_3.obmp_clienti.obm_cliente_pass = '$pass'";
+	AND usr_web1_3.obmp_clienti.obm_cliente_pass = '$pass'
+ORDER BY
+	`usr_web1_3`.`ref_obmp_booking`.`preno_id` DESC" ;
 
 $query = $this->db->query($sql);
 $return = $query->row();

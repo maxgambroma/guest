@@ -50,7 +50,7 @@ Class MY_Controller extends CI_Controller {
         
         
 
-// controllo se il cliente è settato se proviene da link  
+// controllo se il cliente è settato la sessioe  se proviene da link  
         if ( $this->uri->segment(3, 1)!== null && $this->uri->segment(4, 1) !== null ) {
             $this->cliente_session();
         }
@@ -91,7 +91,8 @@ Class MY_Controller extends CI_Controller {
                 'clienti_cogno' => $cliente[0]->clienti_cogno,
                 'clienti_nome' => $cliente[0]->clienti_nome,
                 'hotel_id' => $cliente[0]->hotel_id,
-                'area' => '2'
+                'area' => '2',
+                'email' => $cliente[0]->clienti_email,
             );
             $this->session->set_userdata($newdata);
         }

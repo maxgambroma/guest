@@ -73,38 +73,44 @@ class Clienti extends MY_Controller {
      
         // data          
         $data['today'] = $today = date('Y-m-d');
-        
-        
+                
         // controllo se il cliente è settato se proviene da link  
      
-
        $conto_id = $this->session->conto_id ;    
        $clienti_id = $this->session->clienti_id ;   
         
-        // cliente in sessione
+  
+       
+       if($this->session->area > 1 ){
+                 
         $data['rs_clienti'] = $cliente = $this->clienti_model->get_conto_cliente($conto_id, $clienti_id);
-        
-//        print_r($cliente);
-        
+        $data['hotel_id'] = $hotel_id = $cliente[0]->hotel_id;  
+//      print_r($cliente);
+              
         // trovo i punti per i fidelizzati
         $data['punti'] = $this->clienti_model->clienti_punti($clienti_id);
         // trovo i conti aperti
         $data['conti'] = $conti_new = $this->conti_model->conto_aperto_cliente_id($clienti_id);
-
-
         if($conti_new){
         $data['conti_saldo'] = $conti_saldo = $this->conti_model->totale_conto_camera($conti_new[0]->conto_id, $today);
         }
-
-
         // elenco le nuove prenotazioni 
         $email = $cliente[0]->clienti_email;
+
         // trovo le nuove preno
         $data['preno'] = $preno = $this->agenda_model->get_booking_by_email($email);
 
+           }
        
-      $data['hotel_id'] = $hotel_id = $cliente[0]->hotel_id;
-       $data['albergo'] = $cc = $this->hotel_model->hotel($hotel_id);
+           
+        // Obmp cliente in sessione no conti solo preno
+           
+      else{
+          
+           $data['preno'] = $preno = $this->agenda_model->get_booking_by_email($this->session->email);
+      }
+ 
+        $data['albergo'] = $cc = $this->hotel_model->hotel($hotel_id);
         
 
         

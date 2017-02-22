@@ -286,7 +286,7 @@
 }
 
 
-// se ho gi acompilatoi form
+// se hai gia acompilatoi form
 
 
 if (!empty($review->Total_score) && !empty($cliente->clienti_cogno)) {
