@@ -5,17 +5,15 @@
  * and open the template in the editor.
  */
 if ($rs_clienti) {
-
 // print_r($rs_clienti);
     ?>
-
     <div class="panel">
-              Ciao <?php echo $rs_clienti[0]->clienti_nome; ?>, <br>
-            <?php echo $lg_tex['vantaggi_breve']; ?> <br>
+        Ciao <?php echo $rs_clienti[0]->clienti_nome; ?>, <br>
+        <?php echo $lg_tex['vantaggi_breve']; ?> <br>
         <span id="vantaggi_apri" class="apri_pannello"> <i class="fi-plus"></i>   </span>
         <p>&nbsp;</p>
-        <div id="vantaggi" style="display: none;" >
 
+        <div id="vantaggi" style="display: none;" >
             <br>
             <table width="100%">
                 <thead>
@@ -29,12 +27,10 @@ if ($rs_clienti) {
                         <td>  <?php echo $lg_tex['vantaggi_inferiore']; ?></td>
                         <td><i class="fi-check"></i></td>
                     </tr>
-                    
-                        <tr>
+                    <tr>
                         <td>  <?php echo $lg_tex['vantaggi_fedelta']; ?></td>
                         <td><i class="fi-check"></i></td>
                     </tr>
-                    
                     <tr>
                         <td><?php echo $lg_tex['vantaggi_early']; ?></td>
                         <td><i class="fi-check"></i></td>
@@ -54,7 +50,7 @@ if ($rs_clienti) {
                 </tbody>
             </table>
             <p>
-                 <?php echo $lg_tex['vantaggi_dispo']; ?>
+                <?php echo $lg_tex['vantaggi_dispo']; ?>
                 <span id="vantaggi_chiudi" class="chiudi_pannello"> <i class="fi-x-circle"></i>   </span>
             </p>
             <p>&nbsp;</p>
@@ -70,9 +66,7 @@ if ($rs_clienti) {
             <p>&nbsp;</p>
 
             <div id="punti" style="display: none;" >
-                
                 <?php echo $lg_tex['punti_soggiorno']; ?>
-                
                 <table width="100%">
                     <thead>
                         <tr>
@@ -116,46 +110,116 @@ if ($rs_clienti) {
                     </tbody>
                 </table>
                 <?php echo $lg_tex['punti_calcolo']; ?>
-    <br>
+                <br>
                 <?php echo $lg_tex['punti_dove_spendi']; ?>
-                    <span id="punti_chiudi" class="chiudi_pannello"> <i class="fi-x-circle"></i> </span>
-
-
-                </p>
+                <span id="punti_chiudi" class="chiudi_pannello"> <i class="fi-x-circle"></i> </span>
                 <p>&nbsp;</p>
-
             </div>
         </div>
-        <?php
-    }
-} 
+
+    <?php }
+}
 ?>
 
+<?php if ($conti !== NULL) { ?>
+    <div class="panel">
+        <div class="row">
+            <div class="large-12 columns"> 
+        
+        <h4>Room</h4>
+        <img src="<?php echo base_url(); ?>/asset/img/governante.jpg" width="80" height="80" align="left" style="margin: 10px; " />
+        <p>   Salve, sono Mirella e mi sono occupata delle tua camere.
+            Qui puo esprimere un giudizzio per migliorere il soggiorno.
+        </p>
+            </div>
+        </div>
 
+        <div class="row">
+            <div class="large-6 columns"> 
+                <fieldset>
+                    <legend> Cosa ti è piaciuto? </legend>
+                    <ol>
+                        <li><input type="checkbox" name="" value="ON" />   Letto confortevole </li>
+                        <li><input type="checkbox" name="" value="ON" />Pulita </li>
+                        <li><input type="checkbox" name="" value="ON" />Rinnovata / nuova  </li>
+                        <li><input type="checkbox" name="" value="ON" />Ottimi servizi  </li>
+                        <li><input type="checkbox" name="" value="ON" />Spaziosa </li>
+                        <li><input type="checkbox" name="" value="ON" />Silenziosa</li>
+                        <li><input type="checkbox" name="" value="ON" />Bagno pulito</li>
+                        <li><input type="checkbox" name="" value="ON" />Altro</li>
+                        <li><input type="checkbox" name="" value="ON" /><label for="pokemonRed">Red</label> </li>
+                        <li><input type="checkbox" name="" value="ON" /><label for="pokemonRed">Red</label> </li>
+                    </ol>
+                </fieldset>        
+            </div>
 
-<?php if ($conti) { ?>
-<div class="panel">
-    <h4>Room</h4>
-<div class="row">
-<div class="large-6 columns">
-C
-</div> 
-<div class="large-6 columns"> 
-<ul class="pricing-table">
-<li class="title">ROOM N° <?php echo $conti[0]->numero_camera; ?></li>
-<li class="price"> <?php echo $lg_tex['imp_camera']; ?> <?php echo $conti_saldo['conto_camera']; ?></li>
-<li class="bullet-item"> <?php echo $lg_tex['check-in']; ?> <?php echo $conti[0]->in_conto; ?> <?php echo $lg_tex['check-out'] ?> <?php echo $conti[0]->out_preno; ?></li>
-<li class="bullet-item"><?php echo $lg_tex['extra']; ?> <?php echo $conti_saldo['totale_extra']; ?></li>
-<li class="bullet-item"><?php echo $lg_tex['acconti']; ?> <?php echo $conti_saldo['totale_acconti']; ?></li>
-<li class="bullet-item"><?php echo $lg_tex['saldo']; ?>  <?php echo $conti_saldo['saldo_preno']; ?></li>
-<li class="cta-button"><a class="button" href="#">Buy Now</a></li>
-</ul>
-</div>
-</div>
-</div>
+            <div class="large-6 columns"> 
+                <fieldset> 
+                    <legend>Cosa non ti è piaciuto? </legend>
+                    <ol>
+                        <li><input type="checkbox" name="" value="ON" />Letto pessimo  </li>
+                        <li><input type="checkbox" name="" value="ON" />Scarsa pulizia </li>
+                        <li><input type="checkbox" name="" value="ON" />Vecchia/obsoleta</li>
+                        <li><input type="checkbox" name="" value="ON" />Pochi servizi</li>
+                        <li><input type="checkbox" name="" value="ON" />Piccola</li>
+                        <li><input type="checkbox" name="" value="ON" />Rumorosa</li>
+                        <li><input type="checkbox" name="" value="ON" />Bagno sporco</li>
+                        <li><input type="checkbox" name="" value="ON" />Altro</li>
+                    </ol>
+                </fieldset>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="panel"> 
+        <div class="row">
+            <div class="large-12 columns"> 
+                <img src="<?php echo base_url(); ?>/asset/img/manutenzione.png" width="50" height="50" align="left"  />  
+                <h4> Segnala un Malfunzionamento  </h4> 
+                <textarea name="" rows="4" cols="20">
+                </textarea>
+                <input class="button"  type="submit" value="invia" />
+            </div>
+        </div> 
+    </div>
+
+    <div class="panel"> 
+        <div class="row">
+
+            <div class="large-6 columns"> 
+                <ul class="pricing-table">
+                    <li class="title">ROOM N° <?php echo $conti[0]->numero_camera; ?></li>
+                    <li class="price"> <?php echo $lg_tex['imp_camera']; ?> <?php echo $conti_saldo['conto_camera']; ?></li>
+                    <li class="bullet-item"> <?php echo $lg_tex['check-in']; ?> <?php echo $conti[0]->in_conto; ?> <?php echo $lg_tex['check-out'] ?> <?php echo $conti[0]->out_preno; ?></li>
+                    <li class="bullet-item"><?php echo $lg_tex['extra']; ?> <?php echo $conti_saldo['totale_extra']; ?></li>
+                    <li class="bullet-item"><?php echo $lg_tex['acconti']; ?> <?php echo $conti_saldo['totale_acconti']; ?></li>
+                    <li class="bullet-item"><?php echo $lg_tex['saldo']; ?>  <?php echo $conti_saldo['saldo_preno']; ?></li>
+                    <li class="cta-button"><a class="button" href="#">Buy Now</a></li>
+                </ul>
+            </div>
+
+            <div class="large-6 columns">   
+                <ul class="pricing-table">
+                    <li class="title">Utilizza i tuoi punti</li>
+                    <li class="price">
+                        <select name="punti">
+                            <option>50   10&#8364;</option>
+                            <option>100  20&#8364;</option>
+                            <option>150  40&#8364;</option>
+                            <option>200  60&#8364;</option>
+                            <option>250 100&#8364;</option>
+                        </select>
+                    </li>
+                    <li class="bullet-item"> <p>Ottieni una riduzione del tuo conto al momento del Check-Out  </p></li>
+                    <li class="cta-button"><a class="button" href="#">Buy Now</a></li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
 <?php } ?>
-
-
 <?php // } ?>
 <?php if (isset($preno)) { ?>
     <?php foreach ($preno as $key => $row_new) { ?>
@@ -166,6 +230,7 @@ C
                     <div class="small-12 medium-4 large-5 columns">
                         <img src="<?php echo base_url(); ?><?php echo $row_new->hotel_foto_piccola; ?>"/>
                     </div>
+
                     <div class="small-12  medium-8 large-7 columns">
                         <h4> <?php echo $row_new->hotel_tipologia; ?>  <?php echo $row_new->nome_hotel; ?> <?php echo $row_new->hotel_citta; ?></h4>
                         <div class="event-date">
@@ -173,11 +238,13 @@ C
                             <p class="event-month"><?php echo date('M y', strtotime($row_new->preno_dal)); ?></p>
                             <p class="event-day"><?php echo date('d', strtotime($row_new->preno_dal)); ?></p>
                         </div>
+
                         <div class="event-date">
                             <p class="event-title">OUT</p>
                             <p class="event-month"><?php echo date('M y', strtotime($row_new->preno_al)); ?></p>
                             <p class="event-day"><?php echo date('d', strtotime($row_new->preno_al)); ?></p>
                         </div>
+
                         <p> 
                             <?php if ($row_new->agenzia_nome) { ?>
                                 By <?php
@@ -191,6 +258,7 @@ C
                         </div>
                     </div>
                 </div>
+
                 <div class="row">
                     <div class="small-12 large-12 columns">
                         <p>
@@ -203,36 +271,22 @@ C
     <?php } ?>
 <?php } ?>
 
-
-
-
 <script>
     $("#vantaggi_apri").click(function () {
         $("#vantaggi").toggle("slow");
     });
 
-
-
     $("#vantaggi_chiudi").click(function () {
         $("#vantaggi").toggle("slow");
     });
-
-
-
-
 
     $("#punti_apri").click(function () {
         $("#punti").toggle("slow");
     });
 
-
     $("#punti_chiudi").click(function () {
         $("#punti").toggle("slow");
     });
-
-
-
-
 </script>
 
 
