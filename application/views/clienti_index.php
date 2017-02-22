@@ -4,11 +4,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-if ($rs_clienti) {
+
 // print_r($rs_clienti);
     ?>
     <div class="panel">
-        Ciao <?php echo $rs_clienti[0]->clienti_nome; ?>, <br>
+        Ciao <?php echo $this->session->clienti_nome; ?>, <br>
         <?php echo $lg_tex['vantaggi_breve']; ?> <br>
         <span id="vantaggi_apri" class="apri_pannello"> <i class="fi-plus"></i>   </span>
         <p>&nbsp;</p>
@@ -57,10 +57,12 @@ if ($rs_clienti) {
         </div>
     </div>
 
-    <?php if (isset($punti)) { ?>
+
+
+
         <div class="panel callout radius">
             <p>
-            <h2><?php echo $lg_tex['punti_tot']; ?> : <?php echo $punti; ?></h2>
+            <h2><?php echo $lg_tex['punti_tot']; ?> : <?php echo isset($punti)? $punti : 0;  ?></h2>
             <p>
                 <span id="punti_apri" class="apri_pannello"> <i class="fi-plus"></i>   </span>
             <p>&nbsp;</p>
@@ -117,11 +119,11 @@ if ($rs_clienti) {
             </div>
         </div>
 
-    <?php }
-}
-?>
 
-<?php if ($conti !== NULL) { ?>
+
+
+
+<?php if ( isset($conti) ) { ?>
     <div class="panel">
         <div class="row">
             <div class="large-12 columns"> 
@@ -139,16 +141,14 @@ if ($rs_clienti) {
                 <fieldset>
                     <legend> Cosa ti è piaciuto? </legend>
                     <ol>
-                        <li><input type="checkbox" name="" value="ON" />   Letto confortevole </li>
-                        <li><input type="checkbox" name="" value="ON" />Pulita </li>
-                        <li><input type="checkbox" name="" value="ON" />Rinnovata / nuova  </li>
-                        <li><input type="checkbox" name="" value="ON" />Ottimi servizi  </li>
-                        <li><input type="checkbox" name="" value="ON" />Spaziosa </li>
-                        <li><input type="checkbox" name="" value="ON" />Silenziosa</li>
-                        <li><input type="checkbox" name="" value="ON" />Bagno pulito</li>
-                        <li><input type="checkbox" name="" value="ON" />Altro</li>
-                        <li><input type="checkbox" name="" value="ON" /><label for="pokemonRed">Red</label> </li>
-                        <li><input type="checkbox" name="" value="ON" /><label for="pokemonRed">Red</label> </li>
+                        <li><input type="checkbox" name="" value="ON" /><label for="">Letto confortevole</label></li>
+                        <li><input type="checkbox" name="" value="ON" /><label for="">Pulita </label> </li>
+                        <li><input type="checkbox" name="" value="ON" /><label for="">Rinnovata / nuova</label></li>
+                        <li><input type="checkbox" name="" value="ON" /><label for="">Ottimi servizi</label></li>
+                        <li><input type="checkbox" name="" value="ON" /><label for="">Spaziosa </label></li>
+                        <li><input type="checkbox" name="" value="ON" /><label for="">Silenziosa</label></li>
+                        <li><input type="checkbox" name="" value="ON" /><label for="">Bagno pulito</label></li>
+                        <li><input type="checkbox" name="" value="ON" /><label for="">Altro</label></li>
                     </ol>
                 </fieldset>        
             </div>
@@ -157,14 +157,14 @@ if ($rs_clienti) {
                 <fieldset> 
                     <legend>Cosa non ti è piaciuto? </legend>
                     <ol>
-                        <li><input type="checkbox" name="" value="ON" />Letto pessimo  </li>
-                        <li><input type="checkbox" name="" value="ON" />Scarsa pulizia </li>
-                        <li><input type="checkbox" name="" value="ON" />Vecchia/obsoleta</li>
-                        <li><input type="checkbox" name="" value="ON" />Pochi servizi</li>
-                        <li><input type="checkbox" name="" value="ON" />Piccola</li>
-                        <li><input type="checkbox" name="" value="ON" />Rumorosa</li>
-                        <li><input type="checkbox" name="" value="ON" />Bagno sporco</li>
-                        <li><input type="checkbox" name="" value="ON" />Altro</li>
+                        <li><input type="checkbox" name="" value="ON" /><label for="">Letto pessimo</label></li>
+                        <li><input type="checkbox" name="" value="ON" /><label for="">Scarsa pulizia</label></li>
+                        <li><input type="checkbox" name="" value="ON" /><label for="">Vecchia/obsoleta</label></li>
+                        <li><input type="checkbox" name="" value="ON" /><label for="">Pochi servizi</label> </li>
+                        <li><input type="checkbox" name="" value="ON" /><label for="">Piccola</label></li>
+                        <li><input type="checkbox" name="" value="ON" /><label for="">Rumorosa</label></li>
+                        <li><input type="checkbox" name="" value="ON" /><label for="">Bagno sporco</label> </li>
+                        <li><input type="checkbox" name="" value="ON" /><label for="">Altro</label></li>
                     </ol>
                 </fieldset>
             </div>
@@ -221,6 +221,8 @@ if ($rs_clienti) {
     </div>
 <?php } ?>
 <?php // } ?>
+
+
 <?php if (isset($preno)) { ?>
     <?php foreach ($preno as $key => $row_new) { ?>
         <div>
@@ -262,7 +264,7 @@ if ($rs_clienti) {
                 <div class="row">
                     <div class="small-12 large-12 columns">
                         <p>
-                            <a href="<?php echo base_url(); ?>/index.php/clienti/bookings_edit/<?php echo $rs_clienti[0]->conto_id; ?>/<?php echo $rs_clienti[0]->clienti_id; ?>/<?php echo $row_new->preno_id; ?>?lg=<?php echo $this->lg; ?>" class="button right">Amminista Prenotazione</a>
+                            <a href="<?php echo base_url(); ?>/index.php/clienti/bookings_edit/<?php echo $row_new->preno_id; ?>?lg=<?php echo $this->lg; ?>" class="button right">Amminista Prenotazione</a>
                         </p>
                     </div>
                 </div>

@@ -107,7 +107,7 @@ class Log_in extends CI_Controller {
                 'clienti_cogno' => $cliente_obmp->obm_cliente_last_name,
                 'clienti_nome' => $cliente_obmp->obm_cliente_first_name,
                 'area' => '1',
-                'email' => $cliente_obmp->email
+                'email' => $cliente_obmp->obm_cliente_email,
             );
             $this->session->set_userdata($newdata);
             redirect(base_url() . 'index.php/clienti/index/?hotel_id='.$cliente_obmp->hotel_id , 'refresh');

@@ -134,12 +134,32 @@ return $return;
 function get_by_email($user)
 {
 $sql = "SELECT
-	*
+	`obmp_clienti`.`obm_cliente_id`,
+	`obmp_clienti`.`obm_cliente_first_name`,
+	`obmp_clienti`.`obm_cliente_last_name`,
+	`obmp_clienti`.`obm_cliente_email`,
+	`obmp_clienti`.`obm_cliente_city`,
+	`obmp_clienti`.`obm_cliente_country`,
+	`obmp_clienti`.`obm_cliente_phone`,
+	`obmp_clienti`.`obm_cliente_pass`,
+	`ref_obmp_booking`.`ref_obm_data`,
+	`ref_obmp_booking`.`preno_id`,
+	`ref_obmp_booking`.`obm_cliente_id`,
+	`ref_obmp_booking`.`hotel_id`,
+	`ref_obmp_booking`.`ref_site`,
+	`ref_obmp_booking`.`ref_agency`,
+	`ref_obmp_booking`.`ref_event`,
+	`ref_obmp_booking`.`ref_session`,
+	`ref_obmp_booking`.`ref_cookie`
 FROM
-	usr_web1_3.obmp_clienti
+	`ref_obmp_booking`
+	INNER JOIN `obmp_clienti`
+	 ON `ref_obmp_booking`.`obm_cliente_id` = `obmp_clienti`.`obm_cliente_id`
 WHERE
 	usr_web1_3.obmp_clienti.obm_cliente_email = '$user'
-	";
+ORDER BY
+	`ref_obmp_booking`.`preno_id` DESC"
+	;
 
 $query = $this->db->query($sql);
 $return = $query->row();

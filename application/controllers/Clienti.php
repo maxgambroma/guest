@@ -264,15 +264,14 @@ class Clienti extends MY_Controller {
             $hotel_id = 1;
         }
         $data['today'] = $today = date('Y-m-d');
-     
-        
-        
+
        $conto_id = $this->session->conto_id ;    
        $clienti_id = $this->session->clienti_id ;  
         
         
         
-        $preno_id = $this->uri->segment(5, 1);
+        $preno_id = $this->uri->segment(3, 1);
+        
         $data['rs_clienti'] = $cliente = $this->clienti_model->get_conto_cliente($conto_id, $clienti_id);
 
 // trovo le caratteristiche della camare nelle lingue 
@@ -283,11 +282,13 @@ class Clienti extends MY_Controller {
            $email = $cliente[0]->clienti_email;
 //trovo i vecchi conti
             $data['conti_old'] = $conti_old = $this->clienti_model->conti_by_clienti($clienti_id);
-// trovo le nuove preno
-            $data['preno'] = $preno = $this->agenda_model->booking_id($preno_id);
+
+
+
         }
 
-        
+        // trovo le nuove preno
+            $data['preno'] = $preno = $this->agenda_model->booking_id($preno_id);
         
        $data['review'] =  $this->obmp_review_model->review_preno_cliente($preno_id, $clienti_id );
         
