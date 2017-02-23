@@ -4,190 +4,133 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 // print_r($rs_clienti);
-    ?>
-    <div class="panel">
-        Ciao <?php echo $this->session->clienti_nome; ?>, <br>
-        <?php echo $lg_tex['vantaggi_breve']; ?> <br>
-        <span id="vantaggi_apri" class="apri_pannello"> <i class="fi-plus"></i>   </span>
-        <p>&nbsp;</p>
-
-        <div id="vantaggi" style="display: none;" >
-            <br>
-            <table width="100%">
-                <thead>
-                    <tr>
-                        <th width="80%" ></th>
-                        <th width="20%"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>  <?php echo $lg_tex['vantaggi_inferiore']; ?></td>
-                        <td><i class="fi-check"></i></td>
-                    </tr>
-                    <tr>
-                        <td>  <?php echo $lg_tex['vantaggi_fedelta']; ?></td>
-                        <td><i class="fi-check"></i></td>
-                    </tr>
-                    <tr>
-                        <td><?php echo $lg_tex['vantaggi_early']; ?></td>
-                        <td><i class="fi-check"></i></td>
-                    </tr>
-                    <tr>
-                        <td><?php echo $lg_tex['vantaggi_late']; ?></td>
-                        <td><i class="fi-check"></i></td>
-                    </tr>
-                    <tr>
-                        <td><?php echo $lg_tex['vantaggi_upgrade']; ?></td>
-                        <td><i class="fi-check"></i></td>
-                    </tr>
-                    <tr>
-                        <td><?php echo $lg_tex['vantaggi_bottiglia']; ?></td>
-                        <td><i class="fi-check"></i></td>
-                    </tr>
-                </tbody>
-            </table>
-            <p>
-                <?php echo $lg_tex['vantaggi_dispo']; ?>
-                <span id="vantaggi_chiudi" class="chiudi_pannello"> <i class="fi-x-circle"></i>   </span>
-            </p>
-            <p>&nbsp;</p>
-        </div>
-    </div>
-
-
-
-
-        <div class="panel callout radius">
-            <p>
-            <h2><?php echo $lg_tex['punti_tot']; ?> : <?php echo isset($punti)? $punti : 0;  ?></h2>
-            <p>
-                <span id="punti_apri" class="apri_pannello"> <i class="fi-plus"></i>   </span>
-            <p>&nbsp;</p>
-
-            <div id="punti" style="display: none;" >
-                <?php echo $lg_tex['punti_soggiorno']; ?>
-                <table width="100%">
-                    <thead>
-                        <tr>
-                            <th>Punti</th>
-                            <th>Coupon in Euro (**) </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>50</td>
-                            <td>10,00</td>
-                        </tr>
-                        <tr>
-                            <td>100</td>
-                            <td>20,00</td>
-                        </tr>
-                        <tr>
-                            <td>150</td>
-                            <td>40,00</td>
-                        </tr>
-                        <tr>
-                            <td>200</td>
-                            <td>60,00</td>
-                        </tr>
-                        <tr>
-                            <td>250</td>
-                            <td>100.00</td>
-                        </tr>
-                        <tr>
-                            <td>300</td>
-                            <td>120.00</td>
-                        </tr>
-                        <tr>
-                            <td>350</td>
-                            <td>175.00</td>
-                        </tr>
-                        <tr>
-                            <td>400</td>
-                            <td>220.00</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <?php echo $lg_tex['punti_calcolo']; ?>
-                <br>
-                <?php echo $lg_tex['punti_dove_spendi']; ?>
-                <span id="punti_chiudi" class="chiudi_pannello"> <i class="fi-x-circle"></i> </span>
-                <p>&nbsp;</p>
-            </div>
-        </div>
-
-
-
-
-
-<?php if ( !empty($conti) ) { ?>
-    <div class="panel">
-        <div class="row">
-            <div class="large-12 columns"> 
-        
-        <h4>Room</h4>
-        <img src="<?php echo base_url(); ?>/asset/img/governante.jpg" width="80" height="80" align="left" style="margin: 10px; " />
-        <p>   Salve, sono Mirella e mi sono occupata delle tua camere.
-            Qui puo esprimere un giudizzio per migliorere il soggiorno.
+?>
+<div data-magellan-expedition="fixed">
+    <dl class="sub-nav">
+        <dd data-magellan-arrival="bf"><a href="#bf">Benefit</a></dd>
+        <dd data-magellan-arrival="pu"><a href="#pu">Punti</a></dd>
+        <dd data-magellan-arrival="co"><a href="#co">Conti</a></dd>
+        <dd data-magellan-arrival="cam"><a href="#cam">Cameriere</a></dd>
+        <dd data-magellan-arrival="man"><a href="#man">Manutenzioni</a></dd>
+        <dd data-magellan-arrival="pre"><a href="#pre">Prenotazioni</a></dd>
+    </dl>
+</div>
+<h3 data-magellan-destination="bf">Benefit</h3>
+<a name="bf"></a>
+<div class="panel">
+    Ciao <?php echo $this->session->clienti_nome; ?>, <br>
+    <?php echo $lg_tex['vantaggi_breve']; ?> <br>
+    <span id="vantaggi_apri" class="apri_pannello"> <i class="fi-plus"></i>   </span>
+    <p>&nbsp;</p>
+    <div id="vantaggi" style="display: none;" >
+        <br>
+        <table width="100%">
+            <thead>
+                <tr>
+                    <th width="80%" ></th>
+                    <th width="20%"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>  <?php echo $lg_tex['vantaggi_inferiore']; ?></td>
+                    <td><i class="fi-check"></i></td>
+                </tr>
+                <tr>
+                    <td>  <?php echo $lg_tex['vantaggi_fedelta']; ?></td>
+                    <td><i class="fi-check"></i></td>
+                </tr>
+                <tr>
+                    <td><?php echo $lg_tex['vantaggi_early']; ?></td>
+                    <td><i class="fi-check"></i></td>
+                </tr>
+                <tr>
+                    <td><?php echo $lg_tex['vantaggi_late']; ?></td>
+                    <td><i class="fi-check"></i></td>
+                </tr>
+                <tr>
+                    <td><?php echo $lg_tex['vantaggi_upgrade']; ?></td>
+                    <td><i class="fi-check"></i></td>
+                </tr>
+                <tr>
+                    <td><?php echo $lg_tex['vantaggi_bottiglia']; ?></td>
+                    <td><i class="fi-check"></i></td>
+                </tr>
+            </tbody>
+        </table>
+        <p>
+            <?php echo $lg_tex['vantaggi_dispo']; ?>
+            <span id="vantaggi_chiudi" class="chiudi_pannello"> <i class="fi-x-circle"></i>   </span>
         </p>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="large-6 columns"> 
-                <fieldset>
-                    <legend> Cosa ti è piaciuto? </legend>
-                    <ol>
-                        <li><input type="checkbox" name="" value="ON" /><label for="">Letto confortevole</label></li>
-                        <li><input type="checkbox" name="" value="ON" /><label for="">Pulita </label> </li>
-                        <li><input type="checkbox" name="" value="ON" /><label for="">Rinnovata / nuova</label></li>
-                        <li><input type="checkbox" name="" value="ON" /><label for="">Ottimi servizi</label></li>
-                        <li><input type="checkbox" name="" value="ON" /><label for="">Spaziosa </label></li>
-                        <li><input type="checkbox" name="" value="ON" /><label for="">Silenziosa</label></li>
-                        <li><input type="checkbox" name="" value="ON" /><label for="">Bagno pulito</label></li>
-                        <li><input type="checkbox" name="" value="ON" /><label for="">Altro</label></li>
-                    </ol>
-                </fieldset>        
-            </div>
-
-            <div class="large-6 columns"> 
-                <fieldset> 
-                    <legend>Cosa non ti è piaciuto? </legend>
-                    <ol>
-                        <li><input type="checkbox" name="" value="ON" /><label for="">Letto pessimo</label></li>
-                        <li><input type="checkbox" name="" value="ON" /><label for="">Scarsa pulizia</label></li>
-                        <li><input type="checkbox" name="" value="ON" /><label for="">Vecchia/obsoleta</label></li>
-                        <li><input type="checkbox" name="" value="ON" /><label for="">Pochi servizi</label> </li>
-                        <li><input type="checkbox" name="" value="ON" /><label for="">Piccola</label></li>
-                        <li><input type="checkbox" name="" value="ON" /><label for="">Rumorosa</label></li>
-                        <li><input type="checkbox" name="" value="ON" /><label for="">Bagno sporco</label> </li>
-                        <li><input type="checkbox" name="" value="ON" /><label for="">Altro</label></li>
-                    </ol>
-                </fieldset>
-            </div>
-
-        </div>
-
+        <p>&nbsp;</p>
     </div>
-
-    <div class="panel"> 
-        <div class="row">
-            <div class="large-12 columns"> 
-                <img src="<?php echo base_url(); ?>/asset/img/manutenzione.png" width="50" height="50" align="left"  />  
-                <h4> Segnala un Malfunzionamento  </h4> 
-                <textarea name="" rows="4" cols="20">
-                </textarea>
-                <input class="button"  type="submit" value="invia" />
-            </div>
-        </div> 
+</div>
+<!--<h3 data-magellan-destination="pu">Punti</h3>-->
+<a name="pu"></a>
+<div class="panel callout radius">
+    <p>
+    <h2><?php echo $lg_tex['punti_tot']; ?> : <?php echo isset($punti) ? $punti : 0; ?></h2>
+    <p>
+        <span id="punti_apri" class="apri_pannello"> <i class="fi-plus"></i>   </span>
+    <p>&nbsp;</p>
+    <div id="punti" style="display: none;" >
+        <?php echo $lg_tex['punti_soggiorno']; ?>
+        <table width="100%">
+            <thead>
+                <tr>
+                    <th>Punti</th>
+                    <th>Coupon in Euro (**) </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>50</td>
+                    <td>10,00</td>
+                </tr>
+                <tr>
+                    <td>100</td>
+                    <td>20,00</td>
+                </tr>
+                <tr>
+                    <td>150</td>
+                    <td>40,00</td>
+                </tr>
+                <tr>
+                    <td>200</td>
+                    <td>60,00</td>
+                </tr>
+                <tr>
+                    <td>250</td>
+                    <td>100.00</td>
+                </tr>
+                <tr>
+                    <td>300</td>
+                    <td>120.00</td>
+                </tr>
+                <tr>
+                    <td>350</td>
+                    <td>175.00</td>
+                </tr>
+                <tr>
+                    <td>400</td>
+                    <td>220.00</td>
+                </tr>
+            </tbody>
+        </table>
+        <?php echo $lg_tex['punti_calcolo']; ?>
+        <br>
+        <a href="#" data-reveal-id="myModal">Click Me For A Modal</a>
+        <?php echo $lg_tex['punti_dove_spendi']; ?>
+        <span id="punti_chiudi" class="chiudi_pannello"> <i class="fi-x-circle"></i> </span>
+        <p>&nbsp;</p>
     </div>
-
-    <div class="panel"> 
+</div>
+<?php if (!empty($conti)) { ?>
+    <h3 data-magellan-destination="co">Conti</h3>
+    <a name="co"></a>
+    <div class="panel" id="conti" > 
         <div class="row">
-
             <div class="large-6 columns"> 
                 <ul class="pricing-table">
                     <li class="title">ROOM N° <?php echo $conti[0]->numero_camera; ?></li>
@@ -199,7 +142,6 @@
                     <li class="cta-button"><a class="button" href="#">Buy Now</a></li>
                 </ul>
             </div>
-
             <div class="large-6 columns">   
                 <ul class="pricing-table">
                     <li class="title">Utilizza i tuoi punti</li>
@@ -216,15 +158,71 @@
                     <li class="cta-button"><a class="button" href="#">Buy Now</a></li>
                 </ul>
             </div>
-
         </div>
     </div>
+    <h3 data-magellan-destination="cam">Cameriere</h3>
+    <a name="cam"></a>
+    <div class="panel" id="cameriara" >
+        <div class="row">
+            <div class="large-12 columns"> 
+                <h4>Room</h4>
+                <img src="<?php echo base_url(); ?>/asset/img/governante.jpg" width="80" height="80" align="left" style="margin: 10px; " />
+                <p>   Salve, sono Mirella e mi sono occupata delle tua camere.
+                    Qui puo esprimere un giudizzio per migliorere il soggiorno.
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-6 columns"> 
+                <fieldset>
+                    <legend> Cosa ti è piaciuto? </legend>
+                    <ol>
+                        <li><input type="checkbox" name="" value="ON" /><label for="">Letto confortevole</label></li>
+                        <li><input type="checkbox" name="" value="ON" /><label for="">Pulita </label> </li>
+                        <li><input type="checkbox" name="" value="ON" /><label for="">Rinnovata / nuova</label></li>
+                        <li><input type="checkbox" name="" value="ON" /><label for="">Ottimi servizi</label></li>
+                        <li><input type="checkbox" name="" value="ON" /><label for="">Spaziosa </label></li>
+                        <li><input type="checkbox" name="" value="ON" /><label for="">Silenziosa</label></li>
+                        <li><input type="checkbox" name="" value="ON" /><label for="">Bagno pulito</label></li>
+                        <li><input type="checkbox" name="" value="ON" /><label for="">Altro</label></li>
+                    </ol>
+                </fieldset>        
+            </div>
+            <div class="large-6 columns"> 
+                <fieldset> 
+                    <legend>Cosa non ti è piaciuto? </legend>
+                    <ol>
+                        <li><input type="checkbox" name="" value="ON" /><label for="">Letto pessimo</label></li>
+                        <li><input type="checkbox" name="" value="ON" /><label for="">Scarsa pulizia</label></li>
+                        <li><input type="checkbox" name="" value="ON" /><label for="">Vecchia/obsoleta</label></li>
+                        <li><input type="checkbox" name="" value="ON" /><label for="">Pochi servizi</label> </li>
+                        <li><input type="checkbox" name="" value="ON" /><label for="">Piccola</label></li>
+                        <li><input type="checkbox" name="" value="ON" /><label for="">Rumorosa</label></li>
+                        <li><input type="checkbox" name="" value="ON" /><label for="">Bagno sporco</label> </li>
+                        <li><input type="checkbox" name="" value="ON" /><label for="">Altro</label></li>
+                    </ol>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+    <h3 data-magellan-destination="man">Manutenzione</h3>
+    <a name="man"></a>   
+    <div class="panel" id="manutenzione"> 
+        <div class="row">
+            <div class="large-12 columns"> 
+                <img src="<?php echo base_url(); ?>/asset/img/manutenzione.png" width="50" height="50" align="left"  />  
+                <h4> Segnala un Malfunzionamento  </h4> 
+                <textarea name="" rows="4" cols="20">
+                </textarea>
+                <input class="button"  type="submit" value="invia" />
+            </div>
+        </div> 
+    </div>
 <?php } ?>
-<?php // } ?>
-
-
 <?php if (isset($preno)) { ?>
     <?php foreach ($preno as $key => $row_new) { ?>
+        <h3 data-magellan-destination="pre">Prenotazione</h3>
+        <a name="pre"></a>   
         <div>
             <fieldset>
                 <legend> Booking id : <?php echo $row_new->preno_id; ?></legend>
@@ -232,7 +230,6 @@
                     <div class="small-12 medium-4 large-5 columns">
                         <img src="<?php echo base_url(); ?><?php echo $row_new->hotel_foto_piccola; ?>"/>
                     </div>
-
                     <div class="small-12  medium-8 large-7 columns">
                         <h4> <?php echo $row_new->hotel_tipologia; ?>  <?php echo $row_new->nome_hotel; ?> <?php echo $row_new->hotel_citta; ?></h4>
                         <div class="event-date">
@@ -240,13 +237,11 @@
                             <p class="event-month"><?php echo date('M y', strtotime($row_new->preno_dal)); ?></p>
                             <p class="event-day"><?php echo date('d', strtotime($row_new->preno_dal)); ?></p>
                         </div>
-
                         <div class="event-date">
                             <p class="event-title">OUT</p>
                             <p class="event-month"><?php echo date('M y', strtotime($row_new->preno_al)); ?></p>
                             <p class="event-day"><?php echo date('d', strtotime($row_new->preno_al)); ?></p>
                         </div>
-
                         <p> 
                             <?php if ($row_new->agenzia_nome) { ?>
                                 By <?php
@@ -260,7 +255,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="row">
                     <div class="small-12 large-12 columns">
                         <p>
@@ -272,7 +266,62 @@
         </div>
     <?php } ?>
 <?php } ?>
-
+<div id="punti_dettaglio">
+    <div id="myModal" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+        <h2 id="modalTitle">Awesome. I have it.</h2>
+        <p class="lead">Your couch.  It is mine.</p>
+        <p>I'm a cool paragraph that lives inside of an even cooler modal. Wins!</p>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+        <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+    </div>
+</div>
 <script>
     $("#vantaggi_apri").click(function () {
         $("#vantaggi").toggle("slow");

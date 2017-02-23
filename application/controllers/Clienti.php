@@ -428,22 +428,15 @@ class Clienti extends MY_Controller {
         $obm_cliente_id = $this->session->obm_cliente_id;
         $data['albergo'] = $this->hotel_model->hotel($hotel_id);
 
-        $this->form_validation->set_rules('obm_cliente_id', 'lang:obm_cliente_id', 'trim');
         $this->form_validation->set_rules('obm_cliente_first_name', 'lang:obm_cliente_first_name', 'required|trim|xss_clean');
         $this->form_validation->set_rules('obm_cliente_last_name', 'lang:obm_cliente_last_name', 'required|trim|xss_clean');
-        $this->form_validation->set_rules('obm_cliente_email', 'lang:obm_cliente_email', 'required|trim|valid_email');
+        $this->form_validation->set_rules('obm_cliente_email', 'lang:obm_cliente_email', 'required|trim|valid_email|xss_clean');
         $this->form_validation->set_rules('obm_cliente_city', 'lang:obm_cliente_city', 'trim|xss_clean');
         $this->form_validation->set_rules('obm_cliente_country', 'lang:obm_cliente_country', 'required|trim');
-        $this->form_validation->set_rules('obm_cliente_phone', 'lang:obm_cliente_phone', 'required|trim');
-        $this->form_validation->set_rules('obm_cliente_newsletter', 'lang:obm_cliente_newsletter', 'trim');
-        $this->form_validation->set_rules('obm_cliente_pass', 'lang:obm_cliente_pass', 'required|trim');
-        $this->form_validation->set_rules('obm_cliente_data_insert', 'lang:obm_cliente_data_insert', 'trim');
-        $this->form_validation->set_rules('obm_cliente_data_record', 'lang:obm_cliente_data_record', 'trim');
-        $this->form_validation->set_rules('obm_cliente_cc_type', 'lang:obm_cliente_cc_type', 'trim');
-        $this->form_validation->set_rules('obm_cliente_cc_number', 'lang:obm_cliente_cc_number', 'trim');
-        $this->form_validation->set_rules('obm_cliente_holder', 'lang:obm_cliente_holder', 'trim');
-        $this->form_validation->set_rules('obm_cliente_cc_expire', 'lang:obm_cliente_cc_expire', 'trim');
-        $this->form_validation->set_rules('obm_cliente_cc_security', 'lang:obm_cliente_cc_security', 'trim');
+        $this->form_validation->set_rules('obm_cliente_phone', 'lang:obm_cliente_phone', 'required|trim|xss_clean');
+        $this->form_validation->set_rules('obm_cliente_newsletter', 'lang:obm_cliente_newsletter', 'trim|xss_clean');
+        $this->form_validation->set_rules('obm_cliente_pass', 'lang:obm_cliente_pass', 'required|trim|xss_clean');
+             
         $this->form_validation->set_error_delimiters('<span class="error">', '</span><br /> ');
         if ($this->form_validation->run() == FALSE) { // validation hasn't been passed
 
@@ -453,7 +446,7 @@ class Clienti extends MY_Controller {
              * @return object
              */
             $data['rs_obmp_clienti'] = $this->obmp_clienti_model->find_by_id($obm_cliente_id);
-// scegli il templete
+ // scegli il templete
             $temi = 'tem_cb_clienti';
 // carica la vista del contenuto
             $vista = 'obmp_impo';
@@ -481,7 +474,7 @@ class Clienti extends MY_Controller {
             );
 // run insert model to write data to db
             if ($this->obmp_clienti_model->update($obm_cliente_id, $form_data) == TRUE) { // the information has therefore been successfully saved in the db
-                redirect('clienti/index?' . $_SERVER['QUERY_STRING']);
+                redirect('clienti/index/?' . $_SERVER['QUERY_STRING']);
             } else {
                 redirect('clienti/index/?error=noupdata&' . $_SERVER['QUERY_STRING']);
             }

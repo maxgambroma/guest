@@ -35,7 +35,7 @@ echo form_open(uri_string() . '?' . $_SERVER['QUERY_STRING'], $attributes);
     <input id="obm_cliente_city" type="text" name="obm_cliente_city"  value="<?php echo (!set_value('obm_cliente_city')) ? $rs_obmp_clienti->obm_cliente_city : set_value('obm_cliente_city'); ?>"  />
 </p>
 <p>
-    <?php echo lang('obm_cliente_country', 'obm_cliente_country'); ?> <span class="required">*</span>        <?php echo form_error('obm_cliente_country'); ?>
+    <?php echo lang('obm_cliente_country', 'obm_cliente_country'); ?> <span class="required">*</span> <?php echo form_error('obm_cliente_country'); ?>
     <?php // Change the values in this array to populate your dropdown as required ?>
     <?php
 // $options = array('' => 'Please Select'    
@@ -53,7 +53,7 @@ echo form_open(uri_string() . '?' . $_SERVER['QUERY_STRING'], $attributes);
 <p>
 
 <label><?php echo $lg_tex['country']; ?>: <small>required</small>
-<select name="preno_country" id="preno_country"  required="" data-invalid="" > 
+<select name="obm_cliente_country" id="preno_country"  required="" data-invalid="" > 
 <option value="">Select Country</option>
 <option style="font-weight: bold" value="Australia" phone-code="61"> Australia</option>
 <option style="font-weight: bold" value="Canada" phone-code="1"> Canada</option>
@@ -78,7 +78,7 @@ echo form_open(uri_string() . '?' . $_SERVER['QUERY_STRING'], $attributes);
 <p>
     <?php echo form_error('obm_cliente_newsletter'); ?>
     <?php // Change the values/css classes to suit your needs ?>
-    <input type="checkbox" id="obm_cliente_newsletter" name="obm_cliente_newsletter" value="enter_value_here" class="" <?php echo set_checkbox('obm_cliente_newsletter', 'enter_value_here', $rs_obmp_clienti->obm_cliente_newsletter === "option1" ? TRUE : FALSE ); ?>> 
+    <input type="checkbox" id="obm_cliente_newsletter" name="obm_cliente_newsletter" value="1" class="" <?php echo set_checkbox('obm_cliente_newsletter', '1', $rs_obmp_clienti->obm_cliente_newsletter === "1" ? TRUE : FALSE ); ?>> 
     <?php echo lang('obm_cliente_newsletter', 'obm_cliente_newsletter'); ?>
 </p> 
 <p>

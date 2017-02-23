@@ -355,11 +355,7 @@ ORDER BY
         
         $num = $query->result();
 // un punto ogni 10 euro spesi      
-        
-     
-
-     
-        
+         
         if ( isset($num[0]->importo) ) {
                $numero =  $num[0]->importo;
             return $punti = round(($numero / 10), 0);
@@ -367,6 +363,38 @@ ORDER BY
             return $punti = 0;
         }
     }
+    
+    
+    
+      function clienti_punti_dattaglio($clienti_id) {
+        $query = $this->db->query("
+            SELECT
+             conti.prezzo * ( to_days( conti.out_conto ) - to_days( conti.in_conto )  AS importo
+            FROM
+            conti 
+            INNER JOIN ref_obmp_booking 
+            ON conti.preno_id = ref_obmp_booking.preno_id
+            INNER JOIN refer_clienti 
+            ON conti.conto_id = refer_clienti.conto_id
+            WHERE
+            refer_clienti.clienti_id = '$clienti_id'
+            GROUP BY
+            refer_clienti.conto_id
+            ");
+        
+        $num = $query->result();
+// un punto ogni 10 euro spesi      
+         
+        if ( isset($num[0]->importo) ) {
+               $numero =  $num[0]->importo;
+            return $punti = round(($numero / 10), 0);
+        } else {
+            return $punti = 0;
+        }
+    }
+
+    
+    
 
  
      /**
