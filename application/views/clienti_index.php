@@ -123,7 +123,7 @@
 
 
 
-<?php if ( isset($conti) ) { ?>
+<?php if ( !empty($conti) ) { ?>
     <div class="panel">
         <div class="row">
             <div class="large-12 columns"> 
@@ -264,7 +264,7 @@
                 <div class="row">
                     <div class="small-12 large-12 columns">
                         <p>
-                            <a href="<?php echo base_url(); ?>/index.php/clienti/bookings_edit/<?php echo $row_new->preno_id; ?>?lg=<?php echo $this->lg; ?>" class="button right">Amminista Prenotazione</a>
+                            <a href="<?php echo base_url(); ?>index.php/clienti/bookings_edit/<?php echo $row_new->preno_id; ?>/?hotel_id=<?php echo $row_new->hotel_id; ?>&lg=<?php echo $this->lg; ?>" class="button right">Amminista Prenotazione</a>
                         </p>
                     </div>
                 </div>

@@ -391,18 +391,14 @@ class Agenda extends CI_Controller {
 
 
 	function cambia_date() {
-         
             
         $data['lg'] = $lg = $this->lg;
         $data['lg_tex'] =  $this->tex_lingue_model->tex_lg($lg);
     
-            
-            
         $hotel_id = $this->input->get('hotel_id');
         $preno_id = $this->input->get('preno_id');
         $preno_dal = $this->input->get('preno_dal');
         $preno_al = $this->input->get('preno_al');
-
 
 // trovo la vecchia prenotazione
         $data['preno'] = $preno = $this->agenda_model->find_by_id($preno_id);
@@ -416,7 +412,6 @@ class Agenda extends CI_Controller {
         $data['disponibilita'] = $diso =  $this->new_dispo($preno, $preno_new) ;
         
         $this->load->view('clienti_cambia_date', $data);
-        
         
     }
 
@@ -547,7 +542,7 @@ class Agenda extends CI_Controller {
         $this->form_validation->set_error_delimiters('<span class="error">', '</span><br /> ');
 
         if ($this->form_validation->run() == FALSE && set_value('preno_importo') == 1 && set_value('disponibilita') != 1) { // validation hasn't been passed
-            redirect(base_url() . 'index.php/clienti/bookings/' . $this->input->post('conto_id') . '/' . $this->input->post('clienti_id') . '?lg=' . $this->lg);
+            redirect(base_url() . 'index.php/clienti/bookings/?lg=' . $this->lg);
         } else { // passed validation proceed to post success logic
 // build array for the model
 
@@ -598,7 +593,7 @@ class Agenda extends CI_Controller {
         $this->form_validation->set_error_delimiters('<span class="error">', '</span><br /> ');
 
         if ($this->form_validation->run() == FALSE && set_value('preno_stato') != 9) { // validation hasn't been passed
-            redirect(base_url() . 'index.php/clienti/bookings/' . $this->input->post('conto_id') . '/' . $this->input->post('clienti_id') . '?lg=' . $this->lg);
+            redirect(base_url() . 'index.php/clienti/bookings/?lg='.$this->lg);
         } else { // passed validation proceed to post success logic
 // build array for the model
             $form_data = array(
@@ -613,16 +608,6 @@ class Agenda extends CI_Controller {
             );
             
             
-            
-            
-            
-            
-            
-
-            
-            
-            
-
 // run insert model to write data to db
             $preno_id = set_value('preno_id');
 

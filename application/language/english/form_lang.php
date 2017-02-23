@@ -312,3 +312,22 @@ $lang['de'] = 'De';
 
 $lang['user'] = 'Email';
 $lang['pass'] = 'Password';
+
+
+
+$lang['obm_cliente_id'] = 'Obm_cliente_id';
+$lang['obm_cliente_first_name'] = 'Obm_cliente_first_name';
+$lang['obm_cliente_last_name'] = 'Obm_cliente_last_name';
+$lang['obm_cliente_email'] = 'Obm_cliente_email';
+$lang['obm_cliente_city'] = 'Obm_cliente_city';
+$lang['obm_cliente_country'] = 'Obm_cliente_country';
+$lang['obm_cliente_phone'] = 'Obm_cliente_phone';
+$lang['obm_cliente_newsletter'] = 'Obm_cliente_newsletter';
+$lang['obm_cliente_pass'] = 'Obm_cliente_pass';
+$lang['obm_cliente_data_insert'] = 'Obm_cliente_data_insert';
+$lang['obm_cliente_data_record'] = 'Obm_cliente_data_record';
+$lang['obm_cliente_cc_type'] = 'Obm_cliente_cc_type';
+$lang['obm_cliente_cc_number'] = 'Obm_cliente_cc_number';
+$lang['obm_cliente_holder'] = 'Obm_cliente_holder';
+$lang['obm_cliente_cc_expire'] = 'Obm_cliente_cc_expire';
+$lang['obm_cliente_cc_security'] = 'Obm_cliente_cc_security';

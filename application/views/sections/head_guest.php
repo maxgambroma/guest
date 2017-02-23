@@ -118,7 +118,53 @@ $items = array(
                 <div class="large-12  columns">&nbsp; </div>
             </div>
         </div>
-    <?php } ?>   
+    <?php } 
+    
+ else {  ?>
+     
+    <div class="barra_icone">
+            <div class="row">
+                <div class="large-12  columns">
+                    <div class="barra_icone"> 
+                        <div class="barra_icone">
+                            <div class="icon-bar  six-up">
+                                <a class="item" href="<?php echo base_url(); ?>index.php/clienti/index/?hotel_id=<?php echo $this->input->get('hotel_id'); ?>&lg=<?php echo $this->lg; ?>" >
+                                    <i class="fi-home"></i>
+                                    <label class="show-for-medium-up" >Home</label>
+                                </a>
+                                <a class="item"  href="<?php echo base_url(); ?>index.php/clienti/bookings/?hotel_id=<?php echo $this->input->get('hotel_id'); ?>&lg=<?php echo $this->lg; ?>"  >
+                                    <i class="fi-key"></i>
+                                    <label class="show-for-medium-up" >Bookings Obmp</label>
+                                </a>
+                       
+                                <a class="item" href="<?php echo base_url(); ?>index.php/clienti/obmp_impostazioni/?hotel_id=<?php echo $this->input->get('hotel_id'); ?>&lg=<?php echo $this->lg; ?>">
+                                    <i class="fi-wrench"></i>
+                                    <label class="show-for-medium-up">ImpostazioniObmp</label>
+                                </a>
+                         
+                                <a class="item" href="<?php echo base_url(); ?>index.php/clienti/log_out/?<?php echo $_SERVER['QUERY_STRING']; ?>">
+                                    <i class="fi-x"></i>
+                                    <label class="show-for-medium-up">Log Out obmp</label>
+                                </a>
+                            </div>
+                        </div> 
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="row">
+                <div class="large-12  columns">&nbsp; </div>
+            </div>
+        </div>
+    
+    
+<?php  } ?>
+    
+    
+    
+<!--    logo-->
+        
     <div class="row">
         <div class="large-2 medium-3 small-4 columns">
             <a href="http://<?php echo $albergo['0']->hotel_web; ?>" ><img src="<?php echo base_url(); ?>asset/img/logo_<?php echo $albergo['0']->hotel_id; ?>.gif"   title="WWWW HOTEL"  /> </a> 

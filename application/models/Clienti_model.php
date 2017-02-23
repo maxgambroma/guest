@@ -207,7 +207,7 @@ clienti.clienti_note,
      * @return type
      */
     
-    function conti_by_clienti($clienti_id ) {
+    function conti_by_clienti($clienti_id) {
         $query = $this->db->query("
         SELECT
         conti.conto_id,
@@ -303,25 +303,27 @@ clienti.clienti_note,
         agenzie.agenzia_nome,
 	agenzie.agenzia_tipologia,
 	agenzie.agenzia_id
-        FROM
-        refer_clienti
-        
-        LEFT OUTER JOIN obmp_review
-	 ON  refer_clienti.conto_id = obmp_review.conto_id     
-        INNER JOIN conti
-        ON refer_clienti.conto_id = conti.conto_id
-        INNER JOIN clienti
-        ON refer_clienti.clienti_id = clienti.clienti_id
-        LEFT OUTER JOIN agenda
-        ON conti.preno_id = agenda.preno_id
-        INNER JOIN hotels
+
+FROM
+	refer_clienti
+	LEFT OUTER JOIN obmp_review
+	 ON refer_clienti.conto_id = obmp_review.conto_id
+	INNER JOIN conti
+	 ON refer_clienti.conto_id = conti.conto_id
+	INNER JOIN clienti
+	 ON refer_clienti.clienti_id = clienti.clienti_id
+	LEFT OUTER JOIN agenda
+	 ON conti.preno_id = agenda.preno_id
+	LEFT OUTER JOIN hotels
 	 ON conti.hotel_id = hotels.hotel_id
-          LEFT OUTER JOIN agenzie
+	LEFT OUTER JOIN agenzie
 	 ON conti.preno_agenzia = agenzie.agenzia_id
-         WHERE
-        (refer_clienti.clienti_id = $clienti_id)
-     ORDER BY
-     conti.in_conto DESC
+WHERE
+	(refer_clienti.clienti_id = '$clienti_id')
+ORDER BY
+	conti.in_conto DESC
+
+
         ");
         return $query->result();
     }

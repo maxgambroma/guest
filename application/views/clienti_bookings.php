@@ -38,7 +38,7 @@
                             
                             <?php if($row_new->preno_stato != 9){ ?>
                             
-                            <a href="<?php echo base_url(); ?>/index.php/clienti/bookings_edit/<?php echo $rs_clienti[0]->conto_id; ?>/<?php echo $rs_clienti[0]->clienti_id; ?>/<?php echo $row_new->preno_id; ?>?lg=<?php echo $this->lg; ?>" class="button success right"><?php echo $lg_tex['amm_preno']; ?></a>
+                            <a href="<?php echo base_url(); ?>/index.php/clienti/bookings_edit/<?php echo $row_new->preno_id; ?>?lg=<?php echo $this->lg; ?>" class="button success right"><?php echo $lg_tex['amm_preno']; ?></a>
                        
                             <?php } else { ?>
                             <a href="#" class="button alert right"> <?php echo $lg_tex['cax']; ?> </a>
@@ -53,22 +53,25 @@
 </div>
 
 
-<div class="old_preno">
-    <fieldset>
-        <legend> Old Preno</legend>
+
         
 
 
 
-<?php foreach ($conti_old as $key => $row) { ?>
+<?php
+
+if(isset($conti_old)) {  ?>
+<div class="old_preno">
+    <fieldset>
+        <legend> Old Preno</legend>
+        
+ <?php      
+foreach ($conti_old as $key => $row) { ?>
     <div>
         <fieldset>
             <legend> Booking id : <?php echo $row->preno_id; ?></legend>
             <div class="row box_cancellata ">
-                
-               
-                    
-               
+
                 <div class="small-12 medium-5 large-5 columns">
                     <img src="<?php echo base_url(); ?><?php echo $row->hotel_foto_piccola; ?>"/>
                 </div>
@@ -115,12 +118,12 @@
                    
 <ul class="button-group radius right">
 <!--<li><a href="#" class="button">Punti</a></li>-->
-<li><a href="<?php echo base_url(); ?>index.php/clienti/bookings_edit/<?php echo $row->conto_id; ?>/<?php  echo  $row->clienti_id; ?>/<?php  echo  $row->preno_id; ?>?lg=<?php echo $this->lg; ?>" class="button secondary "><?php echo $lg_tex['vedi_preno']; ?></a></li>
+<li><a href="<?php echo base_url(); ?>index.php/clienti/bookings_edit/<?php  echo  $row->preno_id; ?>/?lg=<?php echo $this->lg; ?>" class="button secondary "><?php echo $lg_tex['vedi_preno']; ?></a></li>
 
     <?php if (!isset($row->review_id)) { ?>
-<li><a href="<?php echo base_url(); ?>index.php/obmp_review/insert/<?php echo $row->conto_id; ?>/<?php  echo  $row->clienti_id; ?>?lg=<?php echo $this->lg; ?>" class="button"><?php echo $lg_tex['scrivi_review']; ?></a></li>
+<li><a href="<?php echo base_url(); ?>index.php/obmp_review/insert/<?php echo $row->conto_id; ?>/<?php  echo  $row->clienti_id; ?>/?lg=<?php echo $this->lg; ?>" class="button"><?php echo $lg_tex['scrivi_review']; ?></a></li>
 <?php } else { ?>
-<li><a href="<?php echo base_url(); ?>index.php/obmp_review/edit/<?php echo $row->conto_id; ?>/<?php  echo  $row->clienti_id; ?>?lg=<?php echo $this->lg; ?> " class="button success"><?php echo $lg_tex['leggi_review']; ?></a></li>
+<li><a href="<?php echo base_url(); ?>index.php/obmp_review/edit/<?php echo $row->conto_id; ?>/<?php  echo  $row->clienti_id; ?>/?lg=<?php echo $this->lg; ?> " class="button success"><?php echo $lg_tex['leggi_review']; ?></a></li>
 <?php } ?>
 </ul>                                      
 
@@ -132,8 +135,9 @@
             
         </fieldset>
     </div>
-<?php } ?>
+<?php }  ?>
 
             </fieldset>
 
  </div>
+<?php }  ?>

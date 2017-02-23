@@ -12,10 +12,10 @@ class Clienti extends MY_Controller {
         $this->load->model('tipologia_camera_model');
         $this->load->model('obmp_review_model');
         $this->load->model('conti_model');
-        
-        
+        $this->load->model('obmp_clienti_model');
+
         $this->load->model('tex_lingue_model');
-        
+
         $this->load->library('form_validation');
         $this->load->library('table');
         $this->load->library('pagination');
@@ -26,8 +26,6 @@ class Clienti extends MY_Controller {
         $this->load->helper('language');
         $this->load->library('session');
 // $idiom = $this->session->get_userdata('language');  
-
-
 
         if ($this->input->get('lg')) {
             $this->lg = $lg = $this->input->get('lg');
@@ -44,76 +42,56 @@ class Clienti extends MY_Controller {
         $lingue['it'] = 'italian';
         $lingue['es'] = 'spanish';
 
-
         $this->idiom = $idiom = $lingue[$lg];
 //        $this->idiom = $idiom = $this->uri->segment(5, 'english');
         $this->lang->load('form_validation_lang', $idiom);
         $this->lang->load('form_lang', $idiom);
     }
 
-   
 //-------------------------------- lato cliente--------------------------
-
     /**
      * lato cliente 
      * pagina iniziale cliente
      */
     public function index() {
 
-        
-        // lingua
-        $data['lg'] = $lg= $this->lg;
-        $data['lg_tex'] =  $this->tex_lingue_model->tex_lg($lg);
-        // hotel   
+// lingua
+        $data['lg'] = $lg = $this->lg;
+        $data['lg_tex'] = $this->tex_lingue_model->tex_lg($lg);
+// hotel   
         if ($this->input->get('hotel_id')) {
             $hotel_id = $this->input->get('hotel_id');
         } else {
             $hotel_id = 1;
         }
-     
-        // data          
+// data          
         $data['today'] = $today = date('Y-m-d');
-                
-        // controllo se il cliente è settato se proviene da link  
-     
-       $conto_id = $this->session->conto_id ;    
-       $clienti_id = $this->session->clienti_id ;   
-        
-  
-       
-       if($this->session->area > 1 ){
-                 
-        $data['rs_clienti'] = $cliente = $this->clienti_model->get_conto_cliente($conto_id, $clienti_id);
-        $data['hotel_id'] = $hotel_id = $cliente[0]->hotel_id;  
+
+// controllo se il cliente è settato se proviene da link  
+        $conto_id = $this->session->conto_id;
+        $clienti_id = $this->session->clienti_id;
+        $email = $this->session->email;
+
+        if ($this->session->area > 1) {
+            $data['rs_clienti'] = $cliente = $this->clienti_model->get_conto_cliente($conto_id, $clienti_id);
+            $data['hotel_id'] = $hotel_id = $cliente[0]->hotel_id;
 //      print_r($cliente);
-              
-        // trovo i punti per i fidelizzati
-        $data['punti'] = $this->clienti_model->clienti_punti($clienti_id);
-        // trovo i conti aperti
-        $data['conti'] = $conti_new = $this->conti_model->conto_aperto_cliente_id($clienti_id);
-        if($conti_new){
-        $data['conti_saldo'] = $conti_saldo = $this->conti_model->totale_conto_camera($conti_new[0]->conto_id, $today);
+// trovo i punti per i fidelizzati
+            $data['punti'] = $this->clienti_model->clienti_punti($clienti_id);
+// trovo i conti aperti
+            $data['conti'] = $conti_new = $this->conti_model->conto_aperto_cliente_id($clienti_id);
+            if ($conti_new) {
+                $data['conti_saldo'] = $conti_saldo = $this->conti_model->totale_conto_camera($conti_new[0]->conto_id, $today);
+            }
+// elenco le nuove prenotazioni 
+// trovo le nuove preno
+            $data['preno'] = $preno = $this->agenda_model->get_booking_by_email($email);
         }
-        // elenco le nuove prenotazioni 
-        $email = $cliente[0]->clienti_email;
-
-        // trovo le nuove preno
-        $data['preno'] = $preno = $this->agenda_model->get_booking_by_email($email);
-
-           }
-       
-           
-        // Obmp cliente in sessione no conti solo preno
-           
-      else{
-          
-           $data['preno'] = $preno = $this->agenda_model->get_booking_by_email($this->session->email);
-      }
- 
+// Obmp cliente in sessione no conti solo preno
+        else {
+            $data['preno'] = $preno = $this->agenda_model->get_booking_by_email($this->session->email);
+        }
         $data['albergo'] = $cc = $this->hotel_model->hotel($hotel_id);
-        
-
-        
 
 // scegli il templete
         $temi = 'tem_cb_clienti';
@@ -130,31 +108,10 @@ class Clienti extends MY_Controller {
     }
 
     /**
-     * delete record by to clienti
+     * 
      */
-//    function delete() {
-//
-//        $clienti_id = $this->input->post('clienti_id');
-//
-//        if ($this->input->post('CAX') == 10 && isset($clienti_id)) {
-//            $this->clienti_model->delete($clienti_id);
-//            redirect('clienti/index/?' . $_SERVER['QUERY_STRING']);
-//        } else {
-//
-//            redirect('clienti/edit/?error=nodelete&' . $_SERVER['QUERY_STRING']);
-//        }
-//    }
-//    function success() {
-//        echo 'this form has been successfully submitted with all validation being passed. All messages or logic here. Please note
-//	    sessions have not been used and would need to be added in to suit your app';
-//    }
-
-
-
-
     function email() {
         $data['lg'] = $this->lg;
-
         $today = date('Y-m-d');
         if ($this->input->get('hotel_id')) {
             $hotel_id = $this->input->get('hotel_id');
@@ -163,10 +120,7 @@ class Clienti extends MY_Controller {
         }
         $data['today'] = $today = date('Y-m-d');
         $data['hotel_id'] = $hotel_id;
-
         $data['albergo'] = $this->hotel_model->hotel($hotel_id);
-
-
         $this->email->from('info@hotellaurentia.com');
         $this->email->to('maxgamb.roma@gmail.com');
         $this->email->subject('Test email from CI and Gmail');
@@ -177,7 +131,6 @@ class Clienti extends MY_Controller {
         ;
         $body = $this->load->view('temp_email_hotel.php', $data, TRUE);
         $this->email->message($body);
-
 
         if (!$this->email->send()) {
             echo $this->email->print_debugger();
@@ -191,43 +144,30 @@ class Clienti extends MY_Controller {
      * elenca le prenotazioni del clienti_id
      */
     function bookings() {
-        
-     // lingua
-        $data['lg'] = $lg= $this->lg;
-        $data['lg_tex'] =  $this->tex_lingue_model->tex_lg($lg);
-        
-      
+// lingua
+        $data['lg'] = $lg = $this->lg;
+        $data['lg_tex'] = $this->tex_lingue_model->tex_lg($lg);
+
         if ($this->input->get('hotel_id')) {
             $hotel_id = $this->input->get('hotel_id');
         } else {
             $hotel_id = 1;
         }
         $data['today'] = $today = date('Y-m-d');
-    
 
-
-        $conto_id = $this->session->conto_id ;    
-        $clienti_id = $this->session->clienti_id ;      
-     
-           
-        
-        
-        
-
+        $conto_id = $this->session->conto_id;
+        $clienti_id = $this->session->clienti_id;
+        $email = $this->session->email;
         $data['rs_clienti'] = $cliente = $this->clienti_model->get_conto_cliente($conto_id, $clienti_id);
-
         if ($data['rs_clienti']) {
             $hotel_id = $cliente[0]->hotel_id;
-
-            $email = $cliente[0]->clienti_email;
 //trovo i vecchi conti
             $data['conti_old'] = $conti_old = $this->clienti_model->conti_by_clienti($clienti_id);
-// trovo le nuove preno
-            $data['preno'] = $preno = $this->agenda_model->get_booking_by_email($email);
+            $data['hotel_id'] = $hotel_id = $cliente[0]->hotel_id;
         }
-
-       $data['hotel_id'] = $hotel_id = $cliente[0]->hotel_id;
-       $data['albergo'] = $this->hotel_model->hotel($hotel_id);
+// trovo le nuove preno
+        $data['preno'] = $preno = $this->agenda_model->get_booking_by_email($email);
+        $data['albergo'] = $this->hotel_model->hotel($hotel_id);
 
 // scegli il templete
         $temi = 'tem_cb_clienti';
@@ -250,13 +190,9 @@ class Clienti extends MY_Controller {
      * restituisce i dettagli della prentoazine e se future le amminista
      */
     function bookings_edit() {
-
-        
-          // lingua
-        $data['lg'] = $lg= $this->lg;
-        $data['lg_tex'] =  $this->tex_lingue_model->tex_lg($lg);
-        
-        
+// lingua
+        $data['lg'] = $lg = $this->lg;
+        $data['lg_tex'] = $this->tex_lingue_model->tex_lg($lg);
         $today = date('Y-m-d');
         if ($this->input->get('hotel_id')) {
             $hotel_id = $this->input->get('hotel_id');
@@ -264,37 +200,25 @@ class Clienti extends MY_Controller {
             $hotel_id = 1;
         }
         $data['today'] = $today = date('Y-m-d');
-
-       $conto_id = $this->session->conto_id ;    
-       $clienti_id = $this->session->clienti_id ;  
-        
-        
-        
+        $conto_id = $this->session->conto_id;
+        $clienti_id = $this->session->clienti_id;
+        $email = $this->session->email;
         $preno_id = $this->uri->segment(3, 1);
-        
         $data['rs_clienti'] = $cliente = $this->clienti_model->get_conto_cliente($conto_id, $clienti_id);
-
 // trovo le caratteristiche della camare nelle lingue 
         $data['lg_tipologia'] = $this->agenda_model->tip_lg_preno($this->lg, $hotel_id);
-        if ($data['rs_clienti']) {
-      
-          $data['hotel_id'] =   $hotel_id = $cliente[0]->hotel_id;
-           $email = $cliente[0]->clienti_email;
+        if ($cliente) {
+            $data['hotel_id'] = $hotel_id = $cliente[0]->hotel_id;
 //trovo i vecchi conti
             $data['conti_old'] = $conti_old = $this->clienti_model->conti_by_clienti($clienti_id);
-
-
-
         }
-
-        // trovo le nuove preno
-            $data['preno'] = $preno = $this->agenda_model->booking_id($preno_id);
-        
-       $data['review'] =  $this->obmp_review_model->review_preno_cliente($preno_id, $clienti_id );
-        
-        
+// trovo le  preno
+// da modificare inserendo email
+        $data['preno'] = $preno = $this->agenda_model->booking_id($preno_id);
+// recenzioni
+        $data['review'] = $this->obmp_review_model->review_preno_cliente($preno_id, $clienti_id);
+// hotel        
         $data['albergo'] = $this->hotel_model->hotel($hotel_id);
-
 // scegli il templete
         $temi = 'tem_cb_clienti';
 // carica la vista del contenuto
@@ -319,13 +243,10 @@ class Clienti extends MY_Controller {
      */
     function review() {
 
-  // lingua
-        $data['lg'] = $lg= $this->lg;
-        $data['lg_tex'] =  $this->tex_lingue_model->tex_lg($lg);
-        
-        
-        
-        
+// lingua
+        $data['lg'] = $lg = $this->lg;
+        $data['lg_tex'] = $this->tex_lingue_model->tex_lg($lg);
+
         $today = date('Y-m-d');
         if ($this->input->get('hotel_id')) {
             $hotel_id = $this->input->get('hotel_id');
@@ -333,15 +254,12 @@ class Clienti extends MY_Controller {
             $hotel_id = 1;
         }
         $data['today'] = $today = date('Y-m-d');
-
-
-        $conto_id = $this->session->conto_id ;    
-        $clienti_id = $this->session->clienti_id ;  
-
+        $conto_id = $this->session->conto_id;
+        $clienti_id = $this->session->clienti_id;
+        $email = $this->session->email;
         $data['rs_clienti'] = $cliente = $this->clienti_model->get_conto_cliente($conto_id, $clienti_id);
-
         if ($data['rs_clienti']) {
-          $data['hotel_id']=  $hotel_id = $cliente[0]->hotel_id;
+            $data['hotel_id'] = $hotel_id = $cliente[0]->hotel_id;
         }
         $data['albergo'] = $this->hotel_model->hotel($hotel_id);
         $data['reviews'] = $reviews = $this->obmp_review_model->review_cliente_id($clienti_id);
@@ -367,10 +285,9 @@ class Clienti extends MY_Controller {
      *  
      */
     function impostazioni() {
-  // lingua
-        $data['lg'] = $lg= $this->lg;
-        $data['lg_tex'] =  $this->tex_lingue_model->tex_lg($lg);
-
+// lingua
+        $data['lg'] = $lg = $this->lg;
+        $data['lg_tex'] = $this->tex_lingue_model->tex_lg($lg);
         $today = date('Y-m-d');
         if ($this->input->get('hotel_id')) {
             $hotel_id = $this->input->get('hotel_id');
@@ -378,25 +295,14 @@ class Clienti extends MY_Controller {
             $hotel_id = 1;
         }
         $data['today'] = $today = date('Y-m-d');
-     
-
-     $conto_id = $this->session->conto_id ;    
-        $clienti_id = $this->session->clienti_id ;  
-        
-        
+        $conto_id = $this->session->conto_id;
+        $clienti_id = $this->session->clienti_id;
+        $email = $this->session->email;
         $data['rs_clienti'] = $cliente = $this->clienti_model->get_conto_cliente($conto_id, $clienti_id);
-
         if ($data['rs_clienti']) {
-         $data['hotel_id']=  $hotel_id = $cliente[0]->hotel_id;
+            $data['hotel_id'] = $hotel_id = $cliente[0]->hotel_id;
         }
-
         $data['albergo'] = $this->hotel_model->hotel($hotel_id);
-
-//  $this->form_validation->set_rules('clienti_id', 'lang:clienti_id', 'required|trim');
-//  $this->form_validation->set_rules('clienti_nome', 'lang:clienti_nome', 'trim');
-//  $this->form_validation->set_rules('clienti_cogno', 'lang:clienti_cogno', 'trim');
-//  $this->form_validation->set_rules('cliente_nato_a', 'lang:cliente_nato_a', 'trim');
-//  $this->form_validation->set_rules('cliente_nato_il', 'lang:cliente_nato_il', 'trim');
         $this->form_validation->set_rules('clienti_tel', 'lang:clienti_tel', 'trim');
         $this->form_validation->set_rules('clienti_fax', 'lang:clienti_fax', 'trim');
         $this->form_validation->set_rules('clienti_email', 'lang:clienti_email', 'trim');
@@ -404,9 +310,7 @@ class Clienti extends MY_Controller {
         $this->form_validation->set_rules('clienti_note', 'lang:clienti_note', 'trim');
         $this->form_validation->set_rules('privacy', 'lang:privacy', 'trim');
         $this->form_validation->set_rules('marketing', 'lang:marketing', 'trim');
-
         $this->form_validation->set_error_delimiters('<span class="error">', '</span><br /> ');
-
         if ($this->form_validation->run() == FALSE) { // validation hasn't been passed
 // scegli il templete
             $temi = 'tem_cb_clienti';
@@ -420,16 +324,10 @@ class Clienti extends MY_Controller {
                 'bar_2' => 'bar_booking',
                 'box_top' => 'box_top');
             $this->load->view('templetes_clienti', $data);
-
 //$this->load->view('Clienti_edit');
         } else { // passed validation proceed to post success logic
 // build array for the model
             $form_data = array(
-//  'clienti_id' => set_value('clienti_id'),
-//  'clienti_nome' => set_value('clienti_nome'),
-//  'clienti_cogno' => set_value('clienti_cogno'),
-//  'cliente_nato_a' => set_value('cliente_nato_a'),
-//  'cliente_nato_il' => set_value('cliente_nato_il'),
                 'clienti_tel' => set_value('clienti_tel'),
                 'clienti_fax' => set_value('clienti_fax'),
                 'clienti_email' => set_value('clienti_email'),
@@ -438,13 +336,9 @@ class Clienti extends MY_Controller {
                 'privacy' => set_value('privacy'),
                 'marketing' => set_value('marketing')
             );
-
 // run insert model to write data to db
-
             $clienti_id = $cliente[0]->clienti_id;
-
             if ($this->clienti_model->update($clienti_id, $form_data) == TRUE) { // the information has therefore been successfully saved in the db  
-
                 redirect('clienti/index/' . $conto_id . '/' . $clienti_id . '/?' . $_SERVER['QUERY_STRING']);
             } else {
                 redirect('clienti/index/' . $conto_id . '/' . $clienti_id . '/?error=noupdata&' . $_SERVER['QUERY_STRING']);
@@ -457,12 +351,9 @@ class Clienti extends MY_Controller {
      *  per gestire il marketing
      */
     function imp_privacy() {
- 
-          // lingua
-        $data['lg'] = $lg= $this->lg;
-        $data['lg_tex'] =  $this->tex_lingue_model->tex_lg($lg);
-        
-
+// lingua
+        $data['lg'] = $lg = $this->lg;
+        $data['lg_tex'] = $this->tex_lingue_model->tex_lg($lg);
         $today = date('Y-m-d');
         if ($this->input->get('hotel_id')) {
             $hotel_id = $this->input->get('hotel_id');
@@ -471,33 +362,16 @@ class Clienti extends MY_Controller {
         }
         $data['today'] = $today = date('Y-m-d');
         $data['hotel_id'] = $hotel_id;
-
-    $conto_id = $this->session->conto_id ;    
-        $clienti_id = $this->session->clienti_id ;  
-        
-        
+        $conto_id = $this->session->conto_id;
+        $clienti_id = $this->session->clienti_id;
+        $email = $this->session->email;
         $data['rs_clienti'] = $cliente = $this->clienti_model->get_conto_cliente($conto_id, $clienti_id);
-
         if ($data['rs_clienti']) {
             $hotel_id = $cliente[0]->hotel_id;
         }
-
         $data['albergo'] = $this->hotel_model->hotel($hotel_id);
-
-//  $this->form_validation->set_rules('clienti_id', 'lang:clienti_id', 'required|trim');
-//  $this->form_validation->set_rules('clienti_nome', 'lang:clienti_nome', 'trim');
-//  $this->form_validation->set_rules('clienti_cogno', 'lang:clienti_cogno', 'trim');
-//  $this->form_validation->set_rules('cliente_nato_a', 'lang:cliente_nato_a', 'trim');
-//  $this->form_validation->set_rules('cliente_nato_il', 'lang:cliente_nato_il', 'trim');
-//  $this->form_validation->set_rules('clienti_tel', 'lang:clienti_tel', 'trim');
-//  $this->form_validation->set_rules('clienti_fax', 'lang:clienti_fax', 'trim');
-//  $this->form_validation->set_rules('clienti_email', 'lang:clienti_email', 'trim');
-//  $this->form_validation->set_rules('clienti_note', 'lang:clienti_note', 'trim');
-//  $this->form_validation->set_rules('privacy', 'lang:privacy', 'trim');
         $this->form_validation->set_rules('marketing', 'lang:marketing', 'trim');
-
         $this->form_validation->set_error_delimiters('<span class="error">', '</span><br /> ');
-
         if ($this->form_validation->run() == FALSE) { // validation hasn't been passed
 // scegli il templete
             $temi = 'tem_cb_clienti';
@@ -511,54 +385,108 @@ class Clienti extends MY_Controller {
                 'bar_2' => 'bar_booking',
                 'box_top' => 'box_top');
             $this->load->view('templetes_clienti', $data);
-
 //$this->load->view('Clienti_edit');
         } else { // passed validation proceed to post success logic
 // build array for the model
             $form_data = array(
-//  'clienti_id' => set_value('clienti_id'),
-//  'clienti_nome' => set_value('clienti_nome'),
-//  'clienti_cogno' => set_value('clienti_cogno'),
-//  'cliente_nato_a' => set_value('cliente_nato_a'),
-//  'cliente_nato_il' => set_value('cliente_nato_il'),
-//  'clienti_tel' => set_value('clienti_tel'),
-//  'clienti_fax' => set_value('clienti_fax'),
-//  'clienti_email' => set_value('clienti_email'),
-//  'clienti_note' => set_value('clienti_note'),
-//  'privacy' => set_value('privacy'),
                 'marketing' => set_value('marketing')
             );
-
 // run insert model to write data to db
-
             $clienti_id = $cliente[0]->clienti_id;
-
-
-
             if ($this->clienti_model->update($clienti_id, $form_data) == TRUE) { // the information has therefore been successfully saved in the db  
-
                 redirect('clienti/index/' . $conto_id . '/' . $clienti_id . '/?' . $_SERVER['QUERY_STRING']);
             } else {
                 redirect('clienti/index/' . $conto_id . '/' . $clienti_id . '/?error=noupdata&' . $_SERVER['QUERY_STRING']);
             }
         }
     }
-    
-    
-    
+
     /**
      *  sessione i dati del cliente
      * @param type $cliente
      */
-    
-    function log_out(){
-        
+    function log_out() {
         $this->logout();
-        
     }
 
-    
-    
+    /**
+     * edit data in to obmp_clienti
+     */
+    function obmp_impostazioni() {
+// lingua
+        $data['lg'] = $lg = $this->lg;
+        $data['lg_tex'] = $this->tex_lingue_model->tex_lg($lg);
+        $today = date('Y-m-d');
+        if ($this->input->get('hotel_id')) {
+            $hotel_id = $this->input->get('hotel_id');
+        } else {
+            $hotel_id = 1;
+        }
+        $data['today'] = $today = date('Y-m-d');
+        $data['hotel_id'] = $hotel_id;
+        $email = $this->session->email;
+        $obm_cliente_id = $this->session->obm_cliente_id;
+        $data['albergo'] = $this->hotel_model->hotel($hotel_id);
+
+        $this->form_validation->set_rules('obm_cliente_id', 'lang:obm_cliente_id', 'trim');
+        $this->form_validation->set_rules('obm_cliente_first_name', 'lang:obm_cliente_first_name', 'required|trim|xss_clean');
+        $this->form_validation->set_rules('obm_cliente_last_name', 'lang:obm_cliente_last_name', 'required|trim|xss_clean');
+        $this->form_validation->set_rules('obm_cliente_email', 'lang:obm_cliente_email', 'required|trim|valid_email');
+        $this->form_validation->set_rules('obm_cliente_city', 'lang:obm_cliente_city', 'trim|xss_clean');
+        $this->form_validation->set_rules('obm_cliente_country', 'lang:obm_cliente_country', 'required|trim');
+        $this->form_validation->set_rules('obm_cliente_phone', 'lang:obm_cliente_phone', 'required|trim');
+        $this->form_validation->set_rules('obm_cliente_newsletter', 'lang:obm_cliente_newsletter', 'trim');
+        $this->form_validation->set_rules('obm_cliente_pass', 'lang:obm_cliente_pass', 'required|trim');
+        $this->form_validation->set_rules('obm_cliente_data_insert', 'lang:obm_cliente_data_insert', 'trim');
+        $this->form_validation->set_rules('obm_cliente_data_record', 'lang:obm_cliente_data_record', 'trim');
+        $this->form_validation->set_rules('obm_cliente_cc_type', 'lang:obm_cliente_cc_type', 'trim');
+        $this->form_validation->set_rules('obm_cliente_cc_number', 'lang:obm_cliente_cc_number', 'trim');
+        $this->form_validation->set_rules('obm_cliente_holder', 'lang:obm_cliente_holder', 'trim');
+        $this->form_validation->set_rules('obm_cliente_cc_expire', 'lang:obm_cliente_cc_expire', 'trim');
+        $this->form_validation->set_rules('obm_cliente_cc_security', 'lang:obm_cliente_cc_security', 'trim');
+        $this->form_validation->set_error_delimiters('<span class="error">', '</span><br /> ');
+        if ($this->form_validation->run() == FALSE) { // validation hasn't been passed
+
+            /** function find_by_id('obm_cliente_id')
+             * find preno_id
+             * @param $form_data - array
+             * @return object
+             */
+            $data['rs_obmp_clienti'] = $this->obmp_clienti_model->find_by_id($obm_cliente_id);
+// scegli il templete
+            $temi = 'tem_cb_clienti';
+// carica la vista del contenuto
+            $vista = 'obmp_impo';
+// gestore templete
+// gestore templete
+            $data['temp'] = array
+                ('templete' => $temi,
+                'contenuto' => $vista,
+                'bar_1' => 'bar_clienti',
+                'bar_2' => 'bar_booking',
+                'box_top' => 'box_top');
+            $this->load->view('templetes_clienti', $data);
+        } else { // passed validation proceed to post success logic
+// build array for the model
+            $form_data = array(
+//	'obm_cliente_id' => set_value('obm_cliente_id'),
+                'obm_cliente_first_name' => set_value('obm_cliente_first_name'),
+                'obm_cliente_last_name' => set_value('obm_cliente_last_name'),
+                'obm_cliente_email' => set_value('obm_cliente_email'),
+                'obm_cliente_city' => set_value('obm_cliente_city'),
+                'obm_cliente_country' => set_value('obm_cliente_country'),
+                'obm_cliente_phone' => set_value('obm_cliente_phone'),
+                'obm_cliente_newsletter' => set_value('obm_cliente_newsletter'),
+                'obm_cliente_pass' => set_value('obm_cliente_pass'),
+            );
+// run insert model to write data to db
+            if ($this->obmp_clienti_model->update($obm_cliente_id, $form_data) == TRUE) { // the information has therefore been successfully saved in the db
+                redirect('clienti/index?' . $_SERVER['QUERY_STRING']);
+            } else {
+                redirect('clienti/index/?error=noupdata&' . $_SERVER['QUERY_STRING']);
+            }
+        }
+    }
 
 }
 
