@@ -16,9 +16,12 @@
         <dd data-magellan-arrival="pre"><a href="#pre">Prenotazioni</a></dd>
     </dl>
 </div>
-<h3 data-magellan-destination="bf">Benefit</h3>
-<a name="bf"></a>
+
 <div class="panel">
+    
+    <h3 data-magellan-destination="bf">Benefit</h3>
+<a name="bf"></a>
+    
     Ciao <?php echo $this->session->clienti_nome; ?>, <br>
     <?php echo $lg_tex['vantaggi_breve']; ?> <br>
     <span id="vantaggi_apri" class="apri_pannello"> <i class="fi-plus"></i>   </span>
@@ -66,11 +69,12 @@
         <p>&nbsp;</p>
     </div>
 </div>
-<!--<h3 data-magellan-destination="pu">Punti</h3>-->
-<a name="pu"></a>
+
 <div class="panel callout radius">
+    <h3 data-magellan-destination="pu">Punti</h3>
+<a name="pu"></a>
     <p>
-    <h2><?php echo $lg_tex['punti_tot']; ?> : <?php echo isset($punti) ? $punti : 0; ?></h2>
+    <h4><?php echo $lg_tex['punti_tot']; ?> : <?php echo isset($punti) ? $punti : 0; ?></h4>
     <p>
         <span id="punti_apri" class="apri_pannello"> <i class="fi-plus"></i>   </span>
     <p>&nbsp;</p>
@@ -120,16 +124,54 @@
         </table>
         <?php echo $lg_tex['punti_calcolo']; ?>
         <br>
+   <p>
+    </p>
+    <b>Come posso iscrivermi al Programma ?</b><br>
+    <div style="margin-left: 40px;">Iscriversi è semplice e gratuito basta fare
+      una prenotazione online nostro sito e inizia da subito ad accumulare punti
+    </div>
+    <br>
+    <b>Quanti punti si accumulano per ogni soggiorno?</b><br>
+    <div style="margin-left: 40px;">Per ogni soggiorno in&nbsp; hotel riceverai
+      10 punti per ogni euro di spesa sul pernottamento.</div>
+    <br>
+    <b>Come posso controllare i punti che ho accumulato?</b><br>
+    <div style="margin-left: 40px;">In qualsiasi momento puoi accedere al tuo
+      estratto conto dall’Area Soci del nostro sito. </div>
+    <b><br>
+      Quando posso spendere i miei punti?</b><br>
+    <div style="margin-left: 40px;">Sono spendibili in ogni nostro hotel se
+      effettui una prenotazione on line sul nostro sito</div>
+    <br>
+    <b>Come posso spendere i miei punti?</b><br>
+    <div style="margin-left: 40px;">Usando l'aria riservata del nostro sito,
+      puoi decidere quanti punti utilizzare prima del check-out, riceverai uno
+      riduzione del soggiorno dell'importo selezionato </div>
+    <br>
+    <b>I punti hanno una scadenza?</b><br>
+    <div style="margin-left: 40px;">I punti accumulati non scadono </div>
+    <br>
+    <b>I miei punti sono&nbsp; cedibile?</b><br>
+    <div style="margin-left: 40px;">I punti sono personali e può
+      essere utilizzata solo dal titolare. <br>
+    </div>
+        
+        
+        
         <a href="#" data-reveal-id="myModal">Click Me For A Modal</a>
         <?php echo $lg_tex['punti_dove_spendi']; ?>
         <span id="punti_chiudi" class="chiudi_pannello"> <i class="fi-x-circle"></i> </span>
         <p>&nbsp;</p>
     </div>
 </div>
+
 <?php if (!empty($conti)) { ?>
-    <h3 data-magellan-destination="co">Conti</h3>
-    <a name="co"></a>
+  
     <div class="panel" id="conti" > 
+        
+          <h3 data-magellan-destination="co">Conti</h3>
+    <a name="co"></a>
+        
         <div class="row">
             <div class="large-6 columns"> 
                 <ul class="pricing-table">
@@ -221,11 +263,13 @@
 <?php } ?>
 <?php if (isset($preno)) { ?>
     <?php foreach ($preno as $key => $row_new) { ?>
-        <h3 data-magellan-destination="pre">Prenotazione</h3>
-        <a name="pre"></a>   
+  
         <div>
             <fieldset>
                 <legend> Booking id : <?php echo $row_new->preno_id; ?></legend>
+                      <h3 data-magellan-destination="pre">Prenotazione</h3>
+        <a name="pre"></a>   
+                
                 <div class="row">
                     <div class="small-12 medium-4 large-5 columns">
                         <img src="<?php echo base_url(); ?><?php echo $row_new->hotel_foto_piccola; ?>"/>
@@ -271,6 +315,10 @@
         <h2 id="modalTitle">Awesome. I have it.</h2>
         <p class="lead">Your couch.  It is mine.</p>
         <p>I'm a cool paragraph that lives inside of an even cooler modal. Wins!</p>
+        
+        
+        
+        
         <table border="1">
             <thead>
                 <tr>

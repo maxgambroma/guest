@@ -38,19 +38,41 @@ echo form_open(uri_string() . '?' . $_SERVER['QUERY_STRING'], $attributes);
     <?php echo lang('obm_cliente_country', 'obm_cliente_country'); ?> <span class="required">*</span> <?php echo form_error('obm_cliente_country'); ?>
     <?php // Change the values in this array to populate your dropdown as required ?>
     <?php
-// $options = array('' => 'Please Select'    
-////                   );
+ $options = array('' => 'Please Select' ,       
+'Australia' => 'Australia' ,
+'Austria' => 'Austria' ,
+'Belgium' => 'Belgium' ,
+'Brazil' => 'Brazil' ,
+'Canada' => 'Canada' ,
+'China' => 'China' ,
+'Denmark' => 'Denmark' ,
+'France' => 'France' ,
+'Germany' => 'Germany' ,
+'Ireland' => 'Ireland' ,
+'Italy' => 'Italy' ,
+'Japan' => 'Japan' ,
+'Netherlands' => 'Netherlands' ,
+'Norway' => 'Norway' ,
+'Poland' => 'Poland' ,
+'Russia' => 'Russia' ,
+'Spain' => 'Spain' ,
+'Sweden' => 'Sweden' ,
+'Switzerland' => 'Switzerland' ,
+'USA' => 'USA' ,
+'United Kingdom' => 'United Kingdom' ,
+   '0' => '-- All Country -- ' ,  
+      );
 //// or FORM DB
-//    foreach ($rs_data as $value) {
-//        $options[$value->id] = $value->nome;
-//    }
-//  
-//    echo form_dropdown('obm_cliente_country', $options, (!set_value('obm_cliente_country')) ? $rs_obmp_clienti->obm_cliente_country : set_value('obm_cliente_country') ) 
-//            
-//            ?>
+    foreach ($rs_nazioni as $value) {
+        $options[ucfirst(strtolower($value->EN_Country))] = ucfirst(strtolower($value->EN_Country));
+    }
+  
+    echo form_dropdown('obm_cliente_country', $options, (!set_value('obm_cliente_country')) ? $rs_obmp_clienti->obm_cliente_country : set_value('obm_cliente_country') ) 
+            
+            ?>
 </p>   
 
-<p>
+<!--<p>
 
 <label><?php echo $lg_tex['country']; ?>: <small>required</small>
 <select name="obm_cliente_country" id="preno_country"  required="" data-invalid="" > 
@@ -63,12 +85,12 @@ echo form_open(uri_string() . '?' . $_SERVER['QUERY_STRING'], $attributes);
 <option style="font-weight: bold" value="Italy" phone-code="39"> Italy</option>
 <option style="font-weight: bold" value="Spain" phone-code="34"> Spain</option>
 <option style="font-weight: bold" value="Switzerland" phone-code="41"> Switzerland</option>
-<option style="font-weight: bold" value="USA" phone-code="phone-code"> USA</option>
+<option style="font-weight: bold" value="USA" phone-code="phone-code"> Switzerland</option>
 <option style="font-weight: bold" value="United Kingdom" phone-code="44"> United Kingdom</option>
 </select>
 </label>
 
- </p>
+ </p>-->
 
 <p>
 <?php echo lang('obm_cliente_phone', 'obm_cliente_phone'); ?> <span class="required">*</span>
