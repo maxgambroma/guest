@@ -13,7 +13,9 @@ class Clienti extends MY_Controller {
         $this->load->model('obmp_review_model');
         $this->load->model('conti_model');
         $this->load->model('obmp_clienti_model');
-
+        $this->load->model('nazioni_model');
+        
+        
         $this->load->model('tex_lingue_model');
 
         $this->load->library('form_validation');
@@ -427,6 +429,8 @@ class Clienti extends MY_Controller {
         $email = $this->session->email;
         $obm_cliente_id = $this->session->obm_cliente_id;
         $data['albergo'] = $this->hotel_model->hotel($hotel_id);
+        
+        $data['rs_nazioni'] =   $this->nazioni_model->find();
 
         $this->form_validation->set_rules('obm_cliente_first_name', 'lang:obm_cliente_first_name', 'required|trim|xss_clean');
         $this->form_validation->set_rules('obm_cliente_last_name', 'lang:obm_cliente_last_name', 'required|trim|xss_clean');
