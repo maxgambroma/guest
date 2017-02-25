@@ -20,6 +20,7 @@ class Obmp extends CI_Controller {
         $this->load->model('log_obmp_full_model');
         $this->load->model('ref_obmp_booking_model');
         $this->load->model('obmp_clienti_model');
+          $this->load->model('nazioni_model');
         $this->load->library('form_validation');
         $this->load->library('table');
         $this->load->library('pagination');
